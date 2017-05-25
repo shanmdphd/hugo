@@ -1,0 +1,2726 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>NCA 파라메터 계산하는 예시 for Theophylline - A Hugo website</title>
+<meta property="og:title" content="NCA 파라메터 계산하는 예시 for Theophylline - A Hugo website">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">11 min read</span>
+    
+
+    <h1 class="article-title">NCA 파라메터 계산하는 예시 for Theophylline</h1>
+
+    
+    <span class="article-date">0001/01/01</span>
+    
+
+    <div class="article-content">
+      
+
+<p>PKNCA 패키지를 사용하는 방법이 나와있습니다.</p>
+
+<p>Examples simplify understanding.  Below is an example of how to use the theophylline dataset to generate NCA parameters.</p>
+
+<h1 id="load-the-data-데이타-불러오기">Load the data 데이타 불러오기.</h1>
+
+<pre><code class="language-r">## 전체 데이타 보기.
+knitr::kable(datasets::Theoph)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">Subject</th>
+<th align="right">Wt</th>
+<th align="right">Dose</th>
+<th align="right">Time</th>
+<th align="right">conc</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">0.00</td>
+<td align="right">0.74</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">0.25</td>
+<td align="right">2.84</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">0.57</td>
+<td align="right">6.57</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">1.12</td>
+<td align="right">10.50</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">2.02</td>
+<td align="right">9.66</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">3.82</td>
+<td align="right">8.58</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">5.10</td>
+<td align="right">8.36</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">7.03</td>
+<td align="right">7.47</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">9.05</td>
+<td align="right">6.89</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">12.12</td>
+<td align="right">5.94</td>
+</tr>
+
+<tr>
+<td align="left">1</td>
+<td align="right">79.6</td>
+<td align="right">4.02</td>
+<td align="right">24.37</td>
+<td align="right">3.28</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">0.27</td>
+<td align="right">1.72</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">0.52</td>
+<td align="right">7.91</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">1.00</td>
+<td align="right">8.31</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">1.92</td>
+<td align="right">8.33</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">3.50</td>
+<td align="right">6.85</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">5.02</td>
+<td align="right">6.08</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">7.03</td>
+<td align="right">5.40</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">9.00</td>
+<td align="right">4.55</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">12.00</td>
+<td align="right">3.01</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="right">72.4</td>
+<td align="right">4.40</td>
+<td align="right">24.30</td>
+<td align="right">0.90</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.27</td>
+<td align="right">4.40</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.58</td>
+<td align="right">6.90</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">1.02</td>
+<td align="right">8.20</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">2.02</td>
+<td align="right">7.80</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">3.62</td>
+<td align="right">7.50</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">5.08</td>
+<td align="right">6.20</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">7.07</td>
+<td align="right">5.30</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">9.00</td>
+<td align="right">4.90</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">12.15</td>
+<td align="right">3.70</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">24.17</td>
+<td align="right">1.05</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">0.35</td>
+<td align="right">1.89</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">0.60</td>
+<td align="right">4.60</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">1.07</td>
+<td align="right">8.60</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">2.13</td>
+<td align="right">8.38</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">3.50</td>
+<td align="right">7.54</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">5.02</td>
+<td align="right">6.88</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">7.02</td>
+<td align="right">5.78</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">9.02</td>
+<td align="right">5.33</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">11.98</td>
+<td align="right">4.19</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="right">72.7</td>
+<td align="right">4.40</td>
+<td align="right">24.65</td>
+<td align="right">1.15</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">0.30</td>
+<td align="right">2.02</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">0.52</td>
+<td align="right">5.63</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">1.00</td>
+<td align="right">11.40</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">2.02</td>
+<td align="right">9.33</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">3.50</td>
+<td align="right">8.74</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">5.02</td>
+<td align="right">7.56</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">7.02</td>
+<td align="right">7.09</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">9.10</td>
+<td align="right">5.90</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">12.00</td>
+<td align="right">4.37</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="right">54.6</td>
+<td align="right">5.86</td>
+<td align="right">24.35</td>
+<td align="right">1.57</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">0.27</td>
+<td align="right">1.29</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">0.58</td>
+<td align="right">3.08</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">1.15</td>
+<td align="right">6.44</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">2.03</td>
+<td align="right">6.32</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">3.57</td>
+<td align="right">5.53</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">5.00</td>
+<td align="right">4.94</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">7.00</td>
+<td align="right">4.02</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">9.22</td>
+<td align="right">3.46</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">12.10</td>
+<td align="right">2.78</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="right">80.0</td>
+<td align="right">4.00</td>
+<td align="right">23.85</td>
+<td align="right">0.92</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">0.00</td>
+<td align="right">0.15</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">0.25</td>
+<td align="right">0.85</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">0.50</td>
+<td align="right">2.35</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">1.02</td>
+<td align="right">5.02</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">2.02</td>
+<td align="right">6.58</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">3.48</td>
+<td align="right">7.09</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">5.00</td>
+<td align="right">6.66</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">6.98</td>
+<td align="right">5.25</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">9.00</td>
+<td align="right">4.39</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">12.05</td>
+<td align="right">3.53</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="right">64.6</td>
+<td align="right">4.95</td>
+<td align="right">24.22</td>
+<td align="right">1.15</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.25</td>
+<td align="right">3.05</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.52</td>
+<td align="right">3.05</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">0.98</td>
+<td align="right">7.31</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">2.02</td>
+<td align="right">7.56</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">3.53</td>
+<td align="right">6.59</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">5.05</td>
+<td align="right">5.88</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">7.15</td>
+<td align="right">4.73</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">9.07</td>
+<td align="right">4.57</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">12.10</td>
+<td align="right">3.00</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="right">70.5</td>
+<td align="right">4.53</td>
+<td align="right">24.12</td>
+<td align="right">1.25</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">0.30</td>
+<td align="right">7.37</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">0.63</td>
+<td align="right">9.03</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">1.05</td>
+<td align="right">7.14</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">2.02</td>
+<td align="right">6.33</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">3.53</td>
+<td align="right">5.66</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">5.02</td>
+<td align="right">5.67</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">7.17</td>
+<td align="right">4.24</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">8.80</td>
+<td align="right">4.11</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">11.60</td>
+<td align="right">3.16</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="right">86.4</td>
+<td align="right">3.10</td>
+<td align="right">24.43</td>
+<td align="right">1.12</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">0.00</td>
+<td align="right">0.24</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">0.37</td>
+<td align="right">2.89</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">0.77</td>
+<td align="right">5.22</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">1.02</td>
+<td align="right">6.41</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">2.05</td>
+<td align="right">7.83</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">3.55</td>
+<td align="right">10.21</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">5.05</td>
+<td align="right">9.18</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">7.08</td>
+<td align="right">8.02</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">9.38</td>
+<td align="right">7.14</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">12.10</td>
+<td align="right">5.68</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="right">58.2</td>
+<td align="right">5.50</td>
+<td align="right">23.70</td>
+<td align="right">2.42</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">0.25</td>
+<td align="right">4.86</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">0.50</td>
+<td align="right">7.24</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">0.98</td>
+<td align="right">8.00</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">1.98</td>
+<td align="right">6.81</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">3.60</td>
+<td align="right">5.87</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">5.02</td>
+<td align="right">5.22</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">7.03</td>
+<td align="right">4.45</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">9.03</td>
+<td align="right">3.62</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">12.12</td>
+<td align="right">2.69</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="right">65.0</td>
+<td align="right">4.92</td>
+<td align="right">24.08</td>
+<td align="right">0.86</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">0.25</td>
+<td align="right">1.25</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">0.50</td>
+<td align="right">3.96</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">1.00</td>
+<td align="right">7.82</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">2.00</td>
+<td align="right">9.72</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">3.52</td>
+<td align="right">9.75</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">5.07</td>
+<td align="right">8.57</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">7.07</td>
+<td align="right">6.59</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">9.03</td>
+<td align="right">6.11</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">12.05</td>
+<td align="right">4.57</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">60.5</td>
+<td align="right">5.30</td>
+<td align="right">24.15</td>
+<td align="right">1.17</td>
+</tr>
+</tbody>
+</table>
+
+<p>The columns that we will be interested in for our analysis are conc, Time, and Subject in the concentration data set and Dose, Time, and Subject for the dosing data set.</p>
+
+<pre><code class="language-r">## By default it is groupedData; convert it to a data frame for use
+my.conc &lt;- PKNCAconc(as.data.frame(datasets::Theoph), conc~Time|Subject)
+
+## Dosing data needs to only have one row per dose, so subset for
+## that first.
+d.dose &lt;- unique(datasets::Theoph[datasets::Theoph$Time == 0,
+                                  c(&quot;Dose&quot;, &quot;Time&quot;, &quot;Subject&quot;)])
+knitr::kable(d.dose,
+             caption=&quot;Example dosing data extracted from theophylline data set&quot;)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">Dose</th>
+<th align="right">Time</th>
+<th align="left">Subject</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="right">4.02</td>
+<td align="right">0</td>
+<td align="left">1</td>
+</tr>
+
+<tr>
+<td align="left">12</td>
+<td align="right">4.40</td>
+<td align="right">0</td>
+<td align="left">2</td>
+</tr>
+
+<tr>
+<td align="left">23</td>
+<td align="right">4.53</td>
+<td align="right">0</td>
+<td align="left">3</td>
+</tr>
+
+<tr>
+<td align="left">34</td>
+<td align="right">4.40</td>
+<td align="right">0</td>
+<td align="left">4</td>
+</tr>
+
+<tr>
+<td align="left">45</td>
+<td align="right">5.86</td>
+<td align="right">0</td>
+<td align="left">5</td>
+</tr>
+
+<tr>
+<td align="left">56</td>
+<td align="right">4.00</td>
+<td align="right">0</td>
+<td align="left">6</td>
+</tr>
+
+<tr>
+<td align="left">67</td>
+<td align="right">4.95</td>
+<td align="right">0</td>
+<td align="left">7</td>
+</tr>
+
+<tr>
+<td align="left">78</td>
+<td align="right">4.53</td>
+<td align="right">0</td>
+<td align="left">8</td>
+</tr>
+
+<tr>
+<td align="left">89</td>
+<td align="right">3.10</td>
+<td align="right">0</td>
+<td align="left">9</td>
+</tr>
+
+<tr>
+<td align="left">100</td>
+<td align="right">5.50</td>
+<td align="right">0</td>
+<td align="left">10</td>
+</tr>
+
+<tr>
+<td align="left">111</td>
+<td align="right">4.92</td>
+<td align="right">0</td>
+<td align="left">11</td>
+</tr>
+
+<tr>
+<td align="left">122</td>
+<td align="right">5.30</td>
+<td align="right">0</td>
+<td align="left">12</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-r">my.dose &lt;- PKNCAdose(d.dose, Dose~Time|Subject)
+</code></pre>
+
+<h1 id="merge-the-concentration-and-dose">Merge the Concentration and Dose</h1>
+
+<p>After loading the data, they must be combined to prepare for parameter calculation.  Intervals for calculation will automatically be selected based on the <code>single.dose.aucs setting</code> in <code>PKNCA.options</code></p>
+
+<pre><code class="language-r">my.data.automatic &lt;- PKNCAdata(my.conc, my.dose)
+knitr::kable(PKNCA.options(&quot;single.dose.aucs&quot;))
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">auclast</th>
+<th align="left">aucall</th>
+<th align="left">aumclast</th>
+<th align="left">aumcall</th>
+<th align="left">cmax</th>
+<th align="left">cmin</th>
+<th align="left">tmax</th>
+<th align="left">tlast</th>
+<th align="left">tfirst</th>
+<th align="left">clast.obs</th>
+<th align="left">f</th>
+<th align="left">cav</th>
+<th align="left">ctrough</th>
+<th align="left">ptr</th>
+<th align="left">tlag</th>
+<th align="left">half.life</th>
+<th align="left">r.squared</th>
+<th align="left">adj.r.squared</th>
+<th align="left">lambda.z</th>
+<th align="left">lambda.z.time.first</th>
+<th align="left">lambda.z.n.points</th>
+<th align="left">clast.pred</th>
+<th align="left">span.ratio</th>
+<th align="left">aucinf</th>
+<th align="left">aumcinf</th>
+<th align="left">aucpext</th>
+<th align="left">cl</th>
+<th align="left">mrt</th>
+<th align="left">vss</th>
+<th align="left">vd</th>
+<th align="left">thalf.eff</th>
+<th align="left">kel</th>
+<th align="left">vz</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-r">knitr::kable(my.data.automatic$intervals)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">auclast</th>
+<th align="left">aucall</th>
+<th align="left">aumclast</th>
+<th align="left">aumcall</th>
+<th align="left">cmax</th>
+<th align="left">cmin</th>
+<th align="left">tmax</th>
+<th align="left">tlast</th>
+<th align="left">tfirst</th>
+<th align="left">clast.obs</th>
+<th align="left">f</th>
+<th align="left">cav</th>
+<th align="left">ctrough</th>
+<th align="left">ptr</th>
+<th align="left">tlag</th>
+<th align="left">half.life</th>
+<th align="left">r.squared</th>
+<th align="left">adj.r.squared</th>
+<th align="left">lambda.z</th>
+<th align="left">lambda.z.time.first</th>
+<th align="left">lambda.z.n.points</th>
+<th align="left">clast.pred</th>
+<th align="left">span.ratio</th>
+<th align="left">aucinf</th>
+<th align="left">aumcinf</th>
+<th align="left">aucpext</th>
+<th align="left">cl</th>
+<th align="left">mrt</th>
+<th align="left">vss</th>
+<th align="left">vd</th>
+<th align="left">thalf.eff</th>
+<th align="left">kel</th>
+<th align="left">vz</th>
+<th align="left">Subject</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">1</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">1</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">2</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">2</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">3</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">3</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">4</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">4</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">5</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">5</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">6</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">6</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">7</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">7</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">8</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">8</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">9</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">9</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">10</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">10</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">11</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">11</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">12</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">12</td>
+</tr>
+</tbody>
+</table>
+
+<p>Intervals for calculation can also be specified manually.  Manual specification requires at least columns for <code>start</code> time, <code>end</code> time, and the parameters requested.  The manual specification can also include any grouping factors from the concentration data set.  Column order of the intervals is not important.  When intervals are manually specified, they are expanded to the full interval set when added to a PKNCAdata object (in other words, a column is created for each parameter.  Also, PKNCA automatically calculates parameters required for the NCA, so while lambda.z is required for calculating AUC~0-$\infinity$~, you do not have to specify it in the parameters requested.</p>
+
+<pre><code class="language-r">my.intervals &lt;- data.frame(start=0,
+                           end=Inf,
+                           cmax=TRUE,
+                           tmax=TRUE,
+                           aucinf=TRUE,
+                           auclast=TRUE)
+my.data.manual &lt;- PKNCAdata(my.conc, my.dose,
+                            intervals=my.intervals)
+knitr::kable(my.data.manual$intervals)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">auclast</th>
+<th align="left">aucall</th>
+<th align="left">aumclast</th>
+<th align="left">aumcall</th>
+<th align="left">cmax</th>
+<th align="left">cmin</th>
+<th align="left">tmax</th>
+<th align="left">tlast</th>
+<th align="left">tfirst</th>
+<th align="left">clast.obs</th>
+<th align="left">f</th>
+<th align="left">cav</th>
+<th align="left">ctrough</th>
+<th align="left">ptr</th>
+<th align="left">tlag</th>
+<th align="left">half.life</th>
+<th align="left">r.squared</th>
+<th align="left">adj.r.squared</th>
+<th align="left">lambda.z</th>
+<th align="left">lambda.z.time.first</th>
+<th align="left">lambda.z.n.points</th>
+<th align="left">clast.pred</th>
+<th align="left">span.ratio</th>
+<th align="left">aucinf</th>
+<th align="left">aumcinf</th>
+<th align="left">aucpext</th>
+<th align="left">cl</th>
+<th align="left">mrt</th>
+<th align="left">vss</th>
+<th align="left">vd</th>
+<th align="left">thalf.eff</th>
+<th align="left">kel</th>
+<th align="left">vz</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="compute-the-parameters">Compute the parameters</h1>
+
+<p>Parameter calculation will automatically split the data by the grouping factor(s), subset by the interval, calculate all required parameters, record all options used for the calculations, and include data provenance to show that the calculation was performed as described.  For all this, just call the <code>pk.nca</code> function with your PKNCAdata object.</p>
+
+<pre><code class="language-r">my.results.automatic &lt;- pk.nca(my.data.automatic)
+knitr::kable(head(my.results.automatic$result))
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">Subject</th>
+<th align="left">PPTESTCD</th>
+<th align="right">PPORRES</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">1</td>
+<td align="left">auclast</td>
+<td align="right">92.3654416</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">cmax</td>
+<td align="right">10.5000000</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">tmax</td>
+<td align="right">1.1200000</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">tlast</td>
+<td align="right">24.3700000</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">lambda.z</td>
+<td align="right">0.0484570</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">r.squared</td>
+<td align="right">0.9999997</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-r">summary(my.results.automatic)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">auclast</th>
+<th align="left">cmax</th>
+<th align="left">tmax</th>
+<th align="left">half.life</th>
+<th align="left">aucinf</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">24</td>
+<td align="left">74.6 [24.3]</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+<td align="left">.</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">.</td>
+<td align="left">8.65 [17.0]</td>
+<td align="left">1.14 [0.630, 3.55]</td>
+<td align="left">8.18 [2.12]</td>
+<td align="left">115 [28.4]</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-r">my.results.manual &lt;- pk.nca(my.data.manual)
+knitr::kable(head(my.results.manual$result))
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">Subject</th>
+<th align="left">PPTESTCD</th>
+<th align="right">PPORRES</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">auclast</td>
+<td align="right">147.2347485</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">cmax</td>
+<td align="right">10.5000000</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">tmax</td>
+<td align="right">1.1200000</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">tlast</td>
+<td align="right">24.3700000</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">lambda.z</td>
+<td align="right">0.0484570</td>
+</tr>
+
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">1</td>
+<td align="left">r.squared</td>
+<td align="right">0.9999997</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-r">summary(my.results.manual)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">start</th>
+<th align="right">end</th>
+<th align="left">auclast</th>
+<th align="left">cmax</th>
+<th align="left">tmax</th>
+<th align="left">aucinf</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">98.7 [22.5]</td>
+<td align="left">8.65 [17.0]</td>
+<td align="left">1.14 [0.630, 3.55]</td>
+<td align="left">115 [28.4]</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

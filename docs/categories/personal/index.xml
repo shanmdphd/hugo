@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Personal on A Hugo website</title>
+    <link>/categories/personal/index.xml</link>
+    <description>Recent content in Personal on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/personal/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Chloe</title>
+      <link>/1/01/01/chloe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/chloe/</guid>
+      <description>&lt;p&gt;this&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/BEazxM2.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Endeavor</title>
+      <link>/1/01/01/endeavor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/endeavor/</guid>
+      <description>&lt;p&gt;Endeavor&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Skateboard</title>
+      <link>/1/01/01/skateboard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/skateboard/</guid>
+      <description>&lt;p&gt;주문한 스케이트보드가 도착했습니다. ^^&lt;/p&gt;
+
+&lt;p&gt;열심히 연습해야겠습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/2m0YZEQ.jpg&#34; alt=&#34;sk8&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>아메리카노 &#43; 라떼</title>
+      <link>/1/01/01/%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8-&#43;-%EB%9D%BC%EB%96%BC/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8-&#43;-%EB%9D%BC%EB%96%BC/</guid>
+      <description>&lt;p&gt;항상 고민스러운 문제 였는데 이렇게 좋은 아이디어가 있다니!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/S9YGFXL.jpg&#34; alt=&#34;coffee latte&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

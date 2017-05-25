@@ -1,0 +1,1337 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Datascience on A Hugo website</title>
+    <link>/categories/datascience/index.xml</link>
+    <description>Recent content in Datascience on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/datascience/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>happygitwithr.com</title>
+      <link>/2016/07/01/happygitwithr.com/</link>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/07/01/happygitwithr.com/</guid>
+      <description>&lt;p&gt;useR 2016 컨퍼런스의 가장 인상적인 tutorial이 모두 GitBook형태로 공개되었습니다. 굉장히 유익한 자료라 생각됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://happygitwithr.com/&#34;&gt;Happy Git and GitHub for the useR |  happygitwithr.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/E0UdN9X.png&#34; alt=&#34;스크린샷 2016-07-01 12.17.13&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A future for R</title>
+      <link>/1/01/01/a-future-for-r/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/a-future-for-r/</guid>
+      <description>
+
+&lt;p&gt;useR 2016에서 있었던 것중에 특징적인 것을 가져왔습니다.&lt;/p&gt;
+
+&lt;p&gt;R markdown을 사용한 문서입니다.&lt;/p&gt;
+
+&lt;p&gt;특히 말미에 ODBC가 언급된 것이 흥미롭습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;a-future-for-r&#34;&gt;A Future for R&lt;/h1&gt;
+
+&lt;p&gt;Henrik Bengtsson, UC San Francisco&lt;/p&gt;
+
+&lt;p&gt;useR 2016, Stanford, CA, 2016-06-28&lt;/p&gt;
+
+&lt;h3 id=&#34;slide-comments&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;p&gt;This is a 15 + 3 minute presentation.&lt;/p&gt;
+
+&lt;h1 id=&#34;my-first-r-assignment&#34;&gt;My first R assignment&lt;/h1&gt;
+
+&lt;p&gt;Calculating the sum 1 + 2 + &amp;hellip; + 100:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- sum(1:100)
+&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;my-first-r-assignment-1&#34;&gt;My first R assignment&lt;/h1&gt;
+
+&lt;p&gt;Calculating the sum 1 + 2 + &amp;hellip; + 100:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- slow_sum(1:100)    ## 2 min
+&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Divide-and-conquer alternative&lt;/strong&gt;: Calculate &lt;em&gt;a&lt;/em&gt; = 1 + 2 + &amp;hellip; + 50, and &lt;strong&gt;then&lt;/strong&gt; &lt;em&gt;b&lt;/em&gt; = 51 + 52 + &amp;hellip; + 100, and then add up &lt;em&gt;a&lt;/em&gt; and &lt;em&gt;b&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; a &amp;lt;- slow_sum(1:50)     ## 1 min
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; b &amp;lt;- slow_sum(51:100)   ## 1 min
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- a + b
+&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;slide-comments-1&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;All of the above steps are evaluated sequentially.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;my-first-future-assignment&#34;&gt;My first future assignment&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Parallel divide-and-conquer&lt;/strong&gt;: Calculate &lt;em&gt;a&lt;/em&gt; = 1 + 2 + &amp;hellip; + 50 and &lt;em&gt;b&lt;/em&gt; = 51 + 52 + &amp;hellip; + 100 &lt;strong&gt;at the same time&lt;/strong&gt;, and then add up &lt;em&gt;a&lt;/em&gt; and &lt;em&gt;b&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(multiprocess)       ## Parallel processing
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Future assignment:   &lt;code&gt;y %&amp;lt;-% x&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; a %&amp;lt;-% slow_sum(1:50)    ## These two assignments are
+&amp;gt; b %&amp;lt;-% slow_sum(51:100)  ## non-blocking and in parallel
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- a + b               ## Waits for a and b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Friedman &amp;amp; Wise (1976, 1977), Hibbard (1976),  Baker &amp;amp; Hewitt (1977)&lt;/p&gt;
+
+&lt;h1 id=&#34;definition-future&#34;&gt;Definition: Future&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;y %&amp;lt;-% { expr }&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A &lt;strong&gt;future&lt;/strong&gt; is an abstraction for a &lt;strong&gt;value&lt;/strong&gt; that will be available later.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The value is the &lt;strong&gt;result of an evaluated expression&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;state of a future&lt;/strong&gt; is either &lt;strong&gt;unresolved&lt;/strong&gt; or &lt;strong&gt;resolved&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;value is blocking&lt;/strong&gt; until the future is resolved.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;slide-comments-2&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Friedman &amp;amp; Wise, Aspects of applicative programming for file systems, &lt;em&gt;Proceedings of an ACM conference on Language design for reliable software&lt;/em&gt;, 1977, pp41-55.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;r-package-future&#34;&gt;R package: future (!)&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A simple &lt;strong&gt;unified API&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Works the same on &lt;strong&gt;all platforms&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Easy to install&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight&lt;/strong&gt; (~300 kB incl. dependencies)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vignettes&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extendable&lt;/strong&gt; by anyone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Image: CRAN version: 1.0.0
+Image: Travis CI: passing
+Image: Codecov: 97%&lt;/p&gt;
+
+&lt;h1 id=&#34;many-ways-to-resolve-futures&#34;&gt;Many ways to resolve futures&lt;/h1&gt;
+
+&lt;p&gt;Strategy:             |
+:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-
+ &lt;code&gt;eager&lt;/code&gt;              | sequentially
+ &lt;code&gt;lazy&lt;/code&gt;               | only if needed
+ &lt;code&gt;multiprocess&lt;/code&gt;       | in parallel
+ &lt;code&gt;cluster&lt;/code&gt;            | on a set of machines
+                      |&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; plan(lazy)
+
+&amp;gt; a %&amp;lt;-% slow_sum(1:50)
+&amp;gt; b %&amp;lt;-% slow_sum(51:100)
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; b
+[1] 3775
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;future-a-will-never-be-evaluated&#34;&gt;Future &lt;code&gt;a&lt;/code&gt; will never be evaluated!&lt;/h3&gt;
+
+&lt;h1 id=&#34;consistent-futures-everywhere&#34;&gt;Consistent futures everywhere (!)&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unix&lt;/li&gt;
+&lt;li&gt;macOS&lt;/li&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(multiprocess)
+&amp;gt; demo(&amp;quot;mandelbrot&amp;quot;)
+
+Calculating and plotting
+Mandelbrot regions ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of demo(mandelbrot)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;- Region 1 done
+- Region 2 done
+- Region 7 done
+- Region 5 done
+- ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of demo(mandelbrot)&lt;/p&gt;
+
+&lt;h1 id=&#34;future-takes-care-of-globals&#34;&gt;Future takes care of globals (!)&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Global variables and functions&lt;/strong&gt; that are needed for the future
+expression to be resolved are &lt;strong&gt;identified automatically&lt;/strong&gt; and
+frozen / &lt;strong&gt;exported&lt;/strong&gt;.
+&lt;strong&gt;Packages&lt;/strong&gt; are automatically loaded.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- rnorm(n=100)
+
+y %&amp;lt;-% { slow_sum(x) }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Globals identified and frozen / exported:
+1. &lt;code&gt;slow_sum()&lt;/code&gt; - a function.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; - a numeric vector of length 100.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;nested-futures&#34;&gt;Nested futures (!)&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- rnorm(n=100)
+
+a %&amp;lt;-% {
+  c %&amp;lt;-% slow_sum(x[1:25])
+  d %&amp;lt;-% slow_sum(x[26:50])
+  c + d
+}
+
+b %&amp;lt;-% {
+  c %&amp;lt;-% slow_sum(x[51:75])
+  d %&amp;lt;-% slow_sum(x[76:100])
+  c + d
+}
+
+y &amp;lt;- a + b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Different strategies for resolving, e.g.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;plan(list(cluster, multiprocess))&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;high-performance-compute-hpc-clusters&#34;&gt;High Performance Compute (HPC) clusters&lt;/h1&gt;
+
+&lt;p&gt;Image: Future Art: Mainframe computer room&lt;/p&gt;
+
+&lt;h1 id=&#34;map-reduce-for-hpc&#34;&gt;Map-Reduce for HPC&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Find our 40 FASTQ files
+fastq &amp;lt;- dir(pattern = &amp;quot;[.]fq$&amp;quot;)           ## 200 GB each!
+
+## Align them
+bam &amp;lt;- lapply(fastq, FUN = DNAseq::align)  ## 6 hours each!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;BatchJobs&amp;quot;)
+reg &amp;lt;- makeRegistry(id=&amp;quot;DNASEQseq&amp;quot;)
+
+fastq &amp;lt;- dir(pattern = &amp;quot;[.]fq$&amp;quot;)
+batchMap(reg, fastq, fun = DNAseq::align)
+submitJobs(reg)
+bam &amp;lt;- loadResults(reg)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: CRAN version: 0.12.0
+Image: Travis CI: passing
+Image: Codecov: 90%&lt;/p&gt;
+
+&lt;h1 id=&#34;future-batchjobs-futures-for-hpc&#34;&gt;future.BatchJobs: Futures for HPC&lt;/h1&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;future.BatchJobs:&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Job scheduler:&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_slurm&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Slurm&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_sge&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Sun Grid Engine&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_torque&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TORQUE / PBS&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_lsf&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Load Sharing Facility&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_openlava&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;OpenLava&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;future.BatchJobs&amp;quot;)
+plan(batchjobs_slurm)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;bam &amp;lt;- listenv()
+for (i in seq_along(fastq)) {
+  bam[[i]] %&amp;lt;-% DNAseq::align(fastq[i])
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;parallel-alternatives&#34;&gt;Parallel alternatives&lt;/h1&gt;
+
+&lt;p&gt;Image: Future Art: Inside of the Stanford Torus by Donald Davis, NASA paintings, 1975 (public domain)&lt;/p&gt;
+
+&lt;h1 id=&#34;foreach-futures-with-foreach&#34;&gt;foreach: Futures with foreach()&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Align them
+foreach(i = seq_along(fastq), .export = &amp;quot;fastq&amp;quot;) %dopar% {
+  DNAseq::align(fastq[i])
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: CRAN version: 0.2.0
+Image: Travis CI: passing
+Image: Codecov: 100%
+(48 lines!)&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;doFuture&lt;/strong&gt; package provides a foreach &lt;code&gt;%dopar%&lt;/code&gt; adapter such that
+&lt;em&gt;any&lt;/em&gt; type of futures can be used wherever the foreach package is used.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;doFuture&amp;quot;)
+registerDoFuture()
+plan(multiprocess)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;slide-comments-3&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;h2 id=&#34;other-foreach-backend-adapter&#34;&gt;Other foreach backend adapter&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;doMC&lt;/li&gt;
+&lt;li&gt;doParallel&lt;/li&gt;
+&lt;li&gt;doSNOW&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;1100-packages-can-now-parallelize-on-hpc&#34;&gt;1100+ packages can now parallelize on HPC&lt;/h1&gt;
+
+&lt;p&gt;Package that depends on foreach: ~300 directly + ~800 indirectly&lt;/p&gt;
+
+&lt;p&gt;These can now also take advantage of compute clusters:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;doFuture&amp;quot;)
+registerDoFuture()      ## (a) Tell foreach to use futures
+
+library(&amp;quot;future.BatchJobs&amp;quot;)
+plan(batchjobs_slurm)   ## (b) Resolve via Slurm scheduler
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;plyr&amp;quot;)
+fastq &amp;lt;- dir(pattern = &amp;quot;[.]fq$&amp;quot;)
+bam &amp;lt;- llply(fastq, DNAseq::align, .parallel = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;slide-comments-4&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; pkgs &amp;lt;- tools::dependsOnPkgs(&amp;quot;foreach&amp;quot;, recursive=TRUE, installed=utils::available.packages())
+&amp;gt; str(pkgs)
+ chr [1:1099] &amp;quot;abcrf&amp;quot; &amp;quot;admixturegraph&amp;quot; &amp;quot;ApacheLogProcessor&amp;quot; &amp;quot;BANFF&amp;quot; ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;future-bonuses&#34;&gt;Future bonuses&lt;/h1&gt;
+
+&lt;p&gt;Image: Future Art: Vision of a future with video calls&lt;/p&gt;
+
+&lt;h1 id=&#34;plot-remotely-display-locally&#34;&gt;Plot remotely - display locally&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(remote, workers=&amp;quot;remote.server.org&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Plot remotely
+&amp;gt; g %&amp;lt;-% R.devices::capturePlot({
++   filled.contour(volcano, color.palette = terrain.colors)
++   title(main = &amp;quot;volcano data: filled contour map&amp;quot;)
++ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Display locally
+&amp;gt; g
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of example(volcano) plot&lt;/p&gt;
+
+&lt;h3 id=&#34;slide-comments-5&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R (&amp;gt;= 3.3.0)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;recordPlot()&lt;/code&gt; + &lt;code&gt;replayPlot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Replotted using local R plot routines&lt;/li&gt;
+&lt;li&gt;X11 and similar is &lt;em&gt;not&lt;/em&gt; in play here!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;building-a-better-future&#34;&gt;Building a better future&lt;/h1&gt;
+
+&lt;p&gt;@HenrikBengtsson&lt;/p&gt;
+
+&lt;p&gt;Thank you!&lt;/p&gt;
+
+&lt;h1 id=&#34;appenix&#34;&gt;Appenix&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A1. Summary&lt;/li&gt;
+&lt;li&gt;A2. Future has a minimalistic API&lt;/li&gt;
+&lt;li&gt;A3. Nested futures with plyr&lt;/li&gt;
+&lt;li&gt;A4. BiocParallel: Futures with Bioconductor&lt;/li&gt;
+&lt;li&gt;A5. Profile code remotely - display locally&lt;/li&gt;
+&lt;li&gt;A6. Implement Future API for new backend&lt;/li&gt;
+&lt;li&gt;A7. Futures I&amp;rsquo;d like to see&lt;/li&gt;
+&lt;li&gt;A8. Future improvements&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;a1-summary&#34;&gt;A1. Summary&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;                 | **future**  | parallel  | foreach     | BatchJobs | BiocParallel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;|:&amp;mdash;&amp;mdash;&amp;mdash;-|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;|:&amp;mdash;&amp;mdash;&amp;mdash;-|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-
+Synchroneous         |** yes     &lt;strong&gt;| yes       |  yes        | yes       | yes
+Asynchroneous        |&lt;/strong&gt; yes     &lt;strong&gt;| yes       |  yes        | yes       | ��
+Uniform API          |&lt;/strong&gt; yes     &lt;strong&gt;|           |  yes        | yes       | yes
+Extendable API       |&lt;/strong&gt; yes     &lt;strong&gt;|           |  yes        | yes       | ��
+Globals              |&lt;/strong&gt; yes     &lt;strong&gt;|           | (yes)       |           |
+Packages             |&lt;/strong&gt; yes     &lt;strong&gt;|           | (yes)       |           |
+For loops            |&lt;/strong&gt; yes     &lt;strong&gt;|           | &lt;code&gt;foreach()&lt;/code&gt; |           |
+While loops          |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           |
+Nested config        |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           |
+Recursive protection |&lt;/strong&gt; yes     &lt;strong&gt;| mc        |             |        mc |
+Early stopping       |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           | ��
+Traceback            |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           | ��
+RNG stream           |&lt;/strong&gt; manual  **| mc &amp;amp; SNOW | doRNG       | manual    | mc &amp;amp; SNOW&lt;/p&gt;
+
+&lt;h3 id=&#34;slide-comments-6&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;h2 id=&#34;early-stopping-is-not-supported-by-foreach&#34;&gt;Early stopping is not supported by foreach&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;foreach&amp;quot;)
+&amp;gt; registerDoSEQ()
+&amp;gt; v &amp;lt;- foreach(i = 1:3) %dopar% { message(i); if (i == 2) stop(&amp;quot;x&amp;quot;); i }
+1
+2
+3
+Error in { : task 2 failed - &amp;quot;x&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;a2-future-has-a-minimalistic-api&#34;&gt;A2. Future has a minimalistic API (!)&lt;/h1&gt;
+
+&lt;table&gt;
+&lt;tr style=&#34;font-size: 150%;
+ &lt;th style=&#34;background: none; width: 50%; text-align: left;Future assignment:&lt;/th&gt;
+ &lt;th style=&#34;background: none; width: 50%; text-align: left;Functional API:&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+ &lt;td style=&#34;vertical-align: top;
+  &lt;pre style=&#34;background-color: #f2f2f2;
+
+ &gt; x &lt;- 101:200
+
+ ## Create implicit futures
+ &gt; a %&lt;-% slow_sum(x[1:50])
+ &gt; b %&lt;-% slow_sum(x[51:100])
+
+ ## Get their values
+ &gt; y &lt;- a + b
+
+ &gt; y
+ [1] 15050
+  &lt;/pre&gt;
+ &lt;/td&gt;
+ &lt;td style=&#34;vertical-align: top;
+  &lt;pre style=&#34;background-color: #f2f2f2;
+
+ &gt; x &lt;- 101:200
+
+ ## Create explicit futures
+ &gt; f &lt;- future( slow_sum(x[1:50]) )
+ &gt; g &lt;- future( slow_sum(x[51:100]) )
+
+ ## Get their values
+ &gt; y &lt;- value(f) + value(g)
+
+ &gt; y
+ [1] 15050
+  &lt;/pre&gt;
+ &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;a3-nested-futures-with-plyr&#34;&gt;A3. Nested futures with plyr&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;future.BatchJobs&amp;quot;)
+plan(list(batchjobs_slurm, multiprocess))
+
+library(plyr)
+
+bam &amp;lt;- llply(fastq, function(fq) {
+
+  chrs &amp;lt;- llply(1:24, function(chr) {
+    DNAseq::align(fq, chromosome = chr)
+  }, .parallel = TRUE)
+
+  merge_chromosomes(chrs)
+
+}, .parallel = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;a4-biocparallel-futures-with-bioconductor&#34;&gt;A4. BiocParallel: Futures with Bioconductor&lt;/h1&gt;
+
+&lt;p&gt;You can use futures with BiocParallel, e.g.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;BiocParallel&amp;quot;)
+register(DoparParam(), default = TRUE)
+
+library(&amp;quot;doFuture&amp;quot;)
+registerDoFuture()
+
+plan(multiprocess)
+
+bplapply(fastq, function(fq) {
+  DNAseq::align(fq)
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;a5-profile-code-remotely-display-locally&#34;&gt;A5. Profile code remotely - display locally&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(remote, workers=&amp;quot;remote.server.org&amp;quot;)
+
+&amp;gt; library(&amp;quot;profvis&amp;quot;)
+
+&amp;gt; dat &amp;lt;- data.frame(
++   x = rnorm(50e3),
++   y = rnorm(50e3)
++ )
+
+## Profile remotely
+&amp;gt; p %&amp;lt;-% profvis({
++   plot(x ~ y, data = dat)
++   m &amp;lt;- lm(x ~ y, data = dat)
++   abline(m, col = &amp;quot;red&amp;quot;)
++ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Browse locally
+&amp;gt; p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of profvis HTML report&lt;/p&gt;
+
+&lt;h1 id=&#34;a6-implement-future-api-for-new-backend&#34;&gt;A6. Implement Future API for new backend&lt;/h1&gt;
+
+&lt;p&gt;To implement a new type of future, create the following methods:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;f &amp;lt;- myfuture({ expr })&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;creates a future of class &lt;code&gt;MyFuture&lt;/code&gt; extending &lt;code&gt;Future&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;value(f)&lt;/code&gt; for &lt;code&gt;MyFuture&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;gets value of future (blocking)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;resolved(f)&lt;/code&gt; for &lt;code&gt;MyFuture&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;checks if future is resolved or not (non-blocking)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;a7-futures-i-d-like-to-see&#34;&gt;A7. Futures I&amp;rsquo;d like to see&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;plan(r32)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e.g. &lt;code&gt;RODBC::odbcConnectAccess()&lt;/code&gt; works only on 32-bit R.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;plan(p2p)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Private and / or community-based peer-to-peer computer cluster&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;plan(rhelp)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Post R scripts to R-help and ask for the results &lt;code&gt;:P&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;a8-future-improvements&#34;&gt;A8. Future improvements&lt;/h1&gt;
+
+&lt;h2 id=&#34;standardization&#34;&gt;Standardization&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Capturing stdout and stderr uniformly&lt;/li&gt;
+&lt;li&gt;Random number generation (Pierre L&amp;rsquo;Ecuyer&amp;rsquo;s RNG streams)
+
+&lt;ul&gt;
+&lt;li&gt;easy to do manually right now&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;optional-features&#34;&gt;Optional features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Logging&lt;/li&gt;
+&lt;li&gt;Progress bars&lt;/li&gt;
+&lt;li&gt;Memoization (caching of results)&lt;/li&gt;
+&lt;li&gt;On the-fly time and memory benchmark statistics&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>First rpubs document published</title>
+      <link>/1/01/01/first-rpubs-document-published/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/first-rpubs-document-published/</guid>
+      <description>&lt;p&gt;처음으로 rpubs.com에 publish하였습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://rpubs.com/shanmdphd/Toxicology2016&#34;&gt;http://rpubs.com/shanmdphd/Toxicology2016&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;R markdown은 배울수록 정말 유용하게 쓸 수 있는 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/rHuuDuZ.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;또한 Bookdown을 이용하여 Gitbook스타일로 &lt;a href=&#34;http://shanmdphd.github.io/ConferencesBook/&#34;&gt;publish&lt;/a&gt;하였습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/OQzxETu.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Google R style</title>
+      <link>/1/01/01/google-r-style/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/google-r-style/</guid>
+      <description>&lt;p&gt;정독할만 합니다. 특히 작명(?)하는 법, attach 사용하지 말라는 것, 그리고 TODO(username)이 새로운 점입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://google.github.io/styleguide/Rguide.xml#todo&#34;&gt;https://google.github.io/styleguide/Rguide.xml#todo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/3ObLhUW.png&#34; alt=&#34;스크린샷 2016-07-02 17.10.35&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ODBC</title>
+      <link>/1/01/01/odbc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/odbc/</guid>
+      <description>
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;One data는 한군데만 있는게 좋습니다.&lt;/li&gt;
+&lt;li&gt;Normalization 이론 참고.&lt;/li&gt;
+&lt;li&gt;ODBC - MS-windows 용&lt;/li&gt;
+&lt;li&gt;xlsx, Oracle DB, mysql 등 DB의 형태는 다양한 모습일 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;about-odbc&#34;&gt;About ODBC&lt;/h2&gt;
+
+&lt;h3 id=&#34;brian-ripley-oxford&#34;&gt;&amp;ldquo;Brian Ripley&amp;rdquo; - Oxford&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ODBC(Open DataBase Connectivity)는 마이크로소프트가 만든, 데이터베이스에 접근하기 위한 소프트웨어의 표준 규격입니다.&lt;/li&gt;
+&lt;li&gt;각 데이터베이스의 차이는 ODBC 드라이버에 흡수되기 때문에 사용자는 ODBC에 정해진 순서에 따라서 프로그램을 쓰면 접속처의 데이터베이스가 어떠한 데이터베이스 관리 시스템에 관리되고 있는지 의식할 필요 없이 접근할 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;ODBC는 본래 1990년대 초 마이크로소프트가 개발하였고, 유닉스 및 메인프레임 분야에서 SQL 액세스 그룹이 표준화한 호출 수준 인터페이스(CLI)를 위한 기초가 되었습니다. ODBC는 CLI의 노고 중 일부로서 제거되었던 일부 기능들을 보유하였다. 온전한 ODBC는 나중에 해당 플랫폼으로 다시 이식되었으며 CLI 보다 상당히 더 잘 알려진 데 팍토 표준이 되었다고 합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;r에서의-사용법-예시&#34;&gt;R에서의 사용법 예시&lt;/h3&gt;
+
+&lt;p&gt;ODBC를 Win 7 64bit에서 사용하려 할 때 몇가지 번거로운 작업이 있습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Excel file을 ODBC 관리자에 입력합니다. 이때 64비트 컴퓨터에서는 ODBC 32bit를 사용해야 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;32bit ODBC 관리자: C:\Windows\SysWOW64\odbcad32.exe
+64bit ODBC 관리자: C:\Windows\System32\odbcad32.exe&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R에서 읽어들어올때도 마찬가지로 32bit R 3.3.0을 실행해야 합니다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RODBC package&lt;/code&gt; 설치.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;install.packages(&amp;quot;RODBC&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;이후 R에서 다음과 같은 식으로 ODBC상의 DB를 변수로 받을 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;require(&amp;quot;RODBC&amp;quot;)
+#HMConc = odbcConnect(&amp;quot;Excel Files&amp;quot;) # ODBC관리자에서 파일 등록 안했을 경우 관리자를 띄어줍니다.
+Conc = odbcConnect(&amp;quot;CONC&amp;quot;) # ODBC관리자에서 CONC로 DB명을 설정함.
+DrugA.ODBC = sqlFetch(Conc, &amp;quot;DrugA&amp;quot;, as.is=TRUE)
+DrugB.ODBC = sqlFetch(Conc, &amp;quot;DrugB&amp;quot;, as.is=TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;64bit-윈도우에서-32bit-odbc관리자-사용하기&#34;&gt;64bit 윈도우에서 32bit ODBC관리자 사용하기&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://garangb.tumblr.com/post/32380544466/64bit-%EC%9C%88%EB%8F%84%EC%9A%B0%EC%97%90%EC%84%9C-32bit-odbc%EA%B4%80%EB%A6%AC%EC%9E%90-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0&#34;&gt;64bit 윈도우에서 32bit ODBC관리자 사용하기&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;discussion&#34;&gt;Discussion&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R에서 Data를 불러오는 여러가지 방법 중에 가장 오래된 전통을 갖고 있습니다.&lt;/li&gt;
+&lt;li&gt;안정적으로 동작합니다.&lt;/li&gt;
+&lt;li&gt;그러나 64비트 개발환경을 사용할 수 없다는 점, OSX와 Linux 등에서 사용이 용이하지 않다는 점은 단점일 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>OSX에서 MySQL 설치하기, RMySQL 패키지 사용하기, 간단한 SQL 문법</title>
+      <link>/1/01/01/osx%EC%97%90%EC%84%9C-mysql-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-rmysql-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EA%B0%84%EB%8B%A8%ED%95%9C-sql-%EB%AC%B8%EB%B2%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/osx%EC%97%90%EC%84%9C-mysql-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-rmysql-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EA%B0%84%EB%8B%A8%ED%95%9C-sql-%EB%AC%B8%EB%B2%95/</guid>
+      <description>
+
+&lt;h2 id=&#34;mysql-설치하기&#34;&gt;MySQL 설치하기&lt;/h2&gt;
+
+&lt;p&gt;다음 명령어를 터미널에서 입력합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew install mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;다음과 같은 결과가 나오게 됩니다. &lt;code&gt;mysql_secure_installation&lt;/code&gt;, &lt;code&gt;mysql -uroot&lt;/code&gt;, &lt;code&gt;mysql.server start&lt;/code&gt;의 세 명령어가 눈에 들어오는군요.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;==&amp;gt; Downloading https://homebrew.bintray.com/bottles/mysql-5.7.13.el_capitan.bot
+######################################################################## 100.0%
+==&amp;gt; Pouring mysql-5.7.13.el_capitan.bottle.tar.gz
+==&amp;gt; /usr/local/Cellar/mysql/5.7.13/bin/mysqld --initialize-insecure --user=Sungp
+==&amp;gt; Caveats
+We&#39;ve installed your MySQL database without a root password. To secure it run:
+    mysql_secure_installation
+
+To connect run:
+    mysql -uroot
+
+To have launchd start mysql now and restart at login:
+  brew services start mysql
+Or, if you don&#39;t want/need a background service you can just run:
+  mysql.server start
+==&amp;gt; Summary
+🍺  /usr/local/Cellar/mysql/5.7.13: 13,344 files, 445.0M
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;서버를 시작하게 됩니다. 성공!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;$ mysql.server start
+Starting MySQL
+... SUCCESS!
+$ mysql -uroot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;uroot권한으로 접속하여 mysql창에서 DB를 생성하고 아이디와 비밀번호를 생성합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; create database CJDate7e;
+mysql&amp;gt; grant all privileges on CJDate7e.* to shan@localhost identified by &#39;asan1234&#39;;
+mysql&amp;gt; \q
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;이제 Terminal 창에서 shan으로 DB에 접속합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mysql -u shan -p
+mysql&amp;gt; use CJDate7e;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;자, 이제 모든 준비가 끝났습니다. 이제 r에서 접속해보겠습니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(RMySQL)
+MyDB = dbConnect(RMySQL::MySQL(), dbname = &amp;quot;CJDate7e&amp;quot;, user=&amp;quot;shan&amp;quot;, password=&amp;quot;asan1234&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;다시 MySQL로 돌아와서 Table을 채워 넣겠습니다. (C.J. Date Intro to DB Systems, 7e)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DROP TABLE S;
+DROP TABLE P;
+DROP TABLE J;
+DROP TABLE SPJ;
+
+CREATE TABLE S
+(SNO VARCHAR(5) PRIMARY KEY,
+SNAME VARCHAR(25) NOT NULL, STATUS INTEGER, CITY VARCHAR(20) NOT NULL);
+
+CREATE TABLE P
+(PNO VARCHAR(6) PRIMARY KEY, PNAME VARCHAR(25) NOT NULL, COLOR CHAR(10) NOT NULL, WEIGHT REAL NOT NULL, CITY VARCHAR(20) NOT NULL);
+
+CREATE TABLE J (JNO VARCHAR(6) PRIMARY KEY, JNAME VARCHAR(25) NOT NULL, CITY VARCHAR(20) NOT NULL);
+
+CREATE TABLE SPJ
+(SNO VARCHAR(5) NOT NULL, PNO VARCHAR(6) NOT NULL, JNO VARCHAR(6) NOT NULL, QTY INTEGER NOT NULL,
+CONSTRAINT SPJ01 PRIMARY KEY (SNO, PNO, JNO),
+CONSTRAINT SPJ02 FOREIGN KEY (SNO) REFERENCES S(SNO),
+CONSTRAINT SPJ03 FOREIGN KEY (PNO) REFERENCES P(PNO),
+CONSTRAINT SPJ04 FOREIGN KEY (JNO) REFERENCES J(JNO));
+
+DELETE FROM S;
+DELETE FROM P;
+DELETE FROM J;
+DELETE FROM SPJ;
+
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S1&#39;, &#39;Smith&#39;, 20, &#39;London&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S2&#39;, &#39;Jones&#39;, 10, &#39;Paris&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S3&#39;, &#39;Blake&#39;, 30, &#39;Paris&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S4&#39;, &#39;Clark&#39;, 20, &#39;London&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S5&#39;, &#39;Adams&#39;, 30, &#39;Athens&#39;);
+
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P1&#39;, &#39;Nut&#39;, &#39;Red&#39;, 12.0, &#39;London&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P2&#39;, &#39;Bolt&#39;, &#39;Green&#39;, 17.0, &#39;Paris&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P3&#39;, &#39;Screw&#39;, &#39;Blue&#39;, 17.0, &#39;Rome&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P4&#39;, &#39;Screw&#39;, &#39;Red&#39;, 14.0, &#39;London&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P5&#39;, &#39;Cam&#39;, &#39;Blue&#39;, 12.0, &#39;Paris&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P6&#39;, &#39;Cog&#39;, &#39;Red&#39;, 19.0, &#39;London&#39;);
+
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J1&#39;, &#39;Sorter&#39;, &#39;Paris&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J2&#39;, &#39;Display&#39;, &#39;Rome&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J3&#39;, &#39;OCR&#39;, &#39;Athens&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J4&#39;, &#39;Console&#39;, &#39;Athens&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J5&#39;, &#39;RAID&#39;, &#39;London&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J6&#39;, &#39;EDS&#39;, &#39;Oslo&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J7&#39;, &#39;Tape&#39;, &#39;London&#39;);
+
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S1&#39;, &#39;P1&#39;, &#39;J1&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S1&#39;, &#39;P1&#39;, &#39;J4&#39;, 700);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J1&#39;, 400);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J2&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J3&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J4&#39;, 500);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J5&#39;, 600);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J6&#39;, 400);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J7&#39;, 800);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P5&#39;, &#39;J2&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S3&#39;, &#39;P3&#39;, &#39;J1&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S3&#39;, &#39;P4&#39;, &#39;J2&#39;, 500);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S4&#39;, &#39;P6&#39;, &#39;J3&#39;, 300);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S4&#39;, &#39;P6&#39;, &#39;J7&#39;, 300);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P2&#39;, &#39;J2&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P2&#39;, &#39;J4&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P5&#39;, &#39;J5&#39;, 500);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P5&#39;, &#39;J7&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P6&#39;, &#39;J2&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P1&#39;, &#39;J4&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P3&#39;, &#39;J4&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P4&#39;, &#39;J4&#39;, 800);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P5&#39;, &#39;J4&#39;, 400);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P6&#39;, &#39;J4&#39;, 500);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;R에서 SQL query를 입력하여 그 값을 받아보겠습니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dbGetQuery(MyDB,&amp;quot;SELECT DISTINCT JNO FROM SPJ WHERE NOT SPJ.SNO = &#39;S2&#39;&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;이제 DB를 닫고 마무리 합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dbDisconnect(MyDB)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;데이터를-어떻게-저장할지-정의하기&#34;&gt;데이터를 어떻게 저장할지 정의하기&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CREATE DATABASE 는 비어있는 데이터베이스를 새롭게 만들려고 할 때 사용합니다.&lt;/li&gt;
+&lt;li&gt;DROP DATABASE 는 존재하고 있는 데이터베이스를 완전히 제거하기 위해서 사용합니다.&lt;/li&gt;
+&lt;li&gt;USE 는 기본 데이터베이스를 지정하는데 사용한다.&lt;/li&gt;
+&lt;li&gt;CREATE TABLE 은, 여러분의 데이터가 실제로 저장되는, 새로운 테이블을 생성하는데 사용한다.&lt;/li&gt;
+&lt;li&gt;ALTER TABLE 은 존재하고 있는 테이블의 정의를 변경할 때에 사용한다.&lt;/li&gt;
+&lt;li&gt;DROP TABLE 은 존재하고 있는 테이블을 완전히 제거하기 위해서 사용한다.&lt;/li&gt;
+&lt;li&gt;DESCRIBE 는 테이블의 구조를 보여준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;데이터를-조작하기&#34;&gt;데이터를 조작하기&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SELECT 는 데이터를 읽고(혹은 조회하고) 싶을 때 사용한다.&lt;/li&gt;
+&lt;li&gt;INSERT 는 데이터를 추가(혹은 삽입)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;UPDATE 는 데이터를 변경(혹은 갱신)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;DELETE 는 존재하는 데이터를 제거(혹은 삭제)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;REPLACE 는 새로운 데이터를 추가하거나 존재하는 데이터를 변경(혹은 대체)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;TRUNCATE 는 테이블 내 모든 데이터를 비우려(혹은 삭제하려)할 때 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;트랜잭션&#34;&gt;트랜잭션&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;START TRANSACTION 는 트랜잭션을 시작할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;COMMIT 는 변경사항을 적용하고 트랜잭션을 종료한다.&lt;/li&gt;
+&lt;li&gt;ROLLBACK 는 변경사항을 포기하고 트랜잭션을 종료한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;간단한-예제&#34;&gt;간단한 예제&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE DATABASE mydb; -- mydb 데이터베이스 생성
+USE mydb; -- 기본 데이터베이스로 mydb를 지정
+CREATE TABLE mytable ( id INT PRIMARY KEY, name VARCHAR(20) ); -- mytable 테이블 생성
+INSERT INTO mytable VALUES ( 1, &#39;Will&#39; ); -- 데이터 입력
+INSERT INTO mytable VALUES ( 2, &#39;Marry&#39; );
+INSERT INTO mytable VALUES ( 3, &#39;Dean&#39; );
+SELECT id, name FROM mytable WHERE id = 1;
+UPDATE mytable SET name = &#39;Willy&#39; WHERE id = 1;
+SELECT id, name FROM mytable;
+DELETE FROM mytable WHERE id = 1;
+SELECT id, name FROM mytable;
+DROP DATABASE mydb;
+SELECT count(1) from mytable; gives the number of records in the table
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mariadb.com/kb/ko/basic-sql-statements/&#34;&gt;https://mariadb.com/kb/ko/basic-sql-statements/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R OOP</title>
+      <link>/1/01/01/r-oop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/r-oop/</guid>
+      <description>
+
+&lt;p&gt;R에서 객체 지향 프로그래밍: S3 기초&lt;/p&gt;
+
+&lt;h2 id=&#34;r-oop&#34;&gt;R OOP&lt;/h2&gt;
+
+&lt;p&gt;객체지향 S3, S4 관련 : &lt;a href=&#34;http://adv-r.had.co.nz/S3.html&#34;&gt;http://adv-r.had.co.nz/S3.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Object oriented, 객체 지향 → 프로그램 단순화, 코드 재사용 용이.&lt;/p&gt;
+
+&lt;p&gt;클래스(Class) ← 객체(멤버 변수), 메소드method(멤버 함수)
+- 클래스는 상속을 통해 계층 구조를 가짐.&lt;/p&gt;
+
+&lt;h3 id=&#34;객체지향-s3&#34;&gt;객체지향 S3&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;generic function - print(), summary(), plot() 등&lt;/li&gt;
+&lt;li&gt;method function - summary.matrix(), plot.function() 등&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;method(함수명) : 함수명의 method함수를 조회.
+getS3method() : S3에서의 method 함수의 내용 조회..&lt;/p&gt;
+
+&lt;h3 id=&#34;객체지향-s4&#34;&gt;객체지향 S4&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;setClass() : 함수 생성.
+&lt;code&gt;
+function (Class, representation = list(), prototype = NULL, contains = character(),
+validity = NULL, access = list(), where = topenv(parent.frame()),
+version = .newExternalptr(), sealed = FALSE, package = getPackageName(where),
+S3methods = FALSE, slots)
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;getClass() : 클래스 조회. 클래스의 내용 나타냄.&lt;/li&gt;
+&lt;li&gt;getSlots() : 슬롯(S4에서 멤버 벼수. @ 사용..) 종류 조회.&lt;/li&gt;
+&lt;li&gt;slotNames() : 슬롯 이름 조회.&lt;/li&gt;
+&lt;li&gt;validObject() : 유효성 검사.&lt;/li&gt;
+&lt;li&gt;setGeneric() : S4에서 generic function 생성.&lt;/li&gt;
+&lt;li&gt;setMethod() : S4에서 method function 생성.&lt;/li&gt;
+&lt;li&gt;removeMethod() : method function 삭제.&lt;/li&gt;
+&lt;li&gt;removeClass() : 클래스 삭제.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;keywords&#34;&gt;Keywords&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;S4
+
+&lt;ul&gt;
+&lt;li&gt;setClass()&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Reference Class&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;setRefClass()&lt;/li&gt;
+&lt;li&gt;Example in Advanced R - account 예제.&lt;/li&gt;
+&lt;li&gt;알아보는 법 (isS4(x)), !is(x,&amp;ldquo;refClass&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;class&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;defines a type of object, describing what properties it possesses, how it behaves, and how it relates to other types of objects&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Every object must be an instance of some class&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;method&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a function associated with a particular type of object&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;핵심
+&lt;a href=&#34;http://adv-r.had.co.nz/S3.html&#34;&gt;http://adv-r.had.co.nz/S3.html&lt;/a&gt;
+&lt;a href=&#34;http://adv-r.had.co.nz/S4.html&#34;&gt;http://adv-r.had.co.nz/S4.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;r-s3-oop-기초&#34;&gt;R S3 OOP 기초&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R은 3가지 유형의 OO(Object-oriented) System을 갖습니다. (S3, S4, RC 이렇게 세 가지입니다.)&lt;/li&gt;
+&lt;li&gt;S3는 R의 핵심적인 패키지들에서 광범위하게 사용되고 있으므로 반드시 알아두어야 합니다.&lt;/li&gt;
+&lt;li&gt;S4는 S3와 기저에 깔린 아이디어는 유사하지만 구현 방식이 더 엄격하고 요즘 대세인 OO 시스템(Java 등의)에 좀더 비슷합니다.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;RS는 R 2.12에서야 등장한 최신 시스템으로 요즘의 OO 시스템에 더 비슷합니다.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;S3는 1990년경에 S언어에 도입된 것으로 &amp;lsquo;generic-function&amp;rsquo; 방식으로 불리는 스타일의 객체 지향 프로그래밍 기법이다. &amp;lsquo;message-passing&amp;rsquo; 방식으로 불리는 OO를 구현한 Java, C++ 등의 객체 지향과는 다릅니다.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&amp;lsquo;message-passing&amp;rsquo; 방식인 Java, C++에서는 객체가 어떤 function을 실행할지 결정하는 데에 비해 S3에서는 generic function이라는 특별한 함수가 어떤 method를 호출할지를 결정합니다.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;클래스&#34;&gt;클래스&lt;/h2&gt;
+
+&lt;p&gt;S3에서는 클래스라고 해봐야 별 것 없다. 단지 class라는 속성(attribute)의 값에 따라 클래스가 결정될 뿐이다. 딱히 instance/class 구별이 큰 의미도 없다. 객체를 만드는 방법은 간단하다. class() 함수를 이용하여 class 속성을 지정할 수 있다. 다음처럼 사각형과 원을 만들어 보자.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;a &amp;lt;- c(xleft=10, ybottom=7, xright=15, ytop=9)
+class(a) &amp;lt;- &amp;quot;rectangle&amp;quot;
+
+b &amp;lt;- list(center=c(10, 5), radius=5)
+class(b) &amp;lt;- &amp;quot;circle&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;어떤 객체가 어떤 내용을 담고 있는지 들여다 보는 데에 여러가지 함수들이 사용될 수 있다. 위처럼 사각형 a와 원 b를 만들었다면 class() 함수로 클래스를 확인해 볼 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;class(a)
+[1] &amp;ldquo;rectangle&amp;rdquo;
+class(b)
+[1] &amp;ldquo;circle&amp;rdquo;
+객체에 대해 attributes(), str(), structure() 명령을 사용해서 어떤 내용이 출력되는지 살펴보라. 그러니까
+str(a)
+Class &amp;lsquo;rectangle&amp;rsquo;  Named num [1:4] 10 7 15 9
+  ..- attr(*, &amp;ldquo;names&amp;rdquo;)= chr [1:4] &amp;ldquo;xleft&amp;rdquo; &amp;ldquo;ybottom&amp;rdquo; &amp;ldquo;xright&amp;rdquo; &amp;ldquo;ytop&amp;rdquo;
+와 같은 식으로 명령을 내려 보라. attr() 함수를 이용하면 원하는 속성을 지정해서 살펴볼 수 있다.
+attr(a, &amp;ldquo;class&amp;rdquo;)
+[1] &amp;ldquo;rectangle&amp;rdquo;
+아까 사용한 class() 함수는 단지 &amp;ldquo;class&amp;rdquo;라는 이름의 속성값에 접근하게 해주는 함수일 뿐이다.
+메소드
+넓이를 계산해 주는 메소드 area()를 만들어 보자. 사각형과 원은 넓이를 계산하는 방법이 다르다. 그러니까, 클래스마다 다른 메소드가 실행되어야 한다. 그런데 다음처럼 실행되게 하려고 한다.&lt;/p&gt;
+
+&lt;p&gt;area(a)
+[1] 10
+area(b)
+[1] 78.53982
+이것을 S3에서 구현하는 방법을 method dispatch라고 하는데 여기서 area() 함수를 generic function이라고 한다. 우선 필요하는 것은 generic function을 정의하는 것이다. 방법은 간단하다. 다음처럼 한다.
+area &amp;lt;- function(x, &amp;hellip;) {
+    UseMethod(&amp;ldquo;area&amp;rdquo;, x)
+}
+이것으로 area()라는 generic function이 만들어졌다. 이것은 인자로 주어진 객체의 class를 체크해서 적절한 메소드를 dispatch해 준다. 각 클래스를 위한 method는 generic function의 이름 다음에 점을 찍고 클래스 이름을 붙여서 만든다. 말로 하는 것보다 한번 보는 것이 쉽다.
+area.rectangle &amp;lt;- function(x, &amp;hellip;) {
+  as.numeric((x[&amp;ldquo;xright&amp;rdquo;] - x[&amp;ldquo;xleft&amp;rdquo;]) * (x[&amp;ldquo;ytop&amp;rdquo;] - x[&amp;ldquo;ybottom&amp;rdquo;]))
+}&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;area.circle &amp;lt;- function(x, &amp;hellip;) {
+  pi * x$radius^2
+}
+이것으로 끝이다. 이제 generic function area()가 rectangle 객체를 받으면 area.rectangle() 메소드가 실행되고 circle 객체를 받으면 area.circle() 메소드가 실행된다.
+한 generic function에 어떤 메소드들이 있는지 알고 싶다면 methods() 함수를 이용한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;methods(&amp;ldquo;area&amp;rdquo;)
+[1] area.circle area.rectangle
+한번 methods(plot) 명령을 내려보라. 여러가지 메소드들을 볼 수 있을 것이다. 만약 우리가 MyClass라는 새로운 클래스를 만들었고 plot()로 그것에 알맞은 그래프가 그려지게 하고 싶다면 plot.MyClass()라는 이름의 함수를 새로 정의하기만 하면 된다. plot()가 이미 generic function이므로 알아서 해준다.
+S3 generic function에서 주어진 클래스에 맞는 method를 얻는 것은 getS3method()로 가능하다. 즉 다음처럼 작동한다.&lt;/p&gt;
+
+&lt;p&gt;getS3method(&amp;ldquo;area&amp;rdquo;, &amp;ldquo;circle&amp;rdquo;)
+function(x, &amp;hellip;) {
+  pi * x$radius^2
+}
+생성자
+S3에서는 생성자(constructor)를 형식적으로 지원하지 않는다. 프로그램 짜는 사람이 알아서 해야한다. 어쨌든 언제나 생성자는 만드는 습관을 들이는 것이 좋다. 생성자는 데이터를 받아서 대개는 리스트 형태로 만들고 class 속성값을 붙여주는 형태가 된다. 예를 들면:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;new_circle &amp;lt;- function(x, y, r) {
+  circle &amp;lt;- list(center=c(x,y), radius=r)
+  class(circle) &amp;lt;- &amp;quot;circle&amp;quot;
+  circle
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;2016-04-22&#34;&gt;2016.04.22&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Class는 허상이다.&lt;/li&gt;
+&lt;li&gt;수학적인 것을 instance화하지 않는다.&lt;/li&gt;
+&lt;li&gt;Static Method는 인스턴스 없이도 쓸 수 있다.&lt;/li&gt;
+&lt;li&gt;메써드는 다섯개여야 한다. .뒤에는 다 클래스 이름이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;S3, S4 object -&amp;gt; 오브젝트 S3, S4
+Reference Class -&amp;gt; 포인터&lt;/p&gt;
+
+&lt;p&gt;How to use S4 object in R?&lt;/p&gt;
+
+&lt;p&gt;Stackoverflow | Kyun&lt;/p&gt;
+
+&lt;p&gt;Object와 함수가 분리되어 있다.
+setGeneric으로 함수 이름만 쓴다
+setMethod
+실제 book
+book1은 인스턴스이다&lt;/p&gt;
+
+&lt;p&gt;readLines
+writeLines | 소켓과 핸들은 필요없다.&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;R Object-oriented Programming
+Chapter 3. Saving
+Primitive input / output :&lt;/p&gt;
+
+&lt;p&gt;Software for data analysis - John M Chambers
+Amazon Kindle Book&lt;/p&gt;
+
+&lt;p&gt;C S R&lt;/p&gt;
+
+&lt;p&gt;Functional programming | Object-oriented programming&lt;/p&gt;
+
+&lt;p&gt;OOP caller , callee&lt;/p&gt;
+
+&lt;p&gt;c=a+b # call by value | 일반적인 프로그래밍&lt;/p&gt;
+
+&lt;p&gt;메모리 할당을 받아야 한다. scope.&lt;/p&gt;
+
+&lt;p&gt;S3, S4에 대한 것은 별로 없다.
+RC는 mutable&lt;/p&gt;
+
+&lt;p&gt;객체 지향 언어는 프로그래밍을 함에 있어서 데이터와 그 데이터를 처리할 메소드를 한데 묶어 객체를 만들고 객체들을 조립하는 것을 목표로 한 언어들을 말한다. 객체 지향 언어의 특징은 추상화, 캡슐화, 상속성, 다형성이 있다. 추상화는 외부 인터페이스만 제공하고 객체 내부를 숨겨서 어떻게 일을 하는지 몰라도 결과를 내보낸다[12]. 캡슐화는 객체 내부에 필요한 데이터등을 묶어서 한번에 관리 할 수 있게 해준다[13]. 상속은 모객체를 상속받아 추가 기능을 더 붙이거나 약간의 수정을 가한 객체를 만들 수 있다[14]. 다형성[15]은 메소드 이름은 같더라도 타입에 따라 다른 메소드가 실행될 수 있다는 것이다.[16]&lt;/p&gt;
+
+&lt;p&gt;Object = Class (object)|개념 + (instance) object|구체화&lt;/p&gt;
+
+&lt;p&gt;Encapsulation | Property and Method | object는 encap하고 일부만 노출됨&lt;/p&gt;
+
+&lt;p&gt;Inheritance&lt;/p&gt;
+
+&lt;p&gt;Polymorphism&lt;/p&gt;
+
+&lt;p&gt;Factor | Level = 색깔 | 노랑&lt;/p&gt;
+
+&lt;p&gt;break 하면 도수분포표를 나눌 수 있다.
+summary&lt;/p&gt;
+
+&lt;p&gt;===&lt;/p&gt;
+
+&lt;p&gt;attribute | name of vector 순서가 있다.&lt;/p&gt;
+
+&lt;h3 id=&#34;picking-a-system-advanced-r&#34;&gt;Picking a system - Advanced R&lt;/h3&gt;
+
+&lt;p&gt;Three OO systems is a lot for one language, but for most R programming, S3 suffices. In R you usually create fairly simple objects and methods for pre-existing generic functions like print(), summary(), and plot(). S3 is well suited to this task, and the majority of OO code that I have written in R is S3. S3 is a little quirky, but it gets the job done with a minimum of code.
+If you are creating more complicated systems of interrelated objects, S4 may be more appropriate. A good example is the Matrix package by Douglas Bates and Martin Maechler. It is designed to efficiently store and compute with many different types of sparse matrices. As of version 1.1.3, it defines 102 classes and 20 generic functions. The package is well written and well commented, and the accompanying vignette (vignette(&amp;ldquo;Intro2Matrix&amp;rdquo;, package = &amp;ldquo;Matrix&amp;rdquo;)) gives a good overview of the structure of the package. S4 is also used extensively by Bioconductor packages, which need to model complicated interrelationships between biological objects. Bioconductor provides many good resources for learning S4. If you’ve mastered S3, S4 is relatively easy to pick up; the ideas are all the same, it is just more formal, more strict, and more verbose.
+If you’ve programmed in a mainstream OO language, RC will seem very natural. But because they can introduce side effects through mutable state, they are harder to understand. For example, when you usually call f(a, b) in R you can assume that a and b will not be modified. But if a and b are RC objects, they might be modified in the place. Generally, when using RC objects you want to minimise side effects as much as possible, and use them only where mutable states are absolutely required. The majority of functions should still be “functional”, and free of side effects. This makes code easier to reason about and easier for other R programmers to understand.&lt;/p&gt;
+
+&lt;h1 id=&#34;s4-기초&#34;&gt;S4 기초&lt;/h1&gt;
+
+&lt;p&gt;S4 클래스로 프로그래밍을 하기 위해서 기본적으로 다음 함수들을 시용해야 한다.&lt;/p&gt;
+
+&lt;p&gt;setClass()
+new()
+setGeneric()
+setMethod()
+클래스
+새로운 클래스는 다음처럼 setClass() 함수를 이용하여 정의한다.&lt;/p&gt;
+
+&lt;p&gt;setClass(&amp;ldquo;circle&amp;rdquo;,
+  representation(x=&amp;ldquo;numeric&amp;rdquo;, y=&amp;ldquo;numeric&amp;rdquo;, r=&amp;ldquo;numeric&amp;rdquo;))
+이제 new()를 이용하여 인스턴스를 만들 수 있다. 객체의 속성을 S4에서늘 슬롯(slot)이라고 한다. 슬롯은 object@slot 형태로 접근할 수 있다.
+&amp;gt; a &amp;lt;- new(&amp;ldquo;circle&amp;rdquo;, x=5, y=10, r=4)
+&amp;gt; str(a)
+Formal class &amp;lsquo;circle&amp;rsquo; [package &amp;ldquo;.GlobalEnv&amp;rdquo;] with 3 slots
+  ..@ x: num 5
+  ..@ y: num 10
+  ..@ r: num 4
+&amp;gt; a@x
+[1] 5
+&amp;gt; a@y
+[1] 10
+&amp;gt; a@r
+[1] 4
+한 객체가 특정 클래스에 속하는지 체크할 때는 is()를 이용한다.
+&amp;gt; is(a, &amp;ldquo;circle&amp;rdquo;)
+[1] TRUE
+메소드
+메소드는 setMethod()를 이용하여 정의한다. 기존의 정의된 generic function이 없다면 우선 generic function부터 만들어야 하는데 이때에는 setGeneric()을 이용한다. 예를 들면 다음처럼 한다.&lt;/p&gt;
+
+&lt;p&gt;setGeneric(&amp;ldquo;area&amp;rdquo;, function(object) standardGeneric(&amp;ldquo;area&amp;rdquo;))&lt;/p&gt;
+
+&lt;p&gt;setMethod(&amp;ldquo;area&amp;rdquo;, &amp;ldquo;circle&amp;rdquo;,
+          function(object) pi * object@r^2
+          )
+이제 메소드를 사용해 보면
+&amp;gt; area(a)
+[1] 50.26548
+&amp;gt; area(new(&amp;ldquo;circle&amp;rdquo;, x=3, y=4, r=3))
+[1] 28.27433
+한 generic function에 어떤 method들이 있는지 알고 싶을 때는 showMethods()를 이용한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;showMethods(&amp;ldquo;area&amp;rdquo;)
+Function: area (package .GlobalEnv)
+object=&amp;ldquo;circle&amp;rdquo;
+참조&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;참고&#34;&gt;참고&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;프로그래밍 언어 &lt;a href=&#34;https://namu.wiki/w/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%20%EC%96%B8%EC%96%B4&#34;&gt;https://namu.wiki/w/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%20%EC%96%B8%EC%96%B4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;객체 지향 프로그래밍 &lt;a href=&#34;https://namu.wiki/w/%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D?from=OOP#s-3.1&#34;&gt;https://namu.wiki/w/%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D?from=OOP#s-3.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;객체 지향 프로그래밍/원칙  &lt;a href=&#34;https://namu.wiki/w/%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%9B%90%EC%B9%99&#34;&gt;https://namu.wiki/w/%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EC%9B%90%EC%B9%99&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://adv-r.had.co.nz/S3.html&#34;&gt;http://adv-r.had.co.nz/S3.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Generic_function&#34;&gt;http://en.wikipedia.org/wiki/Generic_function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Multiple_dispatch&#34;&gt;http://en.wikipedia.org/wiki/Multiple_dispatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://harlequinblue.blogspot.kr/2011/07/r-s4.html&#34;&gt;http://harlequinblue.blogspot.kr/2011/07/r-s4.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://dic1224.blog.me/80208274042&#34;&gt;http://dic1224.blog.me/80208274042&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.soph.uab.edu/Statgenetics/Events/Rshort/060227-8-s4slides.pdf&#34;&gt;http://www.soph.uab.edu/Statgenetics/Events/Rshort/060227-8-s4slides.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;John M. Chambers (2008), Software for data analysis: programming with R, Springer.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>web-r.org</title>
+      <link>/1/01/01/web-r.org/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/web-r.org/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/ef4GEyd.png&#34; alt=&#34;스크린샷 2016-06-25 09.58.32&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;정말 대단한 사이트.&lt;/p&gt;
+
+&lt;p&gt;여기에서 많은 작업을 수행할 수 있을 것 같다.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>게으른 프로그래머</title>
+      <link>/1/01/01/%EA%B2%8C%EC%9C%BC%EB%A5%B8-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/%EA%B2%8C%EC%9C%BC%EB%A5%B8-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.moreagile.net/2014/12/HowtoBecomeAnExpertDeveloper.html&#34;&gt;초보 개발자가 꼭 알아 두어야 할 다섯 가지 기술들&lt;/a&gt;이란 포스트를 보았고 많은 공감을 하였습니다. 최근에 Atom, Acroedit, Sublime Editor보다 Vim을 더 많이 실행하고 그 기능을 익혀 나가는 모습에서 저도 점점 게을러지고 있다는 생각을 해보게 됩니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;초보 개발자가 고급 개발자가 되어가는 과정을 한마디로 정의하자면 &amp;ldquo;좀 더 게을러지기 위한 강렬하고 적극적인 의지의 표현&amp;rdquo;이 되겠다. &amp;ldquo;생산성&amp;rdquo;이니 &amp;ldquo;효율성&amp;rdquo;, &amp;ldquo;정확성&amp;rdquo;같은 것 들은  프로그래머에게 있어서 부수적으로 얻어지는 것일 뿐 목적이 될 수 없다. 오로지 끊임없이 편하고 게을러지기 위한 노력만이 있을 뿐이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>정규표현식 is fun.</title>
+      <link>/1/01/01/%EC%A0%95%EA%B7%9C%ED%91%9C%ED%98%84%EC%8B%9D-is-fun./</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/%EC%A0%95%EA%B7%9C%ED%91%9C%ED%98%84%EC%8B%9D-is-fun./</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;regexr.com&#34;&gt;RegExr.com&lt;/a&gt;이란 사이트에서 정규표현식을 연습하고 있습니다. 중요하다고 생각했지만 주먹 구구식으로 그때 그때 필요한 것만 검색해서 쓰다가 이번에 좀더 깊이 공부해보고자 합니다.&lt;/p&gt;
+
+&lt;p&gt;R에서 grep 등의 함수를 쓰거나 bash와 vim을 좀더 효율적으로 사용할 수 있으리란 생각을 해보게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cfile24.uf.tistory.com/image/2358703656B4828F34BCAF&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cfile4.uf.tistory.com/image/256C953656B4828F2283F9&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cfile4.uf.tistory.com/image/2560213656B48291234A02&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cfile23.uf.tistory.com/image/236D983656B482922147E9&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그림출처 :&lt;a href=&#34;http://shaeod.tistory.com/563&#34;&gt;오뇽님의 블로그&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;프로그래밍은 참 재밌다는 생각을 해봅니다.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>좋은 비교! R vs Python</title>
+      <link>/1/01/01/%EC%A2%8B%EC%9D%80-%EB%B9%84%EA%B5%90-r-vs-python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/%EC%A2%8B%EC%9D%80-%EB%B9%84%EA%B5%90-r-vs-python/</guid>
+      <description>&lt;p&gt;둘의 철저하고 명확한 비교 분석입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.datacamp.com/wp-content/uploads/2015/05/R-vs-Python-216-2.png&#34; alt=&#34;Comparison&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;파이썬에 대해 잘 정리해놓은 링크. 필독!
+&lt;a href=&#34;http://focaidon.xyz/m/post&#34;&gt;http://focaidon.xyz/m/post&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

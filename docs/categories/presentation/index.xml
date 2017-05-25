@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Presentation on A Hugo website</title>
+    <link>/categories/presentation/index.xml</link>
+    <description>Recent content in Presentation on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/presentation/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ICH E18 - Genomic Sampling and Data</title>
+      <link>/1/01/01/ich-e18---genomic-sampling-and-data/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/ich-e18---genomic-sampling-and-data/</guid>
+      <description>&lt;p&gt;제가 오늘 전문가회의에서 발표한 ICH E18 발표 자료로 Genomic sampling, genomic data에 대한 내용이 담겨있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.ich.org/fileadmin/Public_Web_Site/ICH_Products/Guidelines/Efficacy/E18_Step2.pdf&#34;&gt;http://www.ich.org/fileadmin/Public_Web_Site/ICH_Products/Guidelines/Efficacy/E18_Step2.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../../assets/20170307-ICH-E18-shan.png&#34; alt=&#34;Presentation&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

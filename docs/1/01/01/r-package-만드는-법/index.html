@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>R package 만드는 법 - A Hugo website</title>
+<meta property="og:title" content="R package 만드는 법 - A Hugo website">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">R package 만드는 법</h1>
+
+    
+    <span class="article-date">0001/01/01</span>
+    
+
+    <div class="article-content">
+      <p>R 패키지를 만드는 법은 처음에 참 어렵지만 몇번 해 보면 익숙해집니다.</p>
+
+<p>이 자료들을 읽으면 누구나 만들 수 있습니다.</p>
+
+<p><img src="http://r-pkgs.had.co.nz/cover.png" alt="" /></p>
+
+<ul>
+<li><a href="http://r-pkgs.had.co.nz/">Hadley&rsquo;s Book</a></li>
+</ul>
+
+<p><img src="https://hilaryparker.files.wordpress.com/2014/10/cropped-img_20140902_1804591.jpg" alt="" /></p>
+
+<ul>
+<li><a href="https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/">Hilary의 포스팅</a></li>
+</ul>
+
+<p><img src="https://pbs.twimg.com/profile_images/680796333460959232/CzoFZb76_400x400.jpg" alt="" /></p>
+
+<ul>
+<li><a href="http://kbroman.org/pkg_primer/">Broman의 웹페이지</a></li>
+</ul>
+
+<p>간략한 CLI 명령어는 다음과 같습니다.</p>
+
+<pre><code class="language-bash">R CMD check MyPac_0.0.1
+R CMD check --as-cran MyPac_0.0.1
+R CMD build MyPac_0.0.1
+R CMD rd2pdf MyPac_0.0.1
+</code></pre>
+
+<p>K. Broman의 roxygen2의 설명을 읽으면 좀 더 쉽게 Rd 파일을 만들 수 있습니다.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

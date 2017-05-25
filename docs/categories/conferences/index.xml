@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Conferences on A Hugo website</title>
+    <link>/categories/conferences/index.xml</link>
+    <description>Recent content in Conferences on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/conferences/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>2016 ACREP</title>
+      <link>/1/01/01/2016-acrep/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/2016-acrep/</guid>
+      <description>
+
+&lt;h1 id=&#34;acrep&#34;&gt;ACREP&lt;/h1&gt;
+
+&lt;h2 id=&#34;observational-study&#34;&gt;Observational Study&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker 이무송&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents&#34;&gt;Contents&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cohort study&lt;/li&gt;
+&lt;li&gt;RR $$ \frac{\frac{a}{a+b}}{\frac{c}{c+d}} $$&lt;/li&gt;
+&lt;li&gt;단점 - F/U loss, 재발에 대해서 연구 어렵다.&lt;/li&gt;
+&lt;li&gt;연구 대상 수 산출 방법 - Nomogram, 수식적용, 컴퓨터 PASS 2016&lt;/li&gt;
+&lt;li&gt;PCORI.org - conduct of Registry&lt;/li&gt;
+&lt;li&gt;Cohort는 F/U을 전제로 해서 한다. Retrospective Chart-review&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;observational-study의-pitfall-및-이를-극복하기-위한-방법&#34;&gt;Observational Study의 Pitfall 및 이를 극복하기 위한 방법&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 임영석 교수님&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;experimental-study-yes&#34;&gt;Experimental study? Yes&lt;/h3&gt;
+
+&lt;h4 id=&#34;randomized-design-interventional-no&#34;&gt;Randomized design? (interventional)- No&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;NR CLINICAL trial&lt;/li&gt;
+&lt;li&gt;Time series&lt;/li&gt;
+&lt;li&gt;PHASE 1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;randomized-design-interventional-yes&#34;&gt;Randomized design? (interventional)- Yes&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Clinical Trial&lt;/li&gt;
+&lt;li&gt;Community Trial&lt;/li&gt;
+&lt;li&gt;Crossover design&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;experimental-study-no&#34;&gt;Experimental study? No&lt;/h3&gt;
+
+&lt;h4 id=&#34;comparison-group-no-observational-study&#34;&gt;Comparison group? No = Observational study&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Prevalence / incidence,&lt;/li&gt;
+&lt;li&gt;time trend,&lt;/li&gt;
+&lt;li&gt;case series,&lt;/li&gt;
+&lt;li&gt;case reoprt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;comparison-group-yes-analytical-study&#34;&gt;Comparison group? Yes = Analytical study&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cohort study,&lt;/li&gt;
+&lt;li&gt;case-control study,&lt;/li&gt;
+&lt;li&gt;cross-sectional study,&lt;/li&gt;
+&lt;li&gt;ecologic study,&lt;/li&gt;
+&lt;li&gt;PMS&lt;/li&gt;
+&lt;li&gt;두군을 비교하는가 안하는가가 중요한 기준이 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents-1&#34;&gt;Contents&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;research question -(design)- study plan -(implement)- actual study&lt;/li&gt;
+&lt;li&gt;findings in the study -(infer)- truth in the study -(infer)- truth in the universe&lt;/li&gt;
+&lt;li&gt;위암, 대장, 폐암 - post op outcome을 통채로 비교하면 안된다.&lt;/li&gt;
+&lt;li&gt;internal validity &amp;amp; external validity(generalization)&lt;/li&gt;
+&lt;li&gt;PICO anatomy #####
+
+&lt;ul&gt;
+&lt;li&gt;patient/population/problemn&lt;/li&gt;
+&lt;li&gt;Intervention&lt;/li&gt;
+&lt;li&gt;Comparison&lt;/li&gt;
+&lt;li&gt;Outcome&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Gold standard of clinical studies - RCT
+
+&lt;ul&gt;
+&lt;li&gt;Sample - randomization (Treated / Control)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Research question - interesting, important, critical&lt;/li&gt;
+&lt;li&gt;Good research question - FINER - Feasible, Interesting, Novel, Ethical, Relevant&lt;/li&gt;
+&lt;li&gt;Feasible / Ethical / Relevant 가장 중요한 면&lt;/li&gt;
+&lt;li&gt;Prospective Cohort Study -&lt;/li&gt;
+&lt;li&gt;Case-control study - 뒤로 간다. 병원에서 case-control 하는 경우는 사망여부. Outcome인 경우가 많다. disease있고 없고가 아니라.
+
+&lt;ul&gt;
+&lt;li&gt;재발에 대한 - 환자군/대조군을 모아서. 그럼 어떻게 대조군 설정한건가?? 이런 것을 정할때 bias가 많이 발생하게 된다.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Historical cohort - Cohort assembled-(f/u)-&amp;gt;Outcome
+
+&lt;ul&gt;
+&lt;li&gt;2000-2010 HCC 초치료 근치적 수술적 절제술 받은 환자들의 명단을 확보.&lt;/li&gt;
+&lt;li&gt;ITT analysis할때 반드시 필요하다.&lt;/li&gt;
+&lt;li&gt;5년 이상 관찰한 것이 있어.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Mimic those of clinical trials
+
+&lt;ul&gt;
+&lt;li&gt;Internal validity를 높여야 한다. restricted cohort / NEJM 2000;342:1887&lt;/li&gt;
+&lt;li&gt;IIT 분석을 해라.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Chance(Random Error) vs Bias(Systematic Error)
+
+&lt;ul&gt;
+&lt;li&gt;association / cause를 비교해야.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Confounder
+
+&lt;ul&gt;
+&lt;li&gt;biasd와는 좀 다르다. 미리 의식하고 물어보기 전엔 절대 알수 없다. 미리 질환에 대해 잘 알고있는 연구자여야만 찾을 수 있다.&lt;/li&gt;
+&lt;li&gt;Example : smoking - alcohol - heart disease&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is the effect of long-term tx(&amp;gt;5y) with a potent oral antiviral agent(entecavir)(I) in patients with chronic hep B(P)&lt;/li&gt;
+&lt;li&gt;FDA, 식약처는 Surrogate marker를 가지고 허가를 내준다. (조직학적 개선,) - 이것과 환자의 outcome을 정말로 개선시키는건가? 이건 observational study에서만 찾을 수 있다. historical cohort&lt;/li&gt;
+&lt;li&gt;Zero time No treatment control&lt;/li&gt;
+&lt;li&gt;Endpoint ascertainment - 재발이 문제가 된다. 무엇으로 재발을 판정할 것인가? MR? CT? 검사간격을 얼마로 했니? 누구도 시비 못할 것으로 outcome measure하는 것이 좋다. (예를 들어 사망의 경우)&lt;/li&gt;
+&lt;li&gt;PP vs ITT
+
+&lt;ul&gt;
+&lt;li&gt;ITT - which treatment option is best at the time decision must be made? - FDA에서 ITT만 인정을 한다.&lt;/li&gt;
+&lt;li&gt;Explanatory&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Multivariable Cox PH Analysis - (Event 수를 적어야 한다.) Univariate analysis만으로는 부족.&lt;/li&gt;
+&lt;li&gt;Multivariate analysis -&lt;/li&gt;
+&lt;li&gt;Propensity score - SPSS로 가능. 양군간 matching - 쌍을 갖춘다. 같은 수로 나온다. 이때는 univariate할 수 있다.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;consistently observed by unadjusted.&amp;rdquo;  - obs study는 의심을 많이 받기 때문에. 이런 분석을 하는 것이 좋다.&lt;/li&gt;
+&lt;li&gt;Gadoxetic - liver specific contrast agent
+
+&lt;ul&gt;
+&lt;li&gt;2647patients-&amp;gt;700명 수술 가능. - surrogate marker - CT에서 못본걸 MR에서 찾았다. | Cost-effectiveness - 무조건 survival. Propensity matching - Inverse Probability Weighing (IPTW)&lt;/li&gt;
+&lt;li&gt;Unadjsted&lt;/li&gt;
+&lt;li&gt;mutivariable&lt;/li&gt;
+&lt;li&gt;IPTW&lt;/li&gt;
+&lt;li&gt;Propensity&lt;/li&gt;
+&lt;li&gt;제목의 중요성. JCO (IF 21) - Hepatology (IF 11.7) - Gut (IF 14.921) (early rejection so far) - GE (IF 18.187) (accepted with more general terms in the title)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mimic as closely as possible in RCT&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;diagnostic-test-biomarker-study&#34;&gt;Diagnostic test &amp;amp; Biomarker Study&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 박성호 - 영상의학과&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents-diagnostic-test&#34;&gt;Contents - Diagnostic test&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DTA sutdy&lt;/li&gt;
+&lt;li&gt;Prevalence낮으면&lt;/li&gt;
+&lt;li&gt;횡으로 본다. Predictive Value - Prevalence에 영향을 받는다. Pre올라가면 PPV올라가. NPV낮아져.&lt;/li&gt;
+&lt;li&gt;odds ratio - prevalence에 영향을 안받는다. intrinsic parameter로 많이 씀.&lt;/li&gt;
+&lt;li&gt;case-control study vs cross-sectional study [옛날 용어]&lt;/li&gt;
+&lt;li&gt;Cochrane - case-control type accuracy study vs cohort type accuracy study&lt;/li&gt;
+&lt;li&gt;NECA - diagnostic case-control study vs diagnostic cohort study&lt;/li&gt;
+&lt;li&gt;Area under ROC curve - C statistics&lt;/li&gt;
+&lt;li&gt;Youden index - sens spec 더해서 빼기 1 Youden J statistic&lt;/li&gt;
+&lt;li&gt;Least Euclidean distance from (0,1) 거리가 최소되는 점. - 쉬운개념&lt;/li&gt;
+&lt;li&gt;diagnostic accuracy - 시각적으로 어떻게 구성하는지가 중요함.&lt;/li&gt;
+&lt;li&gt;McNemar test&lt;/li&gt;
+&lt;li&gt;Comparing two proportions (2x2) - unpaired(fisher,Chi2), paired (McNemar)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents-biomarker&#34;&gt;Contents - Biomarker&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Biomarker
+
+&lt;ul&gt;
+&lt;li&gt;Classifier / Prognostic / Predictive / Monitoring&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Petal et al. MRI-detected tumor response for locally advanced rectal cancer predicts survival outcomes&lt;/li&gt;
+&lt;li&gt;Machtay et al. Prediction of survival
+
+&lt;ul&gt;
+&lt;li&gt;Prospective&lt;/li&gt;
+&lt;li&gt;S III lung cancer eligible for CCRT&lt;/li&gt;
+&lt;li&gt;Endpoint : overall survival&lt;/li&gt;
+&lt;li&gt;SUV&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Hylton et al.
+
+&lt;ul&gt;
+&lt;li&gt;Prospective&lt;/li&gt;
+&lt;li&gt;Index: functional tumor volume measured with pre-surgery breast MRI&lt;/li&gt;
+&lt;li&gt;Comparator: post-surgical pathologic complete response(PCR)&lt;/li&gt;
+&lt;li&gt;Modified C-statistics(ROC) - diagnosis는 있다 없다로 나온다. survival은 time to event - 각각의 time point마다 diagnosis 유사한 통계량이 나와서 그걸 summation&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Studies of predictive accuracy
+
+&lt;ul&gt;
+&lt;li&gt;Two approaches - Time-to-event / event by a fixed time&lt;/li&gt;
+&lt;li&gt;Event by a fixed time - Sn Sp ROC - Accuracy study와 유사한 것으로 된다.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;더 impact있는 것. - randomization을 테스트 후에 할 것인가 아니면 전에 할 것인가? 전에 하는 것이 더 임팩트 있다. 왜냐하면 테스트(+)이면 치료 들어가는 경우가 많기 때문이다.&lt;/li&gt;
+&lt;li&gt;후자에 해당하는 (더 임팩트있는) 스터디의 예.&lt;/li&gt;
+&lt;li&gt;Monitoring biomarker
+
+&lt;ul&gt;
+&lt;li&gt;Correlation between x and y / delta x and delta y&lt;/li&gt;
+&lt;li&gt;Delta를 보는 것이 중요하다.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;2차-자료원을-이용한-역학-연구군&#34;&gt;2차 자료원을 이용한 역학 연구군&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 예방의학교실/의학통계학과 김화정&lt;/li&gt;
+&lt;li&gt;NEJM 2006, BMI and mortality&lt;/li&gt;
+&lt;li&gt;이차자료원 : 특정한 연구목적으로 수집되지 않은 자료&lt;/li&gt;
+&lt;li&gt;공공데이터 - 정부&lt;/li&gt;
+&lt;li&gt;국건영 심평원 자료 - 생각보다 manage하기 쉽지 않다.&lt;/li&gt;
+&lt;li&gt;HIRA DB - 건강보험청구자료&lt;/li&gt;
+&lt;li&gt;NHISS 국민건강보험자료 공유서비스&lt;/li&gt;
+&lt;li&gt;보건의료 연구에 활용되는 공공데이터&lt;/li&gt;
+&lt;li&gt;장점 : 대규모자료, 장기간 추적관찰. 시간과 비용 절약&lt;/li&gt;
+&lt;li&gt;한국형 - outcomes Research&lt;/li&gt;
+&lt;li&gt;NECA에서 자료를 연계해 주겠다 라고 했으나.. 진전이 크지 않음&lt;/li&gt;
+&lt;li&gt;보건의료 빅데이터 개방시스템 - 공공데이터&lt;/li&gt;
+&lt;li&gt;명세서 일반내역 테이블&lt;/li&gt;
+&lt;li&gt;2차자료의 분석은 case-control의 기준 정하기가 어렵다. 금방 분석이 되기 힘듬. Crossvalidation 반드시 해야함.&lt;/li&gt;
+&lt;li&gt;과제신청 - 연구원등록 : 정부3.0에서 검토 자세히 하게됨.&lt;/li&gt;
+&lt;li&gt;SAS/R 프로그램.&lt;/li&gt;
+&lt;li&gt;단점 - 5년간의 자료. F/U보기가 힘들어. 진단명의 정확도 문제 - 70%. 에러의 숫자가 클 수 있음.&lt;/li&gt;
+&lt;li&gt;의학통계학과 공공데이터 연구지원 #4639 - 상담, 공공데이터 이용신청, 자료확보, 자료분석, 결과검토&lt;/li&gt;
+&lt;li&gt;NHISS 표본연구&lt;/li&gt;
+&lt;li&gt;Dramatic decrease in FQ in the pediatric population&lt;/li&gt;
+&lt;li&gt;case crossover design&lt;/li&gt;
+&lt;li&gt;indication bias - causality - association. confounding by indication&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;대규모-이차-자료원을-이용한-clinical-prediction-model-individual-risk-outcome-probability-예측-분석법&#34;&gt;대규모 이차 자료원을 이용한 clinical prediction model : individual risk/outcome probability 예측 분석법&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Clinical prediction model&lt;/li&gt;
+&lt;li&gt;Framingham risk score&lt;/li&gt;
+&lt;li&gt;JAMA - moving from clinical trials to precision Medicine, 2016 Apr 26&lt;/li&gt;
+&lt;li&gt;DAPT Trial&lt;/li&gt;
+&lt;li&gt;Risk for advanced neoplasia and  likelihood ratios in each risk group within derivation and validation sets
+&lt;a href=&#34;http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4840411/#!po=38.6364&#34;&gt;Derivation and validation of a scoring system to stratify the risk of advanced colorectal neoplasia in asymptomatic adults&lt;/a&gt;  분자:질병있는 / 분모:질병없는 - likelihood ratio&lt;/li&gt;
+&lt;li&gt;Assumptions for model development - linear regression, Cox proportional hazard regression(Proportionality of hazard ### This should be confirmed.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;| | linear reg | logi reg| Cox reg|
+|-|-|-|-|
+|Overall perf| R2 | Nagelkerke r2, brir|the same|
+|discrimination ability||C concordance stat(AUC)|Harell C stat, time-dependent AUC|
+|Calibratrion|Calibration plot, slope|the same+hosmer-lemeshow|the same|&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;C-index 를 사용하여 분석 가능함.  C = number of concordant pairs + 0.5/~~&lt;/li&gt;
+&lt;li&gt;새로운 통계 지표. 2가지. NRI - net eclassification improvement&lt;/li&gt;
+&lt;li&gt;Korean J Radiol 2016;17(3);339-350 -&amp;gt; predicted probability - 사망할 확률을 계산할 수 있음.&lt;/li&gt;
+&lt;li&gt;Framingham그룹에서 발표됨 2008 통계 저널에&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;web-r-org&#34;&gt;Web-r.org&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 문건웅 가톨릭대학교 성빈센트병원 심장내과&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;contents-2&#34;&gt;Contents&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;web-r.org&lt;/li&gt;
+&lt;li&gt;로지스틱 리그레션 - 반응(종속)변수 - 설명변수 . 단변량 분석 먼저 나와 univariate logistic regression&lt;/li&gt;
+&lt;li&gt;다변량 분석.&lt;/li&gt;
+&lt;li&gt;생존분석 - 로지스틱 회귀분석과 비슷한것임. - 다른 것은 시간개념이 들어있는 것임. 얼마 있다가 돌아가셨는지 알 수 있음. KM 분석. cutpoint결정해줌.&lt;/li&gt;
+&lt;li&gt;나무분석 - 생존 나무 분석.&lt;/li&gt;
+&lt;li&gt;진단통계&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

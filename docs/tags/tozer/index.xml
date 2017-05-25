@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tozer on A Hugo website</title>
+    <link>/tags/tozer/index.xml</link>
+    <description>Recent content in Tozer on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/tozer/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Tozer 11장 연습문제 6번 문제풀이</title>
+      <link>/2016/06/08/tozer-11%EC%9E%A5-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-6%EB%B2%88-%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/</link>
+      <pubDate>Wed, 08 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/06/08/tozer-11%EC%9E%A5-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-6%EB%B2%88-%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/</guid>
+      <description>&lt;p&gt;Prof.Lim&amp;rsquo;s lecture&lt;/p&gt;
+
+&lt;p&gt;Tozer 11 Multiple Dose&lt;/p&gt;
+
+&lt;p&gt;This is the R code for multiple dose mimicking the continuous infusion of a virtual drug with continuous and uniform release over time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;TIME=4*0:9
+
+AMT8=50*(1-exp(-0.693/4*TIME))
+plot(TIME,AMT8)
+AMT8
+
+AMT4=AMT8[1:8]+AMT8[2:9]
+plot(AMT4)
+AMT4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Refer to cum() function&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

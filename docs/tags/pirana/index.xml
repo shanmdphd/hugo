@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pirana on A Hugo website</title>
+    <link>/tags/pirana/index.xml</link>
+    <description>Recent content in Pirana on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/pirana/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pirana and PsN</title>
+      <link>/1/01/01/pirana-and-psn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/pirana-and-psn/</guid>
+      <description>&lt;p&gt;여러 제한 점이 있음에도 유용하고 쓸만한 프로그램이란 생각이 듭니다.&lt;/p&gt;
+
+&lt;p&gt;지금까지 임교수님 강의를 전부 Pirana, PsN으로 돌려보고 복습해 봐야 겠습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1038/psp.2013.24/pdf&#34;&gt;Modeling and Simulation Workbench for NONMEM: Tutorial on Pirana, PsN, and Xpose&lt;/a&gt;
+RJ Keizer, MO Karlsson and A Hooker&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.pirana-software.com/&#34;&gt;Official Website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://psn.sourceforge.net/pdfdocs/vpc_npc_userguide.pdf&#34;&gt;VPC and NPC user guide PsN 4.6.0 Revised 2016-04-04&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;마지막 링크의 서문은 다음과 같습니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;NPC – Numerical Predictive Check – is a model diagnostics tool.
+VPC – Visual Predictive Check – is another closely related diagnostics tool.
+A set of simulated datasets are generated using the model to be evaluated. Afterwards the real data observations are compared with the distribution of the simulated observations. By default no model estimation is ever performed. The input to the NPC script is the model to be evaluated, the number of samples (simulated datasets) to generate, parameter values options for the
+simulations, and stratification options for the evaluation. It is also possible to skip the simulation step entirely by giving two already created tablefiles as input. The input to the VPC script is the input to NPC plus an additional set of options. A large portion of the processing is identical between the scripts.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

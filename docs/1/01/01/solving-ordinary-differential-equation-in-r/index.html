@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>Solving Ordinary Differential Equation in R - A Hugo website</title>
+<meta property="og:title" content="Solving Ordinary Differential Equation in R - A Hugo website">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">9 min read</span>
+    
+
+    <h1 class="article-title">Solving Ordinary Differential Equation in R</h1>
+
+    
+    <span class="article-date">0001/01/01</span>
+    
+
+    <div class="article-content">
+      
+
+<p>This slide is what I presented in the Journal Club of AMC CPT.</p>
+
+<p><a href="https://asancpt.github.io">https://asancpt.github.io</a></p>
+
+<p><img src="../../../../assets/2017-04-21-shan-rxode-full.png" alt="" /></p>
+
+<h1 id="rxode">RxODE</h1>
+
+<p>RxODE is an easy ODE solver specialized in pharmacometric applications.</p>
+
+<h2 id="set-up">Set up</h2>
+
+<pre><code class="language-r"># Load some data science tools
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(tibble)
+
+# Load RxODE
+library(RxODE)
+
+# Define model
+ode &lt;- &quot;
+C2 = centr/V2;	
+C3 = peri/V3;
+d/dt(depot) = -KA*depot;
+d/dt(centr) = KA*depot - CL*C2 - Q*C2 + Q*C3;
+d/dt(peri) = Q*C2 - Q*C3;
+d/dt(eff) = Kin*(1-C2/(EC50+C2)) - Kout*eff;
+&quot;
+# Compile model
+mod1 &lt;- RxODE(model = ode, modName = &quot;mod1&quot;)
+
+# Define system parameters
+params &lt;- 
+    c(KA = 0.3, CL = 7,                      # central 
+      V2 = 4.0E+01, Q = 1.0E+01, V3 = 3E+02, # peripheral
+      Kin = .2, Kout = .2, EC50 = 8)         # effects
+inits &lt;- c(0, 0, 0, 1)   
+</code></pre>
+
+<h2 id="simulate-a-single-dose">Simulate a single dose</h2>
+
+<pre><code class="language-r"># Initialize event table
+ev &lt;- eventTable()
+
+# Specify dose
+ev$add.dosing(dose = 10000, nbr.doses = 1)
+
+# Specify sampling
+ev$add.sampling(0:240)
+
+# Simulate
+x &lt;- mod1$run(params, ev, inits)
+
+# Plot results
+matplot(x[,&quot;C2&quot;], type = &quot;l&quot;, xlab = &quot;time (hrs)&quot;, ylab = &quot;Central Conc.&quot;)
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" /></p>
+
+<h3 id="more-comprehensive-plot">More comprehensive plot</h3>
+
+<pre><code class="language-r">ggx &lt;- as.tibble(x) %&gt;% gather(&quot;compartment&quot;, &quot;value&quot;, depot:C3)
+ggplot(ggx, aes(x = time, y = value, group = compartment, colour = compartment)) +
+    geom_line() +
+    facet_wrap(~compartment, scale = &quot;free_y&quot;)
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" /></p>
+
+<h2 id="simulate-5-days-bid-followed-by-5-days-qd">Simulate 5 days BID followed by 5 days QD</h2>
+
+<pre><code class="language-r">ev &lt;- eventTable()
+
+# Specify 5 days BID dosing
+ev$add.dosing(dose = 10000, nbr.doses = 10, dosing.interval = 12)
+
+# Use “start.time” parameter to specify 5 days QD starting at the end of the 5 days BID period
+ev$add.dosing(dose = 20000, nbr.doses = 5, dosing.interval = 24, start.time = 120)
+ev$add.sampling(0:240)
+
+# Simulate and plot
+x &lt;- mod1$run(params, ev, inits)
+matplot(x[,&quot;C2&quot;], type = &quot;l&quot;, xlab = &quot;time (hrs)&quot;, ylab = &quot;Central Conc.&quot;)
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4" /></p>
+
+<h3 id="more-comprehensive-plot-1">More comprehensive plot</h3>
+
+<pre><code class="language-r">ggx &lt;- as.tibble(x) %&gt;% gather(&quot;compartment&quot;, &quot;value&quot;, depot:C3)
+ggplot(ggx, aes(x = time, y = value, group = compartment, colour = compartment)) +
+    geom_line() +
+    facet_wrap(~compartment, scale = &quot;free_y&quot;)
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5" /></p>
+
+<h2 id="simulate-with-variability">Simulate with variability</h2>
+
+<pre><code class="language-r"># Perform simulation 100 times
+nsub &lt;- 100
+
+# Create a parameter matrix with correlated interindividual variability on CL and V2
+library(MASS)
+sigma= matrix(c(0.09,0.08,0.08,0.25),2,2)
+mv = mvrnorm(n=nsub, rep(0,2), sigma)
+CL = 7*exp(mv[,1])
+V2 = 40*exp(mv[,2])
+params.all &lt;- cbind(KA=0.3, CL=CL, V2=V2, Q=10, V3=300, Kin=0.2, Kout=0.2, EC50=8)     
+
+# QD dosing for 2 days
+ev &lt;- eventTable()
+ev$add.dosing(dose = 20000, nbr.doses = 10, dosing.interval = 24)   
+ev$add.sampling(0:48)
+
+res &lt;- NULL #Create an empty matrix for storing results
+
+# Loop through each row of parameter values and simulate
+for (i in 1:nsub)  {
+    params &lt;- params.all[i,]
+    x &lt;- mod1$run(params, ev, inits = inits)
+    res &lt;- cbind(res,x[,&quot;eff&quot;])
+}
+#The same can be achieved more efficiently by replacing the above for-loop with: 
+#    res &lt;- apply(params.all, 1, function(params) mod$run(params, ev, inits)[, “eff”])  
+
+# Plot results
+par(mfrow = c(1,2), mar = c(4,4,1,1))
+matplot(res, type = &quot;l&quot;,  ylab = &quot;Effect&quot;, xlab = &quot;Time (hrs)&quot;)
+
+# Calculate and plot quantiles 
+res.q.t &lt;- apply(res, 1, quantile, prob = c(.05, .5, .95))
+matplot(t(res.q.t), type = &quot;l&quot;, lty = c(2,1,2), col = c(2,1,2), ylab = &quot;Effect&quot;, xlab = &quot;Time (hrs)&quot;)
+legend(&quot;topright&quot;, c(&quot;median&quot;,&quot;5 and 95%&quot;), lty = c(1,2), col = c(&quot;black&quot;,&quot;red&quot;), cex = .8)
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6" /></p>
+
+<h3 id="more-comprehensive-plot-2">More comprehensive plot</h3>
+
+<pre><code class="language-r">resRaw &lt;- list()
+resRaw &lt;- lapply(1:nsub, function(x) mod1$run(params.all[x, ], ev, inits = inits) %&gt;% 
+                  as.tibble %&gt;% 
+                  mutate(SUBJID = x))
+ggres &lt;- bind_rows(resRaw) %&gt;% gather(&quot;compartment&quot;, &quot;value&quot;, depot:C3)
+
+ggplot(ggres, aes(x = time, y = value, group = SUBJID, colour = SUBJID)) +
+    geom_line() +
+    facet_wrap(~compartment, scale = &quot;free_y&quot;)
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" /></p>
+
+<h2 id="simulate-adaptive-dosing-for-a-single-subject-decision-rule-1">Simulate Adaptive dosing for a single subject: Decision Rule #1</h2>
+
+<pre><code class="language-r">#Decision Rule:
+#	If trough effect &lt;.4, cut dose in half
+#	If trough effect in [0.4, 0.6], do not change dose
+#	If trough effect &gt; 0.6, double the dose.
+effect.limits &lt;- c(0, .4, .6, 9)  #decision rule limits
+dose.multipliers &lt;- c(.5, 1, 2)   #decision rule effects
+
+#simulation parameters 
+ndays &lt;- 25				 #number of days to simulate
+unit.dose &lt;- 10000
+start.dose &lt;- 1
+sampling.frequency &lt;- 1   		#sample every day
+
+# Define system parameters
+params &lt;- 
+    c(KA = 0.3, CL = 7,             # central 
+      V2 = 4.0E+01, Q = 1.0E+01, V3 = 3E+02, # peripheral
+      Kin = .2, Kout = .2, EC50 = 8)              # effects
+inits &lt;- c(0, 0, 0, 1)   
+
+#Initialize other variables
+vars &lt;- c(&quot;depot&quot;, &quot;centr&quot;, &quot;peri&quot;, &quot;eff&quot;)
+res &lt;- NULL 		#results vector
+time.vec &lt;- NULL	#time vector
+doses &lt;- NULL	#doses vector
+
+#Simulate a  period of time (set by sampling.frequency), check dose and adjust according to decision rules, then simulate #next time period 
+for (i in seq(1, ndays, by = sampling.frequency)) {
+    if (i==1)  { # Initialize on first day
+        inits &lt;- c(0, 0, 0, 1)      
+        last.multiplier &lt;- start.dose
+        this.multiplier &lt;- 1
+    } else { 				# Use end of previous day as initial conditions for next day
+        inits &lt;- x[dim(x)[1], vars]    		# Use last value of state variables as new initial conditions
+        wh &lt;- cut(inits[&quot;eff&quot;], effect.limits)	# Compare trough effect with decision rule limits
+        this.multiplier &lt;- dose.multipliers[wh]	# Determine dose multiplier accordingly
+    }
+    this.multiplier &lt;- this.multiplier*last.multiplier	# Adjust dose
+    last.multiplier &lt;- this.multiplier			# Store new dose	
+    ev &lt;- eventTable()				# Generate event table
+    # Specify dosing
+    ev$add.dosing(dose = this.multiplier*unit.dose, dosing.interval = 24, nbr.doses = sampling.frequency)
+    ev$add.sampling(0:(24*sampling.frequency))			# Specify sampling	
+    x &lt;- mod1$run(params, ev, inits)					# Run simulation
+    time.total &lt;- ev$get.EventTable()[,&quot;time&quot;]+(i-1)*(24)		# Calculate time vector
+    doses &lt;- rep(last.multiplier, length(time))
+    x &lt;- cbind(x,time.total, doses)					# Compile and store results
+    res &lt;- rbind(res, x)
+}
+
+# Plot results
+plot(res[,&quot;time.total&quot;]/24, res[,&quot;eff&quot;], type = &quot;l&quot;, ylim = c(0,1), xlab = &quot;Time (days)&quot;, ylab = &quot;Effect / Dose Multiplier&quot;)
+rect(-200,0.4,1500,0.6,col = rgb(0.5,0.5,0.5,1/4))
+points(res[,&quot;time.total&quot;]/24,res[,&quot;doses&quot;], type = &quot;s&quot;, xlab = &quot;Time (days)&quot;, ylab = &quot;Dose&quot;, col = &quot;red&quot;, lty = 2)
+legend(&quot;topright&quot;, c(&quot;Effect&quot;,&quot;Dose Multiplier&quot;), lty = c(1,2), col = c(&quot;black&quot;,&quot;red&quot;))
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8" /></p>
+
+<h2 id="simulate-adaptive-dosing-for-a-single-subject-decision-rule-2">Simulate Adaptive dosing for a single subject: Decision Rule #2</h2>
+
+<pre><code class="language-r"># Decision Rule:
+# If peak effect &lt;0.4, cut dose in half
+# If effect at tmax &lt; 0.4, cut the dose in half
+# If trough effect and effect at tmax in [0.4, 0.6], do not change dose
+# If trough effect &gt; 0.6, double the dose.
+# If effect at tmax &gt; 0.6, double the dose.
+
+effect.limits &lt;- c(0, .4, .6, 9)  # decision rule limits
+dose.multipliers &lt;- c(.5, 1, 2)   # decision rule effects
+
+# Simulation parameters 
+ndays &lt;- 25				   #number of days to simulate
+unit.dose &lt;- 10000
+start.dose &lt;- 1
+
+# Initialize other variables
+vars &lt;- c(&quot;depot&quot;, &quot;centr&quot;, &quot;peri&quot;, &quot;eff&quot;)
+res &lt;- NULL 		#results vector
+time.vec &lt;- NULL	#time vector
+doses &lt;- NULL	#doses vector
+
+for (i in 1:ndays) {
+    if (i==1) { 	#initialize on first day
+        inits &lt;- c(0, 0, 0, 1)      
+        last.multiplier &lt;- start.dose
+        this.multiplier &lt;- 1
+    } else {	#use end of previous day as initial conditions for next day
+        inits &lt;- x[dim(x)[1], vars]		# use last value of state variables as new initial conditions
+        wh &lt;- cut(inits[&quot;eff&quot;], effect.limits)		# compare trough effect with decision rule limits
+        this.multiplier &lt;- dose.multipliers[wh]		# determine dose multiplier accordingly
+        if (x[13,&quot;eff&quot;]&lt;effect.limits[2]) {		# compare effect at tmax with decision rule limits
+            this.multiplier &lt;- dose.multipliers[1]	 	# determine dose multiplier accordingly
+        }
+    }
+    this.multiplier &lt;- this.multiplier*last.multiplier		# adjust dose
+    last.multiplier &lt;- this.multiplier				# store new dose	
+    ev &lt;- eventTable()						# generate event table
+    ev$add.dosing(dose = this.multiplier*unit.dose, nbr.doses = 1)	# specify dosing
+    ev$add.sampling(1:24)						# specify sampling	
+    x &lt;- mod1$run(params, ev, inits)					# run simulation
+    time.total &lt;- ev$get.EventTable()[,&quot;time&quot;]+(i-1)*24		# calculate time vector
+    doses &lt;- rep(last.multiplier, length(time))
+    x &lt;- cbind(x, time.total, doses)
+    res &lt;- rbind(res, x)
+}
+
+plot(res[,&quot;time.total&quot;]/24, res[,&quot;eff&quot;], type = &quot;l&quot;, ylim = c(0,1), xlab = &quot;Time (days)&quot;, ylab = &quot;Effect / Dose Multiplier&quot;)
+rect(-200,0.4,1500,0.6,col = rgb(0.5,0.5,0.5,1/4))
+points(res[,&quot;time.total&quot;]/24,res[,&quot;doses&quot;], type = &quot;s&quot;, xlab = &quot;Time (days)&quot;, ylab = &quot;Dose&quot;, col = &quot;red&quot;, lty = 2)
+legend(&quot;topright&quot;,c(&quot;Effect&quot;,&quot;Dose Multiplier&quot;), lty = c(1,2), col = c(&quot;black&quot;,&quot;red&quot;))
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" /></p>
+
+<h2 id="simulating-adaptive-dosing-with-variability">Simulating adaptive dosing with variability</h2>
+
+<pre><code class="language-r"># Perform simulation 100 times
+nsub &lt;- 50;  
+
+# Create a parameter matrix with correlated interindividual variability on CL and V2
+library(MASS)
+sigma= matrix(c(0.09,0.08,0.08,0.25),2,2)
+mv = mvrnorm(n=nsub, rep(0,2), sigma)
+CL = 7*exp(mv[,1])
+V2 = 40*exp(mv[,2])
+params.all &lt;- cbind(KA=0.3, CL=CL, V2=V2, Q=10, V3=300, Kin=0.2, Kout=0.2, EC50=8)     
+
+
+# Decision Rule:
+# If trough effect &lt;.4, cut dose in half
+# If trough effect in [0.4, 0.6], do not change dose
+# If trough effect &gt; 0.6, double the dose.
+effect.limits &lt;- c(0, 0.4, 0.6, 9)   # decision rule limits
+dose.multipliers &lt;- c(0.5, 1, 2)   # decision rule effects
+
+# Simulation parameters 
+ndays &lt;- 25		 #number of days to simulate
+unit.dose &lt;- 10000
+start.dose &lt;- 1
+
+# Initialize other variables
+vars &lt;- c(&quot;depot&quot;, &quot;centr&quot;, &quot;peri&quot;, &quot;eff&quot;)
+res &lt;- NULL
+time.vec &lt;- NULL	
+doses &lt;- NULL
+
+for (j in 1:nsub) { 	# Loop through each row of parameter values and simulate
+    this.run &lt;- NULL	
+    DOSE &lt;- NULL
+    for (i in 1:ndays) {   	# Simulate each day
+        if (i==1) {  		# Initialize on first day
+            inits &lt;- c(0, 0, 0, 1)      
+            last.multiplier &lt;- start.dose
+            this.multiplier &lt;- 1
+        } else {				# Use end of previous day as initial conditions for next day
+            inits &lt;- x[dim(x)[1], vars]        		# Use last value of state variables as new initial conditions
+            wh &lt;- cut(inits[&quot;eff&quot;], effect.limits)	# Compare trough effect with decision rule limits
+            this.multiplier &lt;- dose.multipliers[wh]	# Determine dose multiplier accordingly
+        }
+        this.multiplier &lt;- this.multiplier*last.multiplier 		# Adjust dose
+        last.multiplier &lt;- this.multiplier				# Store new dose	
+        ev &lt;- eventTable()					# Generate event table
+        # Specify dosing
+        ev$add.dosing(dose = this.multiplier*unit.dose, dosing.interval = 24, nbr.doses = sampling.frequency)
+        ev$add.sampling(0:(24*sampling.frequency))		# Specify sampling	
+        params &lt;- params.all[j,]					# Specify parameters for the current subject
+        x &lt;- mod1$run(params, ev, inits)				# Run simulation
+        time.total=ev$get.EventTable()[,&quot;time&quot;]+(i-1)*(24)	#calculate time vector
+        
+        #compile results for this subject, all days
+        DOSE &lt;- rbind(DOSE, last.multiplier)
+        this.run &lt;- rbind(this.run, cbind(x, time.total))
+    }
+    # Compile results for all subjects
+    res &lt;- cbind(res, this.run[, &quot;eff&quot;])
+    time.vec &lt;- this.run[, &quot;time.total&quot;]
+    doses &lt;- cbind(doses, DOSE)
+}
+
+# Calculate and plot quantiles of effect levels
+res.q.t &lt;- apply(res, 1, quantile, prob = c(.05, .5, .95))
+# Calculate distribution of doses on each day
+dose.list &lt;- apply(doses, 1, function(x) table(factor(x, c(1, 0.5, 0.25, 0.125, 0.0625))))
+# Plot results
+par(mfrow = c(2,1), mar = c(4,4,1,1))
+matplot((1:dim(res)[1])/24, t(res.q.t), type = &quot;l&quot;, lty = c(2, 1, 2), col = c(2, 1, 2), ylab = &quot;Effect&quot;, xlab = &quot;Time (days)&quot;)
+legend(&quot;topright&quot;, c(&quot;median&quot;, &quot;5 and 95%&quot;), lty = c(1, 2), col = c(&quot;black&quot;, &quot;red&quot;), cex=.8)
+rect(-200, 0.4, 1500, 0.6, col = rgb(0.5, 0.5, 0.5, 1/4))
+
+matplot(100*t(dose.list)/nsub, type = &quot;l&quot;,  lty = 1,  ylab = &quot;% subjects on each dose&quot;, xlab = &quot;Time (Days)&quot;, lwd = 2, col = c(1:4, 6))
+legend(&quot;topright&quot;, c(&quot;1&quot;, &quot;0.5&quot;, &quot;0.25&quot;, &quot;0.125&quot;, &quot;0.0625&quot;), lty=1, col=c(1:4, 6), horiz = TRUE, cex = 0.9, bty = 'n')
+</code></pre>
+
+<p><img src="{{ site.url }}/images/rxode-unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" /></p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>RODBC R package를 OSX에서 설치하기 - A Hugo website</title>
+<meta property="og:title" content="RODBC R package를 OSX에서 설치하기 - A Hugo website">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">RODBC R package를 OSX에서 설치하기</h1>
+
+    
+    <span class="article-date">0001/01/01</span>
+    
+
+    <div class="article-content">
+      
+
+<p>RODBC를 설치하는데 도움이 되었으면 좋겠습니다.</p>
+
+<pre><code>install.packages(&quot;RODBC&quot;)
+</code></pre>
+
+<p>잘 설치되다가 다음과 같은 에러가 발생하였습니다.</p>
+
+<pre><code>configure: error: &quot;ODBC headers sql.h and sqlext.h not found&quot;
+ERROR: configuration failed for package ‘RODBC’
+</code></pre>
+
+<p>Parallels를 통해 Win7 환경에서 R을 사용하다가 속도가 너무 느리고 Git환경을 사용하고 싶어 서치를 해 봤습니다.</p>
+
+<p>수없이 많은 검색결과가 나왔습니다. 아마 많은 사람들이 같은 어려움을 겪은 것 같습니다.</p>
+
+<p>가장 도움되는 링크는 이것입니다. <a href="https://gist.github.com/Bouke/10454272">https://gist.github.com/Bouke/10454272</a></p>
+
+<pre><code>$ brew install unixodbc
+$ brew install freetds --with-unixodbc
+</code></pre>
+
+<p>터미널에서 위 두줄을 실행하면 <code>install.packages(&quot;RODBC&quot;)</code>이 문제없이 실행됩니다.</p>
+
+<p><img src="http://i.imgur.com/kmFHfRD.png" alt="스크린샷 2016-06-22 11.13.48" /></p>
+
+<p>댓글을 남겼습니다! ^^</p>
+
+<h2 id="iodbc-설치하기">iODBC 설치하기</h2>
+
+<p>다음 링크를 통해 iodbc를 설치합니다.
+<a href="http://www.iodbc.org/dataspace/iodbc/wiki/iODBC/Downloads#Mac">http://www.iodbc.org/dataspace/iodbc/wiki/iODBC/Downloads#Mac</a> OS X</p>
+
+<p><img src="http://i.imgur.com/4YvXweJ.png" alt="스크린샷 2016-06-22 11.31.55" /></p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

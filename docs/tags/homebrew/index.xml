@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Homebrew on A Hugo website</title>
+    <link>/tags/homebrew/index.xml</link>
+    <description>Recent content in Homebrew on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/homebrew/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>OSX에서 MySQL 설치하기, RMySQL 패키지 사용하기, 간단한 SQL 문법</title>
+      <link>/1/01/01/osx%EC%97%90%EC%84%9C-mysql-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-rmysql-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EA%B0%84%EB%8B%A8%ED%95%9C-sql-%EB%AC%B8%EB%B2%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/osx%EC%97%90%EC%84%9C-mysql-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-rmysql-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EA%B0%84%EB%8B%A8%ED%95%9C-sql-%EB%AC%B8%EB%B2%95/</guid>
+      <description>
+
+&lt;h2 id=&#34;mysql-설치하기&#34;&gt;MySQL 설치하기&lt;/h2&gt;
+
+&lt;p&gt;다음 명령어를 터미널에서 입력합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew install mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;다음과 같은 결과가 나오게 됩니다. &lt;code&gt;mysql_secure_installation&lt;/code&gt;, &lt;code&gt;mysql -uroot&lt;/code&gt;, &lt;code&gt;mysql.server start&lt;/code&gt;의 세 명령어가 눈에 들어오는군요.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;==&amp;gt; Downloading https://homebrew.bintray.com/bottles/mysql-5.7.13.el_capitan.bot
+######################################################################## 100.0%
+==&amp;gt; Pouring mysql-5.7.13.el_capitan.bottle.tar.gz
+==&amp;gt; /usr/local/Cellar/mysql/5.7.13/bin/mysqld --initialize-insecure --user=Sungp
+==&amp;gt; Caveats
+We&#39;ve installed your MySQL database without a root password. To secure it run:
+    mysql_secure_installation
+
+To connect run:
+    mysql -uroot
+
+To have launchd start mysql now and restart at login:
+  brew services start mysql
+Or, if you don&#39;t want/need a background service you can just run:
+  mysql.server start
+==&amp;gt; Summary
+🍺  /usr/local/Cellar/mysql/5.7.13: 13,344 files, 445.0M
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;서버를 시작하게 됩니다. 성공!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;$ mysql.server start
+Starting MySQL
+... SUCCESS!
+$ mysql -uroot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;uroot권한으로 접속하여 mysql창에서 DB를 생성하고 아이디와 비밀번호를 생성합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; create database CJDate7e;
+mysql&amp;gt; grant all privileges on CJDate7e.* to shan@localhost identified by &#39;asan1234&#39;;
+mysql&amp;gt; \q
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;이제 Terminal 창에서 shan으로 DB에 접속합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mysql -u shan -p
+mysql&amp;gt; use CJDate7e;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;자, 이제 모든 준비가 끝났습니다. 이제 r에서 접속해보겠습니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(RMySQL)
+MyDB = dbConnect(RMySQL::MySQL(), dbname = &amp;quot;CJDate7e&amp;quot;, user=&amp;quot;shan&amp;quot;, password=&amp;quot;asan1234&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;다시 MySQL로 돌아와서 Table을 채워 넣겠습니다. (C.J. Date Intro to DB Systems, 7e)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DROP TABLE S;
+DROP TABLE P;
+DROP TABLE J;
+DROP TABLE SPJ;
+
+CREATE TABLE S
+(SNO VARCHAR(5) PRIMARY KEY,
+SNAME VARCHAR(25) NOT NULL, STATUS INTEGER, CITY VARCHAR(20) NOT NULL);
+
+CREATE TABLE P
+(PNO VARCHAR(6) PRIMARY KEY, PNAME VARCHAR(25) NOT NULL, COLOR CHAR(10) NOT NULL, WEIGHT REAL NOT NULL, CITY VARCHAR(20) NOT NULL);
+
+CREATE TABLE J (JNO VARCHAR(6) PRIMARY KEY, JNAME VARCHAR(25) NOT NULL, CITY VARCHAR(20) NOT NULL);
+
+CREATE TABLE SPJ
+(SNO VARCHAR(5) NOT NULL, PNO VARCHAR(6) NOT NULL, JNO VARCHAR(6) NOT NULL, QTY INTEGER NOT NULL,
+CONSTRAINT SPJ01 PRIMARY KEY (SNO, PNO, JNO),
+CONSTRAINT SPJ02 FOREIGN KEY (SNO) REFERENCES S(SNO),
+CONSTRAINT SPJ03 FOREIGN KEY (PNO) REFERENCES P(PNO),
+CONSTRAINT SPJ04 FOREIGN KEY (JNO) REFERENCES J(JNO));
+
+DELETE FROM S;
+DELETE FROM P;
+DELETE FROM J;
+DELETE FROM SPJ;
+
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S1&#39;, &#39;Smith&#39;, 20, &#39;London&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S2&#39;, &#39;Jones&#39;, 10, &#39;Paris&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S3&#39;, &#39;Blake&#39;, 30, &#39;Paris&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S4&#39;, &#39;Clark&#39;, 20, &#39;London&#39;);
+INSERT INTO S (SNO, SNAME, STATUS, CITY) VALUES (&#39;S5&#39;, &#39;Adams&#39;, 30, &#39;Athens&#39;);
+
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P1&#39;, &#39;Nut&#39;, &#39;Red&#39;, 12.0, &#39;London&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P2&#39;, &#39;Bolt&#39;, &#39;Green&#39;, 17.0, &#39;Paris&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P3&#39;, &#39;Screw&#39;, &#39;Blue&#39;, 17.0, &#39;Rome&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P4&#39;, &#39;Screw&#39;, &#39;Red&#39;, 14.0, &#39;London&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P5&#39;, &#39;Cam&#39;, &#39;Blue&#39;, 12.0, &#39;Paris&#39;);
+INSERT INTO P (PNO, PNAME, COLOR, WEIGHT, CITY) VALUES (&#39;P6&#39;, &#39;Cog&#39;, &#39;Red&#39;, 19.0, &#39;London&#39;);
+
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J1&#39;, &#39;Sorter&#39;, &#39;Paris&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J2&#39;, &#39;Display&#39;, &#39;Rome&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J3&#39;, &#39;OCR&#39;, &#39;Athens&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J4&#39;, &#39;Console&#39;, &#39;Athens&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J5&#39;, &#39;RAID&#39;, &#39;London&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J6&#39;, &#39;EDS&#39;, &#39;Oslo&#39;);
+INSERT INTO J (JNO, JNAME, CITY) VALUES (&#39;J7&#39;, &#39;Tape&#39;, &#39;London&#39;);
+
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S1&#39;, &#39;P1&#39;, &#39;J1&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S1&#39;, &#39;P1&#39;, &#39;J4&#39;, 700);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J1&#39;, 400);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J2&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J3&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J4&#39;, 500);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J5&#39;, 600);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J6&#39;, 400);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P3&#39;, &#39;J7&#39;, 800);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S2&#39;, &#39;P5&#39;, &#39;J2&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S3&#39;, &#39;P3&#39;, &#39;J1&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S3&#39;, &#39;P4&#39;, &#39;J2&#39;, 500);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S4&#39;, &#39;P6&#39;, &#39;J3&#39;, 300);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S4&#39;, &#39;P6&#39;, &#39;J7&#39;, 300);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P2&#39;, &#39;J2&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P2&#39;, &#39;J4&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P5&#39;, &#39;J5&#39;, 500);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P5&#39;, &#39;J7&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P6&#39;, &#39;J2&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P1&#39;, &#39;J4&#39;, 100);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P3&#39;, &#39;J4&#39;, 200);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P4&#39;, &#39;J4&#39;, 800);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P5&#39;, &#39;J4&#39;, 400);
+INSERT INTO SPJ (SNO, PNO, JNO, QTY) VALUES (&#39;S5&#39;, &#39;P6&#39;, &#39;J4&#39;, 500);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;R에서 SQL query를 입력하여 그 값을 받아보겠습니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dbGetQuery(MyDB,&amp;quot;SELECT DISTINCT JNO FROM SPJ WHERE NOT SPJ.SNO = &#39;S2&#39;&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;이제 DB를 닫고 마무리 합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dbDisconnect(MyDB)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;데이터를-어떻게-저장할지-정의하기&#34;&gt;데이터를 어떻게 저장할지 정의하기&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CREATE DATABASE 는 비어있는 데이터베이스를 새롭게 만들려고 할 때 사용합니다.&lt;/li&gt;
+&lt;li&gt;DROP DATABASE 는 존재하고 있는 데이터베이스를 완전히 제거하기 위해서 사용합니다.&lt;/li&gt;
+&lt;li&gt;USE 는 기본 데이터베이스를 지정하는데 사용한다.&lt;/li&gt;
+&lt;li&gt;CREATE TABLE 은, 여러분의 데이터가 실제로 저장되는, 새로운 테이블을 생성하는데 사용한다.&lt;/li&gt;
+&lt;li&gt;ALTER TABLE 은 존재하고 있는 테이블의 정의를 변경할 때에 사용한다.&lt;/li&gt;
+&lt;li&gt;DROP TABLE 은 존재하고 있는 테이블을 완전히 제거하기 위해서 사용한다.&lt;/li&gt;
+&lt;li&gt;DESCRIBE 는 테이블의 구조를 보여준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;데이터를-조작하기&#34;&gt;데이터를 조작하기&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SELECT 는 데이터를 읽고(혹은 조회하고) 싶을 때 사용한다.&lt;/li&gt;
+&lt;li&gt;INSERT 는 데이터를 추가(혹은 삽입)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;UPDATE 는 데이터를 변경(혹은 갱신)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;DELETE 는 존재하는 데이터를 제거(혹은 삭제)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;REPLACE 는 새로운 데이터를 추가하거나 존재하는 데이터를 변경(혹은 대체)하려할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;TRUNCATE 는 테이블 내 모든 데이터를 비우려(혹은 삭제하려)할 때 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;트랜잭션&#34;&gt;트랜잭션&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;START TRANSACTION 는 트랜잭션을 시작할 때 사용한다.&lt;/li&gt;
+&lt;li&gt;COMMIT 는 변경사항을 적용하고 트랜잭션을 종료한다.&lt;/li&gt;
+&lt;li&gt;ROLLBACK 는 변경사항을 포기하고 트랜잭션을 종료한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;간단한-예제&#34;&gt;간단한 예제&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE DATABASE mydb; -- mydb 데이터베이스 생성
+USE mydb; -- 기본 데이터베이스로 mydb를 지정
+CREATE TABLE mytable ( id INT PRIMARY KEY, name VARCHAR(20) ); -- mytable 테이블 생성
+INSERT INTO mytable VALUES ( 1, &#39;Will&#39; ); -- 데이터 입력
+INSERT INTO mytable VALUES ( 2, &#39;Marry&#39; );
+INSERT INTO mytable VALUES ( 3, &#39;Dean&#39; );
+SELECT id, name FROM mytable WHERE id = 1;
+UPDATE mytable SET name = &#39;Willy&#39; WHERE id = 1;
+SELECT id, name FROM mytable;
+DELETE FROM mytable WHERE id = 1;
+SELECT id, name FROM mytable;
+DROP DATABASE mydb;
+SELECT count(1) from mytable; gives the number of records in the table
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mariadb.com/kb/ko/basic-sql-statements/&#34;&gt;https://mariadb.com/kb/ko/basic-sql-statements/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

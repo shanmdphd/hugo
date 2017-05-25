@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>A future for R - A Hugo website</title>
+<meta property="og:title" content="A future for R - A Hugo website">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">7 min read</span>
+    
+
+    <h1 class="article-title">A future for R</h1>
+
+    
+    <span class="article-date">0001/01/01</span>
+    
+
+    <div class="article-content">
+      
+
+<p>useR 2016에서 있었던 것중에 특징적인 것을 가져왔습니다.</p>
+
+<p>R markdown을 사용한 문서입니다.</p>
+
+<p>특히 말미에 ODBC가 언급된 것이 흥미롭습니다.</p>
+
+<hr />
+
+<h1 id="a-future-for-r">A Future for R</h1>
+
+<p>Henrik Bengtsson, UC San Francisco</p>
+
+<p>useR 2016, Stanford, CA, 2016-06-28</p>
+
+<h3 id="slide-comments">Slide comments</h3>
+
+<p>This is a 15 + 3 minute presentation.</p>
+
+<h1 id="my-first-r-assignment">My first R assignment</h1>
+
+<p>Calculating the sum 1 + 2 + &hellip; + 100:</p>
+
+<pre><code class="language-r">&gt; y &lt;- sum(1:100)
+&gt; y
+[1] 5050
+</code></pre>
+
+<h1 id="my-first-r-assignment-1">My first R assignment</h1>
+
+<p>Calculating the sum 1 + 2 + &hellip; + 100:</p>
+
+<pre><code class="language-r">&gt; y &lt;- slow_sum(1:100)    ## 2 min
+&gt; y
+[1] 5050
+</code></pre>
+
+<p><strong>Divide-and-conquer alternative</strong>: Calculate <em>a</em> = 1 + 2 + &hellip; + 50, and <strong>then</strong> <em>b</em> = 51 + 52 + &hellip; + 100, and then add up <em>a</em> and <em>b</em>:</p>
+
+<pre><code class="language-r">&gt; a &lt;- slow_sum(1:50)     ## 1 min
+</code></pre>
+
+<pre><code class="language-r">&gt; b &lt;- slow_sum(51:100)   ## 1 min
+</code></pre>
+
+<pre><code class="language-r">&gt; y &lt;- a + b
+&gt; y
+[1] 5050
+</code></pre>
+
+<h3 id="slide-comments-1">Slide comments</h3>
+
+<ul>
+<li>All of the above steps are evaluated sequentially.</li>
+</ul>
+
+<h1 id="my-first-future-assignment">My first future assignment</h1>
+
+<p><strong>Parallel divide-and-conquer</strong>: Calculate <em>a</em> = 1 + 2 + &hellip; + 50 and <em>b</em> = 51 + 52 + &hellip; + 100 <strong>at the same time</strong>, and then add up <em>a</em> and <em>b</em>:</p>
+
+<pre><code class="language-r">&gt; library(&quot;future&quot;)
+&gt; plan(multiprocess)       ## Parallel processing
+</code></pre>
+
+<p>Future assignment:   <code>y %&lt;-% x</code></p>
+
+<pre><code class="language-r">&gt; a %&lt;-% slow_sum(1:50)    ## These two assignments are
+&gt; b %&lt;-% slow_sum(51:100)  ## non-blocking and in parallel
+&gt;
+</code></pre>
+
+<pre><code class="language-r">&gt; y &lt;- a + b               ## Waits for a and b
+</code></pre>
+
+<pre><code class="language-r">&gt; y
+[1] 5050
+</code></pre>
+
+<p>Friedman &amp; Wise (1976, 1977), Hibbard (1976),  Baker &amp; Hewitt (1977)</p>
+
+<h1 id="definition-future">Definition: Future</h1>
+
+<p><code>y %&lt;-% { expr }</code></p>
+
+<ul>
+<li><p>A <strong>future</strong> is an abstraction for a <strong>value</strong> that will be available later.</p></li>
+
+<li><p>The value is the <strong>result of an evaluated expression</strong>.</p></li>
+
+<li><p>The <strong>state of a future</strong> is either <strong>unresolved</strong> or <strong>resolved</strong>.</p></li>
+
+<li><p>The <strong>value is blocking</strong> until the future is resolved.</p></li>
+</ul>
+
+<h3 id="slide-comments-2">Slide comments</h3>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li>Friedman &amp; Wise, Aspects of applicative programming for file systems, <em>Proceedings of an ACM conference on Language design for reliable software</em>, 1977, pp41-55.</li>
+</ul>
+
+<h1 id="r-package-future">R package: future (!)</h1>
+
+<ul>
+<li>A simple <strong>unified API</strong></li>
+<li>Works the same on <strong>all platforms</strong></li>
+<li><strong>Easy to install</strong></li>
+<li><strong>Lightweight</strong> (~300 kB incl. dependencies)</li>
+<li><strong>Vignettes</strong></li>
+<li><strong>Extendable</strong> by anyone</li>
+</ul>
+
+<p>Image: CRAN version: 1.0.0
+Image: Travis CI: passing
+Image: Codecov: 97%</p>
+
+<h1 id="many-ways-to-resolve-futures">Many ways to resolve futures</h1>
+
+<p>Strategy:             |
+:&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;|:&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-
+ <code>eager</code>              | sequentially
+ <code>lazy</code>               | only if needed
+ <code>multiprocess</code>       | in parallel
+ <code>cluster</code>            | on a set of machines
+                      |</p>
+
+<pre><code class="language-r">&gt; plan(lazy)
+
+&gt; a %&lt;-% slow_sum(1:50)
+&gt; b %&lt;-% slow_sum(51:100)
+&gt;
+</code></pre>
+
+<pre><code class="language-r">&gt; b
+[1] 3775
+</code></pre>
+
+<h3 id="future-a-will-never-be-evaluated">Future <code>a</code> will never be evaluated!</h3>
+
+<h1 id="consistent-futures-everywhere">Consistent futures everywhere (!)</h1>
+
+<ul>
+<li>Unix</li>
+<li>macOS</li>
+<li>Windows</li>
+</ul>
+
+<pre><code class="language-r">&gt; library(&quot;future&quot;)
+&gt; plan(multiprocess)
+&gt; demo(&quot;mandelbrot&quot;)
+
+Calculating and plotting
+Mandelbrot regions ...
+</code></pre>
+
+<p>Image: Screenshot of demo(mandelbrot)</p>
+
+<pre><code class="language-r">- Region 1 done
+- Region 2 done
+- Region 7 done
+- Region 5 done
+- ...
+</code></pre>
+
+<p>Image: Screenshot of demo(mandelbrot)</p>
+
+<h1 id="future-takes-care-of-globals">Future takes care of globals (!)</h1>
+
+<p><strong>Global variables and functions</strong> that are needed for the future
+expression to be resolved are <strong>identified automatically</strong> and
+frozen / <strong>exported</strong>.
+<strong>Packages</strong> are automatically loaded.</p>
+
+<pre><code class="language-r">x &lt;- rnorm(n=100)
+
+y %&lt;-% { slow_sum(x) }
+</code></pre>
+
+<p>Globals identified and frozen / exported:
+1. <code>slow_sum()</code> - a function.</p>
+
+<ol>
+<li><code>x</code> - a numeric vector of length 100.</li>
+</ol>
+
+<h1 id="nested-futures">Nested futures (!)</h1>
+
+<pre><code class="language-r">x &lt;- rnorm(n=100)
+
+a %&lt;-% {
+  c %&lt;-% slow_sum(x[1:25])
+  d %&lt;-% slow_sum(x[26:50])
+  c + d
+}
+
+b %&lt;-% {
+  c %&lt;-% slow_sum(x[51:75])
+  d %&lt;-% slow_sum(x[76:100])
+  c + d
+}
+
+y &lt;- a + b
+</code></pre>
+
+<p>Different strategies for resolving, e.g.</p>
+
+<ul>
+<li><code>plan(list(cluster, multiprocess))</code></li>
+</ul>
+
+<h1 id="high-performance-compute-hpc-clusters">High Performance Compute (HPC) clusters</h1>
+
+<p>Image: Future Art: Mainframe computer room</p>
+
+<h1 id="map-reduce-for-hpc">Map-Reduce for HPC</h1>
+
+<pre><code class="language-r">## Find our 40 FASTQ files
+fastq &lt;- dir(pattern = &quot;[.]fq$&quot;)           ## 200 GB each!
+
+## Align them
+bam &lt;- lapply(fastq, FUN = DNAseq::align)  ## 6 hours each!
+</code></pre>
+
+<pre><code class="language-r">library(&quot;BatchJobs&quot;)
+reg &lt;- makeRegistry(id=&quot;DNASEQseq&quot;)
+
+fastq &lt;- dir(pattern = &quot;[.]fq$&quot;)
+batchMap(reg, fastq, fun = DNAseq::align)
+submitJobs(reg)
+bam &lt;- loadResults(reg)
+</code></pre>
+
+<p>Image: CRAN version: 0.12.0
+Image: Travis CI: passing
+Image: Codecov: 90%</p>
+
+<h1 id="future-batchjobs-futures-for-hpc">future.BatchJobs: Futures for HPC</h1>
+
+<table>
+<thead>
+<tr>
+<th align="left">future.BatchJobs:</th>
+<th align="left">Job scheduler:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>batchjobs_slurm</code></td>
+<td align="left">Slurm</td>
+</tr>
+
+<tr>
+<td align="left"><code>batchjobs_sge</code></td>
+<td align="left">Sun Grid Engine</td>
+</tr>
+
+<tr>
+<td align="left"><code>batchjobs_torque</code></td>
+<td align="left">TORQUE / PBS</td>
+</tr>
+
+<tr>
+<td align="left"><code>batchjobs_lsf</code></td>
+<td align="left">Load Sharing Facility</td>
+</tr>
+
+<tr>
+<td align="left"><code>batchjobs_openlava</code></td>
+<td align="left">OpenLava</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-r">library(&quot;future.BatchJobs&quot;)
+plan(batchjobs_slurm)
+</code></pre>
+
+<pre><code class="language-r">bam &lt;- listenv()
+for (i in seq_along(fastq)) {
+  bam[[i]] %&lt;-% DNAseq::align(fastq[i])
+}
+</code></pre>
+
+<h1 id="parallel-alternatives">Parallel alternatives</h1>
+
+<p>Image: Future Art: Inside of the Stanford Torus by Donald Davis, NASA paintings, 1975 (public domain)</p>
+
+<h1 id="foreach-futures-with-foreach">foreach: Futures with foreach()</h1>
+
+<pre><code class="language-r">## Align them
+foreach(i = seq_along(fastq), .export = &quot;fastq&quot;) %dopar% {
+  DNAseq::align(fastq[i])
+}
+</code></pre>
+
+<p>Image: CRAN version: 0.2.0
+Image: Travis CI: passing
+Image: Codecov: 100%
+(48 lines!)</p>
+
+<p>The <strong>doFuture</strong> package provides a foreach <code>%dopar%</code> adapter such that
+<em>any</em> type of futures can be used wherever the foreach package is used.</p>
+
+<pre><code class="language-r">library(&quot;doFuture&quot;)
+registerDoFuture()
+plan(multiprocess)
+</code></pre>
+
+<h3 id="slide-comments-3">Slide comments</h3>
+
+<h2 id="other-foreach-backend-adapter">Other foreach backend adapter</h2>
+
+<ul>
+<li>doMC</li>
+<li>doParallel</li>
+<li>doSNOW</li>
+</ul>
+
+<h1 id="1100-packages-can-now-parallelize-on-hpc">1100+ packages can now parallelize on HPC</h1>
+
+<p>Package that depends on foreach: ~300 directly + ~800 indirectly</p>
+
+<p>These can now also take advantage of compute clusters:</p>
+
+<pre><code class="language-r">library(&quot;doFuture&quot;)
+registerDoFuture()      ## (a) Tell foreach to use futures
+
+library(&quot;future.BatchJobs&quot;)
+plan(batchjobs_slurm)   ## (b) Resolve via Slurm scheduler
+</code></pre>
+
+<pre><code class="language-r">library(&quot;plyr&quot;)
+fastq &lt;- dir(pattern = &quot;[.]fq$&quot;)
+bam &lt;- llply(fastq, DNAseq::align, .parallel = TRUE)
+</code></pre>
+
+<h3 id="slide-comments-4">Slide comments</h3>
+
+<pre><code class="language-r">&gt; pkgs &lt;- tools::dependsOnPkgs(&quot;foreach&quot;, recursive=TRUE, installed=utils::available.packages())
+&gt; str(pkgs)
+ chr [1:1099] &quot;abcrf&quot; &quot;admixturegraph&quot; &quot;ApacheLogProcessor&quot; &quot;BANFF&quot; ...
+</code></pre>
+
+<h1 id="future-bonuses">Future bonuses</h1>
+
+<p>Image: Future Art: Vision of a future with video calls</p>
+
+<h1 id="plot-remotely-display-locally">Plot remotely - display locally</h1>
+
+<pre><code class="language-r">&gt; library(&quot;future&quot;)
+&gt; plan(remote, workers=&quot;remote.server.org&quot;)
+</code></pre>
+
+<pre><code class="language-r">## Plot remotely
+&gt; g %&lt;-% R.devices::capturePlot({
++   filled.contour(volcano, color.palette = terrain.colors)
++   title(main = &quot;volcano data: filled contour map&quot;)
++ })
+</code></pre>
+
+<pre><code class="language-r">## Display locally
+&gt; g
+</code></pre>
+
+<p>Image: Screenshot of example(volcano) plot</p>
+
+<h3 id="slide-comments-5">Slide comments</h3>
+
+<ul>
+<li>R (&gt;= 3.3.0)</li>
+<li><code>recordPlot()</code> + <code>replayPlot()</code></li>
+<li>Replotted using local R plot routines</li>
+<li>X11 and similar is <em>not</em> in play here!</li>
+</ul>
+
+<h1 id="building-a-better-future">Building a better future</h1>
+
+<p>@HenrikBengtsson</p>
+
+<p>Thank you!</p>
+
+<h1 id="appenix">Appenix</h1>
+
+<ul>
+<li>A1. Summary</li>
+<li>A2. Future has a minimalistic API</li>
+<li>A3. Nested futures with plyr</li>
+<li>A4. BiocParallel: Futures with Bioconductor</li>
+<li>A5. Profile code remotely - display locally</li>
+<li>A6. Implement Future API for new backend</li>
+<li>A7. Futures I&rsquo;d like to see</li>
+<li>A8. Future improvements</li>
+</ul>
+
+<h1 id="a1-summary">A1. Summary</h1>
+
+<pre><code>                 | **future**  | parallel  | foreach     | BatchJobs | BiocParallel
+</code></pre>
+
+<p>:&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;|:&mdash;&mdash;&mdash;&mdash;|:&mdash;&mdash;&mdash;-|:&mdash;&mdash;&mdash;&mdash;|:&mdash;&mdash;&mdash;-|:&mdash;&mdash;&mdash;&mdash;-
+Synchroneous         |** yes     <strong>| yes       |  yes        | yes       | yes
+Asynchroneous        |</strong> yes     <strong>| yes       |  yes        | yes       | ��
+Uniform API          |</strong> yes     <strong>|           |  yes        | yes       | yes
+Extendable API       |</strong> yes     <strong>|           |  yes        | yes       | ��
+Globals              |</strong> yes     <strong>|           | (yes)       |           |
+Packages             |</strong> yes     <strong>|           | (yes)       |           |
+For loops            |</strong> yes     <strong>|           | <code>foreach()</code> |           |
+While loops          |</strong> yes     <strong>|           |             |           |
+Nested config        |</strong> yes     <strong>|           |             |           |
+Recursive protection |</strong> yes     <strong>| mc        |             |        mc |
+Early stopping       |</strong> yes     <strong>|           |             |           | ��
+Traceback            |</strong> yes     <strong>|           |             |           | ��
+RNG stream           |</strong> manual  **| mc &amp; SNOW | doRNG       | manual    | mc &amp; SNOW</p>
+
+<h3 id="slide-comments-6">Slide comments</h3>
+
+<h2 id="early-stopping-is-not-supported-by-foreach">Early stopping is not supported by foreach</h2>
+
+<pre><code class="language-r">&gt; library(&quot;foreach&quot;)
+&gt; registerDoSEQ()
+&gt; v &lt;- foreach(i = 1:3) %dopar% { message(i); if (i == 2) stop(&quot;x&quot;); i }
+1
+2
+3
+Error in { : task 2 failed - &quot;x&quot;
+</code></pre>
+
+<h1 id="a2-future-has-a-minimalistic-api">A2. Future has a minimalistic API (!)</h1>
+
+<table>
+<tr style="font-size: 150%;
+ <th style="background: none; width: 50%; text-align: left;Future assignment:</th>
+ <th style="background: none; width: 50%; text-align: left;Functional API:</th>
+</tr>
+<tr>
+</tr>
+<tr>
+ <td style="vertical-align: top;
+  <pre style="background-color: #f2f2f2;
+
+ > x <- 101:200
+
+ ## Create implicit futures
+ > a %<-% slow_sum(x[1:50])
+ > b %<-% slow_sum(x[51:100])
+
+ ## Get their values
+ > y <- a + b
+
+ > y
+ [1] 15050
+  </pre>
+ </td>
+ <td style="vertical-align: top;
+  <pre style="background-color: #f2f2f2;
+
+ > x <- 101:200
+
+ ## Create explicit futures
+ > f <- future( slow_sum(x[1:50]) )
+ > g <- future( slow_sum(x[51:100]) )
+
+ ## Get their values
+ > y <- value(f) + value(g)
+
+ > y
+ [1] 15050
+  </pre>
+ </td>
+</tr>
+</table>
+
+<h1 id="a3-nested-futures-with-plyr">A3. Nested futures with plyr</h1>
+
+<pre><code class="language-r">library(&quot;future.BatchJobs&quot;)
+plan(list(batchjobs_slurm, multiprocess))
+
+library(plyr)
+
+bam &lt;- llply(fastq, function(fq) {
+
+  chrs &lt;- llply(1:24, function(chr) {
+    DNAseq::align(fq, chromosome = chr)
+  }, .parallel = TRUE)
+
+  merge_chromosomes(chrs)
+
+}, .parallel = TRUE)
+</code></pre>
+
+<h1 id="a4-biocparallel-futures-with-bioconductor">A4. BiocParallel: Futures with Bioconductor</h1>
+
+<p>You can use futures with BiocParallel, e.g.</p>
+
+<pre><code class="language-r">library(&quot;BiocParallel&quot;)
+register(DoparParam(), default = TRUE)
+
+library(&quot;doFuture&quot;)
+registerDoFuture()
+
+plan(multiprocess)
+
+bplapply(fastq, function(fq) {
+  DNAseq::align(fq)
+})
+</code></pre>
+
+<h1 id="a5-profile-code-remotely-display-locally">A5. Profile code remotely - display locally</h1>
+
+<pre><code class="language-r">&gt; library(&quot;future&quot;)
+&gt; plan(remote, workers=&quot;remote.server.org&quot;)
+
+&gt; library(&quot;profvis&quot;)
+
+&gt; dat &lt;- data.frame(
++   x = rnorm(50e3),
++   y = rnorm(50e3)
++ )
+
+## Profile remotely
+&gt; p %&lt;-% profvis({
++   plot(x ~ y, data = dat)
++   m &lt;- lm(x ~ y, data = dat)
++   abline(m, col = &quot;red&quot;)
++ })
+</code></pre>
+
+<pre><code class="language-r">## Browse locally
+&gt; p
+</code></pre>
+
+<p>Image: Screenshot of profvis HTML report</p>
+
+<h1 id="a6-implement-future-api-for-new-backend">A6. Implement Future API for new backend</h1>
+
+<p>To implement a new type of future, create the following methods:</p>
+
+<ul>
+<li><p><code>f &lt;- myfuture({ expr })</code></p>
+
+<ul>
+<li>creates a future of class <code>MyFuture</code> extending <code>Future</code></li>
+</ul></li>
+
+<li><p><code>value(f)</code> for <code>MyFuture</code></p>
+
+<ul>
+<li>gets value of future (blocking)</li>
+</ul></li>
+
+<li><p><code>resolved(f)</code> for <code>MyFuture</code></p>
+
+<ul>
+<li>checks if future is resolved or not (non-blocking)</li>
+</ul></li>
+</ul>
+
+<h1 id="a7-futures-i-d-like-to-see">A7. Futures I&rsquo;d like to see</h1>
+
+<ul>
+<li><p><code>plan(r32)</code></p>
+
+<ul>
+<li>e.g. <code>RODBC::odbcConnectAccess()</code> works only on 32-bit R.</li>
+</ul></li>
+
+<li><p><code>plan(p2p)</code></p>
+
+<ul>
+<li>Private and / or community-based peer-to-peer computer cluster</li>
+</ul></li>
+
+<li><p><code>plan(rhelp)</code></p>
+
+<ul>
+<li>Post R scripts to R-help and ask for the results <code>:P</code></li>
+</ul></li>
+</ul>
+
+<h1 id="a8-future-improvements">A8. Future improvements</h1>
+
+<h2 id="standardization">Standardization</h2>
+
+<ul>
+<li>Capturing stdout and stderr uniformly</li>
+<li>Random number generation (Pierre L&rsquo;Ecuyer&rsquo;s RNG streams)
+
+<ul>
+<li>easy to do manually right now</li>
+</ul></li>
+</ul>
+
+<h2 id="optional-features">Optional features</h2>
+
+<ul>
+<li>Logging</li>
+<li>Progress bars</li>
+<li>Memoization (caching of results)</li>
+<li>On the-fly time and memory benchmark statistics</li>
+</ul>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

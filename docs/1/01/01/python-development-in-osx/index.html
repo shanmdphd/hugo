@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>Python development in OSX - A Hugo website</title>
+<meta property="og:title" content="Python development in OSX - A Hugo website">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">Python development in OSX</h1>
+
+    
+    <span class="article-date">0001/01/01</span>
+    
+
+    <div class="article-content">
+      <p>ysyang님의 <a href="http://wsyang.com/2015/07/19/hellow-python/">이 글</a>을 이대로 따라해보았습니다.
+설치환경: OSX 10.11.5 El Capitan</p>
+
+<pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+brew install pyenv
+export PATH=&quot;$HOME/.pyenv/shims:$PATH&quot;
+pyenv install anaconda3-4.0.0
+pyenv rehash
+pyenv version
+brew install homebrew/boneyard/pyenv-pip-rehash
+python --version # 본문에 오타 있었습니다.
+pyenv global anaconda3-4.0.0
+pyenv rehash
+conda update conda
+
+&gt;&gt;&gt; import numpy
+&gt;&gt;&gt; numpy.test('full')
+&gt;&gt;&gt; import scipy
+&gt;&gt;&gt; scipy.test('full')
+&gt;&gt;&gt; import matplotlib
+&gt;&gt;&gt; matplotlib.test()
+</code></pre>
+
+<p>다만 여기서 에러가 났는데 <a href="https://github.com/numpy/numpy/issues/6718">https://github.com/numpy/numpy/issues/6718</a> 이 글을 참고할 수 있겠습니다.</p>
+
+<pre><code>&gt;&gt;&gt; numpy.test('full')
+FAIL: test_scripts.test_f2py
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/Users/Sungpil/.pyenv/versions/anaconda3-4.0.0/lib/python3.5/site-packages/nose/case.py&quot;, line 198, in runTest
+    self.test(*self.arg)
+  File &quot;/Users/Sungpil/.pyenv/versions/anaconda3-4.0.0/lib/python3.5/site-packages/numpy/testing/decorators.py&quot;, line 146, in skipper_func
+    return f(*args, **kwargs)
+  File &quot;/Users/Sungpil/.pyenv/versions/anaconda3-4.0.0/lib/python3.5/site-packages/numpy/tests/test_scripts.py&quot;, line 82, in test_f2py
+    assert_(success, &quot;Warning: neither %s nor %s found in path&quot; % f2py_cmds)
+  File &quot;/Users/Sungpil/.pyenv/versions/anaconda3-4.0.0/lib/python3.5/site-packages/numpy/testing/utils.py&quot;, line 53, in assert_
+    raise AssertionError(smsg)
+AssertionError: Warning: neither f2py nor f2py found in path
+</code></pre>
+
+<p><a href="http://tutorial.djangogirls.org/ko/python_introduction/">http://tutorial.djangogirls.org/ko/python_introduction/</a>
+DjangoGirls의 위 책도 Python을 이해하는데 큰 도움이 될듯.</p>
+
+<p>Programming is a fun!</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

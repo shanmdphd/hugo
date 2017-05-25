@@ -6,8 +6,331 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Dec 2016 21:49:57 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 27 Apr 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pubmed Search Results of NONMEM</title>
+      <link>/2017/04/27/pubmed-search-results-of-nonmem/</link>
+      <pubDate>Thu, 27 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/04/27/pubmed-search-results-of-nonmem/</guid>
+      <description>
+
+&lt;h1 id=&#34;introduction-and-methods&#34;&gt;Introduction and Methods&lt;/h1&gt;
+
+&lt;p&gt;The number of publications containing NONMEM was retrieved from the Pubmed search at 2017-04-27 07:30 KST by &lt;code&gt;Download CSV&lt;/code&gt; functionality and the CSV file was processed by R 3.4.0 [@R-base] and ggplot2 [@R-ggplot2].&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;pubmedsearch.png&#34; alt=&#34;Pubmed search&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;results&#34;&gt;Results&lt;/h1&gt;
+
+&lt;h2 id=&#34;plot&#34;&gt;Plot&lt;/h2&gt;
+
+&lt;p&gt;Results from a PubMed search for the term, NONMEM were plotted against the year the publication appeared.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(knitr)
+library(ggplot2)
+library(dplyr)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;timeline &amp;lt;- read.csv(&amp;quot;timeline.csv&amp;quot;, skip = 1, stringsAsFactors = FALSE) %&amp;gt;% mutate(percentage = round(count/sum(count)*100, 2)) %&amp;gt;% arrange(year) %&amp;gt;% mutate(cum_percent = cumsum(percentage))
+ggplot(data=timeline, aes(x=year, y=count)) +
+    geom_bar(stat=&amp;quot;identity&amp;quot;) + guides(fill=FALSE) +
+    xlab(&amp;quot;Year&amp;quot;) + ylab(&amp;quot;Number of Articles&amp;quot;) +
+    ggtitle(&amp;quot;Increase of Articles Using NONMEM&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/pubmed-unnamed-chunk-2-1.png&#34; alt=&#34;Publications utilizing NONMEM&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(Information Retrieved from Pubmed Search at 2017-04-27 07:30 KST)&lt;/p&gt;
+
+&lt;h2 id=&#34;raw-data&#34;&gt;Raw data&lt;/h2&gt;
+
+&lt;p&gt;Results from a PubMed search for the term, NONMEM were listed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;knitr::kable(timeline, caption = &amp;quot;Raw data of the number of publications utilizing NONMEM.&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;right&#34;&gt;year&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;count&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;percentage&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;cum_percent&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1980&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.05&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1981&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.10&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1982&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.15&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1983&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.15&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.30&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1984&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.35&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.65&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1985&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.70&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1986&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.15&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.85&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1988&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.30&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.15&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1989&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.59&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1990&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.35&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.94&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1991&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.49&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.43&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1992&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.99&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.42&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1993&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;14&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.69&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.11&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1994&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;19&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.94&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.05&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1995&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;30&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.48&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.53&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1996&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;35&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.73&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8.26&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1997&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;25&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.23&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9.49&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1998&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;53&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.62&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.11&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1999&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;39&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.92&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;14.03&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;40&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.97&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2001&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;39&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.92&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;17.92&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2002&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;55&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.71&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20.63&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2003&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;66&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.26&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;23.89&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2004&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;61&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;26.90&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2005&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;94&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.64&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;31.54&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2006&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;86&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.24&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;35.78&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2007&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;79&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.90&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;39.68&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2008&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;107&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.28&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44.96&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2009&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;123&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.07&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;51.03&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2010&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;116&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.73&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;56.76&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2011&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.48&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;62.24&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2012&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;118&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.82&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;68.06&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2013&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;137&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.76&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;74.82&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2014&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;130&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.42&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81.24&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2015&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;148&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.31&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;88.55&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2016&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;153&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.55&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;96.10&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2017&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;79&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.90&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;The number of publications utilizing NONMEM tends to increase.&lt;/p&gt;
+
+&lt;h1 id=&#34;references&#34;&gt;References&lt;/h1&gt;
+</description>
+    </item>
     
     <item>
       <title>A Plain Markdown Post</title>
@@ -45,6 +368,47 @@
 &lt;li id=&#34;fn:This-is-because&#34;&gt;This is because we have to protect the math expressions from being interpreted as Markdown. You may not need the backticks if your math expression does not contain any special Markdown syntax such as underscores or asterisks, but it is always a safer choice to use backticks. When you happen to have a pair of literal dollar signs inside the same element, you can escape one dollar sign, e.g., &lt;code&gt;\$50 and $100&lt;/code&gt; renders &amp;ldquo;\$50 and $100&amp;rdquo;. &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:This-is-because&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>happygitwithr.com</title>
+      <link>/2016/07/01/happygitwithr.com/</link>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/07/01/happygitwithr.com/</guid>
+      <description>&lt;p&gt;useR 2016 컨퍼런스의 가장 인상적인 tutorial이 모두 GitBook형태로 공개되었습니다. 굉장히 유익한 자료라 생각됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://happygitwithr.com/&#34;&gt;Happy Git and GitHub for the useR |  happygitwithr.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/E0UdN9X.png&#34; alt=&#34;스크린샷 2016-07-01 12.17.13&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tozer 11장 연습문제 6번 문제풀이</title>
+      <link>/2016/06/08/tozer-11%EC%9E%A5-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-6%EB%B2%88-%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/</link>
+      <pubDate>Wed, 08 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/06/08/tozer-11%EC%9E%A5-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C-6%EB%B2%88-%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/</guid>
+      <description>&lt;p&gt;Prof.Lim&amp;rsquo;s lecture&lt;/p&gt;
+
+&lt;p&gt;Tozer 11 Multiple Dose&lt;/p&gt;
+
+&lt;p&gt;This is the R code for multiple dose mimicking the continuous infusion of a virtual drug with continuous and uniform release over time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;TIME=4*0:9
+
+AMT8=50*(1-exp(-0.693/4*TIME))
+plot(TIME,AMT8)
+AMT8
+
+AMT4=AMT8[1:8]+AMT8[2:9]
+plot(AMT4)
+AMT4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Refer to cum() function&lt;/p&gt;
 </description>
     </item>
     
@@ -103,6 +467,1382 @@ Figure 1: A fancy pie chart.
       
       <guid>/2015/01/01/lorem-ipsum/</guid>
       <description>&lt;p&gt;&lt;strong&gt;Lorem ipsum&lt;/strong&gt; dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore &lt;em&gt;magna aliqua&lt;/em&gt;. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/1/01/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/</guid>
+      <description>
+
+&lt;ul&gt;
+&lt;li&gt;Berkeley Madonna&lt;/li&gt;
+&lt;li&gt;MM equation&lt;/li&gt;
+&lt;li&gt;처음에는 몸안의 Ag보다 더 많은 Ab가 들어간다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$ L+R = LR $$&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Quasi equilibrium vs TMDD&lt;/li&gt;
+&lt;li&gt;Essential equation of TMDD (3 equations)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/ZlSRrqm.png&#34; alt=&#34;스크린샷 2016-06-14 오전 10.27.54&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/7mZ0dUx.png&#34; alt=&#34;스크린샷 2016-06-14 오전 10.37.49&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/idGKSiO.png&#34; alt=&#34;스크린샷 2016-06-14 오전 11.06.49&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;(A) a brief initial phase&lt;/li&gt;
+&lt;li&gt;(B) an apparent linear phase&lt;/li&gt;
+&lt;li&gt;&amp;copy; a transition phase&lt;/li&gt;
+&lt;li&gt;(D) a linear terminal phase&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/LhrJGte.png&#34; alt=&#34;스크린샷 2016-06-14 오전 11.27.55&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/A41g2qw.png&#34; alt=&#34;스크린샷 2016-06-14 오전 11.31.44&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;$$
+One can distinguish four different phases in the dynamics
+of the system in which different processes are dominant:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Runge-Kutta 4 | Stop time 5&lt;/li&gt;
+&lt;li&gt;Kon 0.5&lt;/li&gt;
+&lt;li&gt;Stop&lt;/li&gt;
+&lt;li&gt;초기 약물엔 TNF와 Ab붙어있어도 (IC)크게 문제될 것이 없다. TMDD안나타낸다. Linear PK로 나타나&lt;/li&gt;
+&lt;li&gt;다양한 Ab가 개발되니까 이제는 Linear PK로 나타내게 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Model 3&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;(Phase A가 짧아서 의미는 없지만) phase A의 경사가 급하고 시간이 짧아지는 이유는?&lt;/li&gt;
+
+&lt;li&gt;&lt;h2 id=&#34;왜-농도가-급격히-떨어지는가-두가지-농도의-곱이기-때문에-second-order-kinetics이다&#34;&gt;왜 농도가 급격히 떨어지는가? 두가지 농도의 곱이기 때문에 second order kinetics이다.&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Lapprox (24) 그래서 초록색 커브가 올라가는 것임.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;L(Ab)에 비해 RL(Immune Complex)의 농도가 훨씬 커서 주도권을 뺏긴것.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R가 회복되는 것은 de novo synthesis가 일어나기 때문에.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2016 ACREP</title>
+      <link>/1/01/01/2016-acrep/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/2016-acrep/</guid>
+      <description>
+
+&lt;h1 id=&#34;acrep&#34;&gt;ACREP&lt;/h1&gt;
+
+&lt;h2 id=&#34;observational-study&#34;&gt;Observational Study&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker 이무송&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents&#34;&gt;Contents&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cohort study&lt;/li&gt;
+&lt;li&gt;RR $$ \frac{\frac{a}{a+b}}{\frac{c}{c+d}} $$&lt;/li&gt;
+&lt;li&gt;단점 - F/U loss, 재발에 대해서 연구 어렵다.&lt;/li&gt;
+&lt;li&gt;연구 대상 수 산출 방법 - Nomogram, 수식적용, 컴퓨터 PASS 2016&lt;/li&gt;
+&lt;li&gt;PCORI.org - conduct of Registry&lt;/li&gt;
+&lt;li&gt;Cohort는 F/U을 전제로 해서 한다. Retrospective Chart-review&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;observational-study의-pitfall-및-이를-극복하기-위한-방법&#34;&gt;Observational Study의 Pitfall 및 이를 극복하기 위한 방법&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 임영석 교수님&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;experimental-study-yes&#34;&gt;Experimental study? Yes&lt;/h3&gt;
+
+&lt;h4 id=&#34;randomized-design-interventional-no&#34;&gt;Randomized design? (interventional)- No&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;NR CLINICAL trial&lt;/li&gt;
+&lt;li&gt;Time series&lt;/li&gt;
+&lt;li&gt;PHASE 1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;randomized-design-interventional-yes&#34;&gt;Randomized design? (interventional)- Yes&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Clinical Trial&lt;/li&gt;
+&lt;li&gt;Community Trial&lt;/li&gt;
+&lt;li&gt;Crossover design&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;experimental-study-no&#34;&gt;Experimental study? No&lt;/h3&gt;
+
+&lt;h4 id=&#34;comparison-group-no-observational-study&#34;&gt;Comparison group? No = Observational study&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Prevalence / incidence,&lt;/li&gt;
+&lt;li&gt;time trend,&lt;/li&gt;
+&lt;li&gt;case series,&lt;/li&gt;
+&lt;li&gt;case reoprt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;comparison-group-yes-analytical-study&#34;&gt;Comparison group? Yes = Analytical study&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cohort study,&lt;/li&gt;
+&lt;li&gt;case-control study,&lt;/li&gt;
+&lt;li&gt;cross-sectional study,&lt;/li&gt;
+&lt;li&gt;ecologic study,&lt;/li&gt;
+&lt;li&gt;PMS&lt;/li&gt;
+&lt;li&gt;두군을 비교하는가 안하는가가 중요한 기준이 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents-1&#34;&gt;Contents&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;research question -(design)- study plan -(implement)- actual study&lt;/li&gt;
+&lt;li&gt;findings in the study -(infer)- truth in the study -(infer)- truth in the universe&lt;/li&gt;
+&lt;li&gt;위암, 대장, 폐암 - post op outcome을 통채로 비교하면 안된다.&lt;/li&gt;
+&lt;li&gt;internal validity &amp;amp; external validity(generalization)&lt;/li&gt;
+&lt;li&gt;PICO anatomy #####
+
+&lt;ul&gt;
+&lt;li&gt;patient/population/problemn&lt;/li&gt;
+&lt;li&gt;Intervention&lt;/li&gt;
+&lt;li&gt;Comparison&lt;/li&gt;
+&lt;li&gt;Outcome&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Gold standard of clinical studies - RCT
+
+&lt;ul&gt;
+&lt;li&gt;Sample - randomization (Treated / Control)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Research question - interesting, important, critical&lt;/li&gt;
+&lt;li&gt;Good research question - FINER - Feasible, Interesting, Novel, Ethical, Relevant&lt;/li&gt;
+&lt;li&gt;Feasible / Ethical / Relevant 가장 중요한 면&lt;/li&gt;
+&lt;li&gt;Prospective Cohort Study -&lt;/li&gt;
+&lt;li&gt;Case-control study - 뒤로 간다. 병원에서 case-control 하는 경우는 사망여부. Outcome인 경우가 많다. disease있고 없고가 아니라.
+
+&lt;ul&gt;
+&lt;li&gt;재발에 대한 - 환자군/대조군을 모아서. 그럼 어떻게 대조군 설정한건가?? 이런 것을 정할때 bias가 많이 발생하게 된다.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Historical cohort - Cohort assembled-(f/u)-&amp;gt;Outcome
+
+&lt;ul&gt;
+&lt;li&gt;2000-2010 HCC 초치료 근치적 수술적 절제술 받은 환자들의 명단을 확보.&lt;/li&gt;
+&lt;li&gt;ITT analysis할때 반드시 필요하다.&lt;/li&gt;
+&lt;li&gt;5년 이상 관찰한 것이 있어.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Mimic those of clinical trials
+
+&lt;ul&gt;
+&lt;li&gt;Internal validity를 높여야 한다. restricted cohort / NEJM 2000;342:1887&lt;/li&gt;
+&lt;li&gt;IIT 분석을 해라.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Chance(Random Error) vs Bias(Systematic Error)
+
+&lt;ul&gt;
+&lt;li&gt;association / cause를 비교해야.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Confounder
+
+&lt;ul&gt;
+&lt;li&gt;biasd와는 좀 다르다. 미리 의식하고 물어보기 전엔 절대 알수 없다. 미리 질환에 대해 잘 알고있는 연구자여야만 찾을 수 있다.&lt;/li&gt;
+&lt;li&gt;Example : smoking - alcohol - heart disease&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What is the effect of long-term tx(&amp;gt;5y) with a potent oral antiviral agent(entecavir)(I) in patients with chronic hep B(P)&lt;/li&gt;
+&lt;li&gt;FDA, 식약처는 Surrogate marker를 가지고 허가를 내준다. (조직학적 개선,) - 이것과 환자의 outcome을 정말로 개선시키는건가? 이건 observational study에서만 찾을 수 있다. historical cohort&lt;/li&gt;
+&lt;li&gt;Zero time No treatment control&lt;/li&gt;
+&lt;li&gt;Endpoint ascertainment - 재발이 문제가 된다. 무엇으로 재발을 판정할 것인가? MR? CT? 검사간격을 얼마로 했니? 누구도 시비 못할 것으로 outcome measure하는 것이 좋다. (예를 들어 사망의 경우)&lt;/li&gt;
+&lt;li&gt;PP vs ITT
+
+&lt;ul&gt;
+&lt;li&gt;ITT - which treatment option is best at the time decision must be made? - FDA에서 ITT만 인정을 한다.&lt;/li&gt;
+&lt;li&gt;Explanatory&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Multivariable Cox PH Analysis - (Event 수를 적어야 한다.) Univariate analysis만으로는 부족.&lt;/li&gt;
+&lt;li&gt;Multivariate analysis -&lt;/li&gt;
+&lt;li&gt;Propensity score - SPSS로 가능. 양군간 matching - 쌍을 갖춘다. 같은 수로 나온다. 이때는 univariate할 수 있다.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;consistently observed by unadjusted.&amp;rdquo;  - obs study는 의심을 많이 받기 때문에. 이런 분석을 하는 것이 좋다.&lt;/li&gt;
+&lt;li&gt;Gadoxetic - liver specific contrast agent
+
+&lt;ul&gt;
+&lt;li&gt;2647patients-&amp;gt;700명 수술 가능. - surrogate marker - CT에서 못본걸 MR에서 찾았다. | Cost-effectiveness - 무조건 survival. Propensity matching - Inverse Probability Weighing (IPTW)&lt;/li&gt;
+&lt;li&gt;Unadjsted&lt;/li&gt;
+&lt;li&gt;mutivariable&lt;/li&gt;
+&lt;li&gt;IPTW&lt;/li&gt;
+&lt;li&gt;Propensity&lt;/li&gt;
+&lt;li&gt;제목의 중요성. JCO (IF 21) - Hepatology (IF 11.7) - Gut (IF 14.921) (early rejection so far) - GE (IF 18.187) (accepted with more general terms in the title)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mimic as closely as possible in RCT&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;diagnostic-test-biomarker-study&#34;&gt;Diagnostic test &amp;amp; Biomarker Study&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 박성호 - 영상의학과&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents-diagnostic-test&#34;&gt;Contents - Diagnostic test&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DTA sutdy&lt;/li&gt;
+&lt;li&gt;Prevalence낮으면&lt;/li&gt;
+&lt;li&gt;횡으로 본다. Predictive Value - Prevalence에 영향을 받는다. Pre올라가면 PPV올라가. NPV낮아져.&lt;/li&gt;
+&lt;li&gt;odds ratio - prevalence에 영향을 안받는다. intrinsic parameter로 많이 씀.&lt;/li&gt;
+&lt;li&gt;case-control study vs cross-sectional study [옛날 용어]&lt;/li&gt;
+&lt;li&gt;Cochrane - case-control type accuracy study vs cohort type accuracy study&lt;/li&gt;
+&lt;li&gt;NECA - diagnostic case-control study vs diagnostic cohort study&lt;/li&gt;
+&lt;li&gt;Area under ROC curve - C statistics&lt;/li&gt;
+&lt;li&gt;Youden index - sens spec 더해서 빼기 1 Youden J statistic&lt;/li&gt;
+&lt;li&gt;Least Euclidean distance from (0,1) 거리가 최소되는 점. - 쉬운개념&lt;/li&gt;
+&lt;li&gt;diagnostic accuracy - 시각적으로 어떻게 구성하는지가 중요함.&lt;/li&gt;
+&lt;li&gt;McNemar test&lt;/li&gt;
+&lt;li&gt;Comparing two proportions (2x2) - unpaired(fisher,Chi2), paired (McNemar)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;contents-biomarker&#34;&gt;Contents - Biomarker&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Biomarker
+
+&lt;ul&gt;
+&lt;li&gt;Classifier / Prognostic / Predictive / Monitoring&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Petal et al. MRI-detected tumor response for locally advanced rectal cancer predicts survival outcomes&lt;/li&gt;
+&lt;li&gt;Machtay et al. Prediction of survival
+
+&lt;ul&gt;
+&lt;li&gt;Prospective&lt;/li&gt;
+&lt;li&gt;S III lung cancer eligible for CCRT&lt;/li&gt;
+&lt;li&gt;Endpoint : overall survival&lt;/li&gt;
+&lt;li&gt;SUV&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Hylton et al.
+
+&lt;ul&gt;
+&lt;li&gt;Prospective&lt;/li&gt;
+&lt;li&gt;Index: functional tumor volume measured with pre-surgery breast MRI&lt;/li&gt;
+&lt;li&gt;Comparator: post-surgical pathologic complete response(PCR)&lt;/li&gt;
+&lt;li&gt;Modified C-statistics(ROC) - diagnosis는 있다 없다로 나온다. survival은 time to event - 각각의 time point마다 diagnosis 유사한 통계량이 나와서 그걸 summation&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Studies of predictive accuracy
+
+&lt;ul&gt;
+&lt;li&gt;Two approaches - Time-to-event / event by a fixed time&lt;/li&gt;
+&lt;li&gt;Event by a fixed time - Sn Sp ROC - Accuracy study와 유사한 것으로 된다.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;더 impact있는 것. - randomization을 테스트 후에 할 것인가 아니면 전에 할 것인가? 전에 하는 것이 더 임팩트 있다. 왜냐하면 테스트(+)이면 치료 들어가는 경우가 많기 때문이다.&lt;/li&gt;
+&lt;li&gt;후자에 해당하는 (더 임팩트있는) 스터디의 예.&lt;/li&gt;
+&lt;li&gt;Monitoring biomarker
+
+&lt;ul&gt;
+&lt;li&gt;Correlation between x and y / delta x and delta y&lt;/li&gt;
+&lt;li&gt;Delta를 보는 것이 중요하다.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;2차-자료원을-이용한-역학-연구군&#34;&gt;2차 자료원을 이용한 역학 연구군&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 예방의학교실/의학통계학과 김화정&lt;/li&gt;
+&lt;li&gt;NEJM 2006, BMI and mortality&lt;/li&gt;
+&lt;li&gt;이차자료원 : 특정한 연구목적으로 수집되지 않은 자료&lt;/li&gt;
+&lt;li&gt;공공데이터 - 정부&lt;/li&gt;
+&lt;li&gt;국건영 심평원 자료 - 생각보다 manage하기 쉽지 않다.&lt;/li&gt;
+&lt;li&gt;HIRA DB - 건강보험청구자료&lt;/li&gt;
+&lt;li&gt;NHISS 국민건강보험자료 공유서비스&lt;/li&gt;
+&lt;li&gt;보건의료 연구에 활용되는 공공데이터&lt;/li&gt;
+&lt;li&gt;장점 : 대규모자료, 장기간 추적관찰. 시간과 비용 절약&lt;/li&gt;
+&lt;li&gt;한국형 - outcomes Research&lt;/li&gt;
+&lt;li&gt;NECA에서 자료를 연계해 주겠다 라고 했으나.. 진전이 크지 않음&lt;/li&gt;
+&lt;li&gt;보건의료 빅데이터 개방시스템 - 공공데이터&lt;/li&gt;
+&lt;li&gt;명세서 일반내역 테이블&lt;/li&gt;
+&lt;li&gt;2차자료의 분석은 case-control의 기준 정하기가 어렵다. 금방 분석이 되기 힘듬. Crossvalidation 반드시 해야함.&lt;/li&gt;
+&lt;li&gt;과제신청 - 연구원등록 : 정부3.0에서 검토 자세히 하게됨.&lt;/li&gt;
+&lt;li&gt;SAS/R 프로그램.&lt;/li&gt;
+&lt;li&gt;단점 - 5년간의 자료. F/U보기가 힘들어. 진단명의 정확도 문제 - 70%. 에러의 숫자가 클 수 있음.&lt;/li&gt;
+&lt;li&gt;의학통계학과 공공데이터 연구지원 #4639 - 상담, 공공데이터 이용신청, 자료확보, 자료분석, 결과검토&lt;/li&gt;
+&lt;li&gt;NHISS 표본연구&lt;/li&gt;
+&lt;li&gt;Dramatic decrease in FQ in the pediatric population&lt;/li&gt;
+&lt;li&gt;case crossover design&lt;/li&gt;
+&lt;li&gt;indication bias - causality - association. confounding by indication&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;대규모-이차-자료원을-이용한-clinical-prediction-model-individual-risk-outcome-probability-예측-분석법&#34;&gt;대규모 이차 자료원을 이용한 clinical prediction model : individual risk/outcome probability 예측 분석법&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Clinical prediction model&lt;/li&gt;
+&lt;li&gt;Framingham risk score&lt;/li&gt;
+&lt;li&gt;JAMA - moving from clinical trials to precision Medicine, 2016 Apr 26&lt;/li&gt;
+&lt;li&gt;DAPT Trial&lt;/li&gt;
+&lt;li&gt;Risk for advanced neoplasia and  likelihood ratios in each risk group within derivation and validation sets
+&lt;a href=&#34;http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4840411/#!po=38.6364&#34;&gt;Derivation and validation of a scoring system to stratify the risk of advanced colorectal neoplasia in asymptomatic adults&lt;/a&gt;  분자:질병있는 / 분모:질병없는 - likelihood ratio&lt;/li&gt;
+&lt;li&gt;Assumptions for model development - linear regression, Cox proportional hazard regression(Proportionality of hazard ### This should be confirmed.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;| | linear reg | logi reg| Cox reg|
+|-|-|-|-|
+|Overall perf| R2 | Nagelkerke r2, brir|the same|
+|discrimination ability||C concordance stat(AUC)|Harell C stat, time-dependent AUC|
+|Calibratrion|Calibration plot, slope|the same+hosmer-lemeshow|the same|&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;C-index 를 사용하여 분석 가능함.  C = number of concordant pairs + 0.5/~~&lt;/li&gt;
+&lt;li&gt;새로운 통계 지표. 2가지. NRI - net eclassification improvement&lt;/li&gt;
+&lt;li&gt;Korean J Radiol 2016;17(3);339-350 -&amp;gt; predicted probability - 사망할 확률을 계산할 수 있음.&lt;/li&gt;
+&lt;li&gt;Framingham그룹에서 발표됨 2008 통계 저널에&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;web-r-org&#34;&gt;Web-r.org&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Speaker: 문건웅 가톨릭대학교 성빈센트병원 심장내과&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;contents-2&#34;&gt;Contents&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;web-r.org&lt;/li&gt;
+&lt;li&gt;로지스틱 리그레션 - 반응(종속)변수 - 설명변수 . 단변량 분석 먼저 나와 univariate logistic regression&lt;/li&gt;
+&lt;li&gt;다변량 분석.&lt;/li&gt;
+&lt;li&gt;생존분석 - 로지스틱 회귀분석과 비슷한것임. - 다른 것은 시간개념이 들어있는 것임. 얼마 있다가 돌아가셨는지 알 수 있음. KM 분석. cutpoint결정해줌.&lt;/li&gt;
+&lt;li&gt;나무분석 - 생존 나무 분석.&lt;/li&gt;
+&lt;li&gt;진단통계&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A future for R</title>
+      <link>/1/01/01/a-future-for-r/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/a-future-for-r/</guid>
+      <description>
+
+&lt;p&gt;useR 2016에서 있었던 것중에 특징적인 것을 가져왔습니다.&lt;/p&gt;
+
+&lt;p&gt;R markdown을 사용한 문서입니다.&lt;/p&gt;
+
+&lt;p&gt;특히 말미에 ODBC가 언급된 것이 흥미롭습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;a-future-for-r&#34;&gt;A Future for R&lt;/h1&gt;
+
+&lt;p&gt;Henrik Bengtsson, UC San Francisco&lt;/p&gt;
+
+&lt;p&gt;useR 2016, Stanford, CA, 2016-06-28&lt;/p&gt;
+
+&lt;h3 id=&#34;slide-comments&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;p&gt;This is a 15 + 3 minute presentation.&lt;/p&gt;
+
+&lt;h1 id=&#34;my-first-r-assignment&#34;&gt;My first R assignment&lt;/h1&gt;
+
+&lt;p&gt;Calculating the sum 1 + 2 + &amp;hellip; + 100:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- sum(1:100)
+&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;my-first-r-assignment-1&#34;&gt;My first R assignment&lt;/h1&gt;
+
+&lt;p&gt;Calculating the sum 1 + 2 + &amp;hellip; + 100:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- slow_sum(1:100)    ## 2 min
+&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Divide-and-conquer alternative&lt;/strong&gt;: Calculate &lt;em&gt;a&lt;/em&gt; = 1 + 2 + &amp;hellip; + 50, and &lt;strong&gt;then&lt;/strong&gt; &lt;em&gt;b&lt;/em&gt; = 51 + 52 + &amp;hellip; + 100, and then add up &lt;em&gt;a&lt;/em&gt; and &lt;em&gt;b&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; a &amp;lt;- slow_sum(1:50)     ## 1 min
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; b &amp;lt;- slow_sum(51:100)   ## 1 min
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- a + b
+&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;slide-comments-1&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;All of the above steps are evaluated sequentially.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;my-first-future-assignment&#34;&gt;My first future assignment&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Parallel divide-and-conquer&lt;/strong&gt;: Calculate &lt;em&gt;a&lt;/em&gt; = 1 + 2 + &amp;hellip; + 50 and &lt;em&gt;b&lt;/em&gt; = 51 + 52 + &amp;hellip; + 100 &lt;strong&gt;at the same time&lt;/strong&gt;, and then add up &lt;em&gt;a&lt;/em&gt; and &lt;em&gt;b&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(multiprocess)       ## Parallel processing
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Future assignment:   &lt;code&gt;y %&amp;lt;-% x&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; a %&amp;lt;-% slow_sum(1:50)    ## These two assignments are
+&amp;gt; b %&amp;lt;-% slow_sum(51:100)  ## non-blocking and in parallel
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y &amp;lt;- a + b               ## Waits for a and b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; y
+[1] 5050
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Friedman &amp;amp; Wise (1976, 1977), Hibbard (1976),  Baker &amp;amp; Hewitt (1977)&lt;/p&gt;
+
+&lt;h1 id=&#34;definition-future&#34;&gt;Definition: Future&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;y %&amp;lt;-% { expr }&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A &lt;strong&gt;future&lt;/strong&gt; is an abstraction for a &lt;strong&gt;value&lt;/strong&gt; that will be available later.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The value is the &lt;strong&gt;result of an evaluated expression&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;state of a future&lt;/strong&gt; is either &lt;strong&gt;unresolved&lt;/strong&gt; or &lt;strong&gt;resolved&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;value is blocking&lt;/strong&gt; until the future is resolved.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;slide-comments-2&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Friedman &amp;amp; Wise, Aspects of applicative programming for file systems, &lt;em&gt;Proceedings of an ACM conference on Language design for reliable software&lt;/em&gt;, 1977, pp41-55.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;r-package-future&#34;&gt;R package: future (!)&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A simple &lt;strong&gt;unified API&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Works the same on &lt;strong&gt;all platforms&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Easy to install&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight&lt;/strong&gt; (~300 kB incl. dependencies)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vignettes&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extendable&lt;/strong&gt; by anyone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Image: CRAN version: 1.0.0
+Image: Travis CI: passing
+Image: Codecov: 97%&lt;/p&gt;
+
+&lt;h1 id=&#34;many-ways-to-resolve-futures&#34;&gt;Many ways to resolve futures&lt;/h1&gt;
+
+&lt;p&gt;Strategy:             |
+:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-
+ &lt;code&gt;eager&lt;/code&gt;              | sequentially
+ &lt;code&gt;lazy&lt;/code&gt;               | only if needed
+ &lt;code&gt;multiprocess&lt;/code&gt;       | in parallel
+ &lt;code&gt;cluster&lt;/code&gt;            | on a set of machines
+                      |&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; plan(lazy)
+
+&amp;gt; a %&amp;lt;-% slow_sum(1:50)
+&amp;gt; b %&amp;lt;-% slow_sum(51:100)
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; b
+[1] 3775
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;future-a-will-never-be-evaluated&#34;&gt;Future &lt;code&gt;a&lt;/code&gt; will never be evaluated!&lt;/h3&gt;
+
+&lt;h1 id=&#34;consistent-futures-everywhere&#34;&gt;Consistent futures everywhere (!)&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unix&lt;/li&gt;
+&lt;li&gt;macOS&lt;/li&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(multiprocess)
+&amp;gt; demo(&amp;quot;mandelbrot&amp;quot;)
+
+Calculating and plotting
+Mandelbrot regions ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of demo(mandelbrot)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;- Region 1 done
+- Region 2 done
+- Region 7 done
+- Region 5 done
+- ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of demo(mandelbrot)&lt;/p&gt;
+
+&lt;h1 id=&#34;future-takes-care-of-globals&#34;&gt;Future takes care of globals (!)&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Global variables and functions&lt;/strong&gt; that are needed for the future
+expression to be resolved are &lt;strong&gt;identified automatically&lt;/strong&gt; and
+frozen / &lt;strong&gt;exported&lt;/strong&gt;.
+&lt;strong&gt;Packages&lt;/strong&gt; are automatically loaded.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- rnorm(n=100)
+
+y %&amp;lt;-% { slow_sum(x) }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Globals identified and frozen / exported:
+1. &lt;code&gt;slow_sum()&lt;/code&gt; - a function.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; - a numeric vector of length 100.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;nested-futures&#34;&gt;Nested futures (!)&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x &amp;lt;- rnorm(n=100)
+
+a %&amp;lt;-% {
+  c %&amp;lt;-% slow_sum(x[1:25])
+  d %&amp;lt;-% slow_sum(x[26:50])
+  c + d
+}
+
+b %&amp;lt;-% {
+  c %&amp;lt;-% slow_sum(x[51:75])
+  d %&amp;lt;-% slow_sum(x[76:100])
+  c + d
+}
+
+y &amp;lt;- a + b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Different strategies for resolving, e.g.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;plan(list(cluster, multiprocess))&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;high-performance-compute-hpc-clusters&#34;&gt;High Performance Compute (HPC) clusters&lt;/h1&gt;
+
+&lt;p&gt;Image: Future Art: Mainframe computer room&lt;/p&gt;
+
+&lt;h1 id=&#34;map-reduce-for-hpc&#34;&gt;Map-Reduce for HPC&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Find our 40 FASTQ files
+fastq &amp;lt;- dir(pattern = &amp;quot;[.]fq$&amp;quot;)           ## 200 GB each!
+
+## Align them
+bam &amp;lt;- lapply(fastq, FUN = DNAseq::align)  ## 6 hours each!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;BatchJobs&amp;quot;)
+reg &amp;lt;- makeRegistry(id=&amp;quot;DNASEQseq&amp;quot;)
+
+fastq &amp;lt;- dir(pattern = &amp;quot;[.]fq$&amp;quot;)
+batchMap(reg, fastq, fun = DNAseq::align)
+submitJobs(reg)
+bam &amp;lt;- loadResults(reg)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: CRAN version: 0.12.0
+Image: Travis CI: passing
+Image: Codecov: 90%&lt;/p&gt;
+
+&lt;h1 id=&#34;future-batchjobs-futures-for-hpc&#34;&gt;future.BatchJobs: Futures for HPC&lt;/h1&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;future.BatchJobs:&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Job scheduler:&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_slurm&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Slurm&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_sge&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Sun Grid Engine&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_torque&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TORQUE / PBS&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_lsf&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Load Sharing Facility&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;batchjobs_openlava&lt;/code&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;OpenLava&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;future.BatchJobs&amp;quot;)
+plan(batchjobs_slurm)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;bam &amp;lt;- listenv()
+for (i in seq_along(fastq)) {
+  bam[[i]] %&amp;lt;-% DNAseq::align(fastq[i])
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;parallel-alternatives&#34;&gt;Parallel alternatives&lt;/h1&gt;
+
+&lt;p&gt;Image: Future Art: Inside of the Stanford Torus by Donald Davis, NASA paintings, 1975 (public domain)&lt;/p&gt;
+
+&lt;h1 id=&#34;foreach-futures-with-foreach&#34;&gt;foreach: Futures with foreach()&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Align them
+foreach(i = seq_along(fastq), .export = &amp;quot;fastq&amp;quot;) %dopar% {
+  DNAseq::align(fastq[i])
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: CRAN version: 0.2.0
+Image: Travis CI: passing
+Image: Codecov: 100%
+(48 lines!)&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;doFuture&lt;/strong&gt; package provides a foreach &lt;code&gt;%dopar%&lt;/code&gt; adapter such that
+&lt;em&gt;any&lt;/em&gt; type of futures can be used wherever the foreach package is used.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;doFuture&amp;quot;)
+registerDoFuture()
+plan(multiprocess)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;slide-comments-3&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;h2 id=&#34;other-foreach-backend-adapter&#34;&gt;Other foreach backend adapter&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;doMC&lt;/li&gt;
+&lt;li&gt;doParallel&lt;/li&gt;
+&lt;li&gt;doSNOW&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;1100-packages-can-now-parallelize-on-hpc&#34;&gt;1100+ packages can now parallelize on HPC&lt;/h1&gt;
+
+&lt;p&gt;Package that depends on foreach: ~300 directly + ~800 indirectly&lt;/p&gt;
+
+&lt;p&gt;These can now also take advantage of compute clusters:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;doFuture&amp;quot;)
+registerDoFuture()      ## (a) Tell foreach to use futures
+
+library(&amp;quot;future.BatchJobs&amp;quot;)
+plan(batchjobs_slurm)   ## (b) Resolve via Slurm scheduler
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;plyr&amp;quot;)
+fastq &amp;lt;- dir(pattern = &amp;quot;[.]fq$&amp;quot;)
+bam &amp;lt;- llply(fastq, DNAseq::align, .parallel = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;slide-comments-4&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; pkgs &amp;lt;- tools::dependsOnPkgs(&amp;quot;foreach&amp;quot;, recursive=TRUE, installed=utils::available.packages())
+&amp;gt; str(pkgs)
+ chr [1:1099] &amp;quot;abcrf&amp;quot; &amp;quot;admixturegraph&amp;quot; &amp;quot;ApacheLogProcessor&amp;quot; &amp;quot;BANFF&amp;quot; ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;future-bonuses&#34;&gt;Future bonuses&lt;/h1&gt;
+
+&lt;p&gt;Image: Future Art: Vision of a future with video calls&lt;/p&gt;
+
+&lt;h1 id=&#34;plot-remotely-display-locally&#34;&gt;Plot remotely - display locally&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(remote, workers=&amp;quot;remote.server.org&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Plot remotely
+&amp;gt; g %&amp;lt;-% R.devices::capturePlot({
++   filled.contour(volcano, color.palette = terrain.colors)
++   title(main = &amp;quot;volcano data: filled contour map&amp;quot;)
++ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Display locally
+&amp;gt; g
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of example(volcano) plot&lt;/p&gt;
+
+&lt;h3 id=&#34;slide-comments-5&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R (&amp;gt;= 3.3.0)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;recordPlot()&lt;/code&gt; + &lt;code&gt;replayPlot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Replotted using local R plot routines&lt;/li&gt;
+&lt;li&gt;X11 and similar is &lt;em&gt;not&lt;/em&gt; in play here!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;building-a-better-future&#34;&gt;Building a better future&lt;/h1&gt;
+
+&lt;p&gt;@HenrikBengtsson&lt;/p&gt;
+
+&lt;p&gt;Thank you!&lt;/p&gt;
+
+&lt;h1 id=&#34;appenix&#34;&gt;Appenix&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A1. Summary&lt;/li&gt;
+&lt;li&gt;A2. Future has a minimalistic API&lt;/li&gt;
+&lt;li&gt;A3. Nested futures with plyr&lt;/li&gt;
+&lt;li&gt;A4. BiocParallel: Futures with Bioconductor&lt;/li&gt;
+&lt;li&gt;A5. Profile code remotely - display locally&lt;/li&gt;
+&lt;li&gt;A6. Implement Future API for new backend&lt;/li&gt;
+&lt;li&gt;A7. Futures I&amp;rsquo;d like to see&lt;/li&gt;
+&lt;li&gt;A8. Future improvements&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;a1-summary&#34;&gt;A1. Summary&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;                 | **future**  | parallel  | foreach     | BatchJobs | BiocParallel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;|:&amp;mdash;&amp;mdash;&amp;mdash;-|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;|:&amp;mdash;&amp;mdash;&amp;mdash;-|:&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-
+Synchroneous         |** yes     &lt;strong&gt;| yes       |  yes        | yes       | yes
+Asynchroneous        |&lt;/strong&gt; yes     &lt;strong&gt;| yes       |  yes        | yes       | ��
+Uniform API          |&lt;/strong&gt; yes     &lt;strong&gt;|           |  yes        | yes       | yes
+Extendable API       |&lt;/strong&gt; yes     &lt;strong&gt;|           |  yes        | yes       | ��
+Globals              |&lt;/strong&gt; yes     &lt;strong&gt;|           | (yes)       |           |
+Packages             |&lt;/strong&gt; yes     &lt;strong&gt;|           | (yes)       |           |
+For loops            |&lt;/strong&gt; yes     &lt;strong&gt;|           | &lt;code&gt;foreach()&lt;/code&gt; |           |
+While loops          |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           |
+Nested config        |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           |
+Recursive protection |&lt;/strong&gt; yes     &lt;strong&gt;| mc        |             |        mc |
+Early stopping       |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           | ��
+Traceback            |&lt;/strong&gt; yes     &lt;strong&gt;|           |             |           | ��
+RNG stream           |&lt;/strong&gt; manual  **| mc &amp;amp; SNOW | doRNG       | manual    | mc &amp;amp; SNOW&lt;/p&gt;
+
+&lt;h3 id=&#34;slide-comments-6&#34;&gt;Slide comments&lt;/h3&gt;
+
+&lt;h2 id=&#34;early-stopping-is-not-supported-by-foreach&#34;&gt;Early stopping is not supported by foreach&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;foreach&amp;quot;)
+&amp;gt; registerDoSEQ()
+&amp;gt; v &amp;lt;- foreach(i = 1:3) %dopar% { message(i); if (i == 2) stop(&amp;quot;x&amp;quot;); i }
+1
+2
+3
+Error in { : task 2 failed - &amp;quot;x&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;a2-future-has-a-minimalistic-api&#34;&gt;A2. Future has a minimalistic API (!)&lt;/h1&gt;
+
+&lt;table&gt;
+&lt;tr style=&#34;font-size: 150%;
+ &lt;th style=&#34;background: none; width: 50%; text-align: left;Future assignment:&lt;/th&gt;
+ &lt;th style=&#34;background: none; width: 50%; text-align: left;Functional API:&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+ &lt;td style=&#34;vertical-align: top;
+  &lt;pre style=&#34;background-color: #f2f2f2;
+
+ &gt; x &lt;- 101:200
+
+ ## Create implicit futures
+ &gt; a %&lt;-% slow_sum(x[1:50])
+ &gt; b %&lt;-% slow_sum(x[51:100])
+
+ ## Get their values
+ &gt; y &lt;- a + b
+
+ &gt; y
+ [1] 15050
+  &lt;/pre&gt;
+ &lt;/td&gt;
+ &lt;td style=&#34;vertical-align: top;
+  &lt;pre style=&#34;background-color: #f2f2f2;
+
+ &gt; x &lt;- 101:200
+
+ ## Create explicit futures
+ &gt; f &lt;- future( slow_sum(x[1:50]) )
+ &gt; g &lt;- future( slow_sum(x[51:100]) )
+
+ ## Get their values
+ &gt; y &lt;- value(f) + value(g)
+
+ &gt; y
+ [1] 15050
+  &lt;/pre&gt;
+ &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;a3-nested-futures-with-plyr&#34;&gt;A3. Nested futures with plyr&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;future.BatchJobs&amp;quot;)
+plan(list(batchjobs_slurm, multiprocess))
+
+library(plyr)
+
+bam &amp;lt;- llply(fastq, function(fq) {
+
+  chrs &amp;lt;- llply(1:24, function(chr) {
+    DNAseq::align(fq, chromosome = chr)
+  }, .parallel = TRUE)
+
+  merge_chromosomes(chrs)
+
+}, .parallel = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;a4-biocparallel-futures-with-bioconductor&#34;&gt;A4. BiocParallel: Futures with Bioconductor&lt;/h1&gt;
+
+&lt;p&gt;You can use futures with BiocParallel, e.g.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;BiocParallel&amp;quot;)
+register(DoparParam(), default = TRUE)
+
+library(&amp;quot;doFuture&amp;quot;)
+registerDoFuture()
+
+plan(multiprocess)
+
+bplapply(fastq, function(fq) {
+  DNAseq::align(fq)
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;a5-profile-code-remotely-display-locally&#34;&gt;A5. Profile code remotely - display locally&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;&amp;gt; library(&amp;quot;future&amp;quot;)
+&amp;gt; plan(remote, workers=&amp;quot;remote.server.org&amp;quot;)
+
+&amp;gt; library(&amp;quot;profvis&amp;quot;)
+
+&amp;gt; dat &amp;lt;- data.frame(
++   x = rnorm(50e3),
++   y = rnorm(50e3)
++ )
+
+## Profile remotely
+&amp;gt; p %&amp;lt;-% profvis({
++   plot(x ~ y, data = dat)
++   m &amp;lt;- lm(x ~ y, data = dat)
++   abline(m, col = &amp;quot;red&amp;quot;)
++ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;## Browse locally
+&amp;gt; p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image: Screenshot of profvis HTML report&lt;/p&gt;
+
+&lt;h1 id=&#34;a6-implement-future-api-for-new-backend&#34;&gt;A6. Implement Future API for new backend&lt;/h1&gt;
+
+&lt;p&gt;To implement a new type of future, create the following methods:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;f &amp;lt;- myfuture({ expr })&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;creates a future of class &lt;code&gt;MyFuture&lt;/code&gt; extending &lt;code&gt;Future&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;value(f)&lt;/code&gt; for &lt;code&gt;MyFuture&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;gets value of future (blocking)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;resolved(f)&lt;/code&gt; for &lt;code&gt;MyFuture&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;checks if future is resolved or not (non-blocking)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;a7-futures-i-d-like-to-see&#34;&gt;A7. Futures I&amp;rsquo;d like to see&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;plan(r32)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e.g. &lt;code&gt;RODBC::odbcConnectAccess()&lt;/code&gt; works only on 32-bit R.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;plan(p2p)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Private and / or community-based peer-to-peer computer cluster&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;plan(rhelp)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Post R scripts to R-help and ask for the results &lt;code&gt;:P&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;a8-future-improvements&#34;&gt;A8. Future improvements&lt;/h1&gt;
+
+&lt;h2 id=&#34;standardization&#34;&gt;Standardization&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Capturing stdout and stderr uniformly&lt;/li&gt;
+&lt;li&gt;Random number generation (Pierre L&amp;rsquo;Ecuyer&amp;rsquo;s RNG streams)
+
+&lt;ul&gt;
+&lt;li&gt;easy to do manually right now&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;optional-features&#34;&gt;Optional features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Logging&lt;/li&gt;
+&lt;li&gt;Progress bars&lt;/li&gt;
+&lt;li&gt;Memoization (caching of results)&lt;/li&gt;
+&lt;li&gt;On the-fly time and memory benchmark statistics&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ATOM Git-plus에서 push 안되는 문제</title>
+      <link>/1/01/01/atom-git-plus%EC%97%90%EC%84%9C-push-%EC%95%88%EB%90%98%EB%8A%94-%EB%AC%B8%EC%A0%9C/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/atom-git-plus%EC%97%90%EC%84%9C-push-%EC%95%88%EB%90%98%EB%8A%94-%EB%AC%B8%EC%A0%9C/</guid>
+      <description>
+
+&lt;h2 id=&#34;증상&#34;&gt;증상&lt;/h2&gt;
+
+&lt;p&gt;OS X에서는 잘 되던 ATOM의 killer package, git-plus의 작동이 Win 7 에서는 잘 안되었습니다. CLI나 Github Desktop으로 commit과 push를 하던 중 너무 불편해져서 해결해 보기로 마음 먹고 본격적인 search를 시작하였습니다.&lt;/p&gt;
+
+&lt;h2 id=&#34;답변&#34;&gt;답변&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I can’t use the Git Plus package &lt;a href=&#34;https://discuss.atom.io/t/i-cant-use-the-git-plus-package/17328&#34;&gt;https://discuss.atom.io/t/i-cant-use-the-git-plus-package/17328&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Git Credential Manager for Windows - 1.4.0 &lt;a href=&#34;https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/tag/v1.4.0&#34;&gt;https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/tag/v1.4.0&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/RvfvmsG.png&#34; alt=&#34;2016-07-01_022040&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;결론&#34;&gt;결론&lt;/h2&gt;
+
+&lt;p&gt;일단 add와 commit 자체가 안되던 문제는 path 설정이 잘못되어 있었던 것 같습니다. 첫번째 링크에서 알려준대로 path를 잘 맞춰주니 add와 commit은 잘 되었습니다. 둘째로, push가 안되던 문제는 Git Credential Manager for Windows를 설치하니 단번에 성공하였습니다.&lt;/p&gt;
+
+&lt;p&gt;Happy Git~&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://hikaruzone.files.wordpress.com/2015/10/in-case-of-fire-1-git-commit-2-git-push-3-leave-building2.png?w=1200&#34; alt=&#34;in case of fire&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AWS - Brave new world</title>
+      <link>/1/01/01/aws---brave-new-world/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/aws---brave-new-world/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://i.cubeupload.com/RXeMPJ.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Remarkable!&lt;/p&gt;
+
+&lt;p&gt;AWS indeed provides a totally new perspective how softwares work in the internet.&lt;/p&gt;
+
+&lt;p&gt;I was really shocked today.&lt;/p&gt;
+
+&lt;p&gt;You can run Rstudio through AWS with a help of this article. &lt;a href=&#34;https://aws.amazon.com/ko/blogs/big-data/running-r-on-aws/&#34;&gt;https://aws.amazon.com/ko/blogs/big-data/running-r-on-aws/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I updated some bash codes of latest version of Rstudio server and Shiny server according to the Rstudio website as shown below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/bash
+#install R
+yum install -y R
+
+#install RStudio-Server
+#https://www.rstudio.com/products/rstudio/download-server/
+wget https://download2.rstudio.org/rstudio-server-rhel-1.0.136-x86_64.rpm
+yum install -y --nogpgcheck rstudio-server-rhel-1.0.136-x86_64.rpm
+
+#install shiny and shiny-server
+#https://www.rstudio.com/products/shiny/download-server/
+R -e &amp;quot;install.packages(&#39;shiny&#39;, repos=&#39;http://cran.rstudio.com/&#39;)&amp;quot;
+wget https://download3.rstudio.org/centos5.9/x86_64/shiny-server-1.5.3.838-rh5-x86_64.rpm
+yum install -y --nogpgcheck shiny-server-1.5.3.838-rh5-x86_64.rpm
+
+#add user(s)
+useradd your_username
+echo your_username:your_password | chpasswd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then I installed &lt;code&gt;tidyverse&lt;/code&gt; and &lt;code&gt;cowplot&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggplot2)
+library(dplyr)
+library(cowplot)
+
+Backbone &amp;lt;- ggplot(Theoph %&amp;gt;% 
+                     mutate(Subject = as.numeric(Subject)), 
+                   aes(Time, conc, group = Subject, colour = Wt)) +
+  geom_line() +
+  geom_point() + 
+  scale_y_log10()
+
+Individual &amp;lt;- Backbone + facet_wrap(~ Subject)
+groupLinear &amp;lt;- Backbone + scale_y_continuous()
+groupLog &amp;lt;- groupLinear + scale_y_log10()
+
+ggdraw() +
+  draw_plot(Individual, 0, .5, 1, .5) +
+  draw_plot(groupLinear, 0, 0, .5, .5) +
+  draw_plot(groupLog, .5, 0, .5, .5) +
+  draw_plot_label(c(&amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;, &amp;quot;C&amp;quot;), c(0, 0, 0.5), c(1, 0.5, 0.5), size = 15)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.cubeupload.com/MweD9e.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Adding Appveyor</title>
+      <link>/1/01/01/adding-appveyor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/adding-appveyor/</guid>
+      <description>&lt;p&gt;Appveyor를 추가해야 겠다는 생각을 하고 있었지만 막상 어떻게 해야할 지 몰랐는데 너무나 쉽게 끝나버렸습니다.&lt;/p&gt;
+
+&lt;p&gt;R Console에서 단지 한줄만 추가해주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;appveyor.yml&lt;/code&gt; 추가부터 &lt;code&gt;.Rbuildignore&lt;/code&gt;수정까지 한번에!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;devtools::use_appveyor()
+# * Creating `appveyor.yml` from template.
+# * Adding `appveyor.yml` to `.Rbuildignore`.
+# Next: 
+#  * Turn on AppVeyor for this repo at https://ci.appveyor.com/projects
+#  * Add an AppVeyor shield to your README.md:
+# [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/asancpt/ncar?branch=master&amp;amp;svg=true)](https://ci.appveyor.com/project/asancpt/ncar)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;너무 어렵게 생각하던 것도 쉽게 풀릴 때가 많습니다. 문제는 어렵게 생각하는 것 자체에 머물러 시도를 못하는 상태 그 자체인 것 같습니다.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Bioequivalence, 생물학적 동등성 시험</title>
+      <link>/1/01/01/bioequivalence-%EC%83%9D%EB%AC%BC%ED%95%99%EC%A0%81-%EB%8F%99%EB%93%B1%EC%84%B1-%EC%8B%9C%ED%97%98/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/bioequivalence-%EC%83%9D%EB%AC%BC%ED%95%99%EC%A0%81-%EB%8F%99%EB%93%B1%EC%84%B1-%EC%8B%9C%ED%97%98/</guid>
+      <description>
+
+&lt;h1 id=&#34;be-시험의-통계-분석에서-주의해야-할-점&#34;&gt;BE 시험의 통계 분석에서 주의해야 할 점.&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;2x2 crossover BE test&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;분할-투여-안하는-경우&#34;&gt;분할 투여 안하는 경우&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;PE - point estimates&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SAS&#34;&gt;PROC MIXED DATA=DATA; 
+    CLASS SEQ SUBJ PRD TRT;
+    MODEL LNAUCL = SEQ SUBJ PRD TRT /DDFM=SATTERTH;
+    RANDOM SUBJ
+    ESTIMATE &#39;T-R&#39; TRT -1 1 /CL ALPHA=0.1;
+    ODS OUTPUT ESTIMATES=ESTIM;
+RUN;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;PROC MIXED와 &lt;code&gt;PROC GLM&lt;/code&gt;의 가장 큰 차이 : SUBJ가 Random effect인가 아닌가..&lt;/li&gt;
+&lt;li&gt;Anova table을 구하려면 &lt;code&gt;PROC GLM&lt;/code&gt;을 써야 함.&lt;/li&gt;
+&lt;li&gt;SUBJ(SEQ) - interindividual variability - 항상 유의하다. 오히려 유의하지 않으면 이상한것.&lt;/li&gt;
+&lt;li&gt;EMS(Estimated Mean) - Balanced 되어 있지 않아서 계수가 정수가 아님.&lt;/li&gt;
+&lt;li&gt;MSE를 error term으로 했을때를 보면 안됨. Sequence nesting되어 있기 때문. Sequence에 대한 F value 작아서 pooling해도 되지만, 규정상 하면 안됨&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;로그스케일이기 때문에 추가적으로 exponentiate해서 Geometric mean ratio의 PE, LL, UL를 구할 수 있다.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;SAS macro&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SAS&#34;&gt;OPTIONS SYMBOLGEN = YES
+
+%MACRO BETEST(BEDATA,VARNAME);
+&amp;amp;BEDATA
+&amp;amp;VARNAME
+%MEND BETEST;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;위 코드에서 &lt;code&gt;SYMBOLGEN&lt;/code&gt; 은 로그 창에서 변수가 올바로 입력되었는지를 보는 것에 도움을 줍니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;매크로를 부를때는 다음과 같이 합니다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SAS&#34;&gt;%BETEST(XDATA, LNCMAX);
+%BETEST(XDATA, LNAUCL);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PROC MIXED&lt;/code&gt;는 중간에 탈락한 사람들도 다 쓴다. &lt;code&gt;PROC GLM&lt;/code&gt;은 처리를 못합니다.&lt;/li&gt;
+&lt;li&gt;비교하는 것은 Average BE, population BE(분산을 비교), individual BE(더 자세하게 봅니다)
+
+&lt;ul&gt;
+&lt;li&gt;population BE - Prescribability(분산이 커지는지를 보는 것입니다)&lt;/li&gt;
+&lt;li&gt;individual BE - Switchability(계속 먹고 있는 사람에게 바꿔서 줄 수 있겠는가를 봅니다)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;군당 최소 12명이상 하는 것이 관례화 되어 있다. 하지만 80% Power Sample size&lt;/li&gt;
+&lt;li&gt;90% CI for Ratio - 여기에는 100을 곱하면 안된다. Ratio에는 곱하기를 하지 않는다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;분할-투여하는-경우&#34;&gt;분할 투여하는 경우&lt;/h2&gt;
+
+&lt;p&gt;아슬아슬하게 기준을 충족하지 못하는 경우에 추가 임상시험을 해야 합니다.
+생동에서 추가 임상시험 규정을 잘 알아야 합니다.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;CONSISTEST = CONSISTENCY 합쳐도 되는가?
+
+&lt;ul&gt;
+&lt;li&gt;MSE1, MSE2 에 대해서 F.test해서 유의하지 않아야 한다.&lt;/li&gt;
+&lt;li&gt;Interaction term을 test해라. (STUDY * TRT) T1, R1, T2, R2
+
+&lt;ul&gt;
+&lt;li&gt;SUBJECT(ADM*SEQUENCE)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RANDOM ADM&lt;/code&gt; ADM이 fixed or random effect? - 교수님 생각엔 random effect&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;EQVTEST&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2차 효과를 빼고 돌려볼 수도 있습니다.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Consistency test를 하고 괜찮았으므로 합쳤습니다&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;discussion-conclusion&#34;&gt;Discussion &amp;amp; Conclusion&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;요즘엔 WNL에서도 BE data를 처리해줍니다만 average BE 외엔 신뢰도에 의문이 생깁니다.&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;SAS에서 &lt;code&gt;/TEST&lt;/code&gt;를 쓰는 이유&lt;/li&gt;
+&lt;li&gt;역로그 변환을 해야 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;tmax&#34;&gt;Tmax&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Wilcoxon Signed-Rank Test (Non-parametric test)&lt;/li&gt;
+&lt;li&gt;Hodges &amp;amp; Lehmann Estimate 방법을 써야 함.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$\mu_R$$&lt;/p&gt;
+
+&lt;p&gt;뮤알 - 80% ~ 120%&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>CD19-Targeted CAR T Cells in Haematologic malignancies</title>
+      <link>/1/01/01/cd19-targeted-car-t-cells-in-haematologic-malignancies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/cd19-targeted-car-t-cells-in-haematologic-malignancies/</guid>
+      <description>
+
+&lt;p&gt;Speaker: Jae Park, MD / Memorial Sloan Kettering Cancer Center | Specialized in ALL CLL NHL&lt;/p&gt;
+
+&lt;h2 id=&#34;cd19-targeted-car-t-cells&#34;&gt;CD19-Targeted CAR T cells&lt;/h2&gt;
+
+&lt;h3 id=&#34;contents&#34;&gt;Contents&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://media4.asco.org/156/9447/110503/110503_video_pvhr.jpg&#34; alt=&#34;Gen of 19-28z CAR&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Ab + T cell receptor -&amp;gt; chimeric&lt;/li&gt;
+&lt;li&gt;MHC presentation해서 보는게 아니라 Ab처럼 binding하지만 Action은 T cell&lt;/li&gt;
+&lt;li&gt;두개를 합친것. 어떻게 clinic에 사용할 것인가?&lt;/li&gt;
+&lt;li&gt;Stable expression할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.mskcc.org/sites/default/files/styles/large/public/node/39453/image/msk402-cartcell-infographic327.jpg&#34; alt=&#34;Process&#34; /&gt;
+&lt;a href=&#34;https://www.mskcc.org/blog/car-t-cell-therapy-growing-area-research&#34;&gt;https://www.mskcc.org/blog/car-t-cell-therapy-growing-area-research&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Average 60%정도 replication하는 동안은 CAR expression.&lt;/li&gt;
+&lt;li&gt;Tumor antigen을 CAR T Cell이 보게 되면서 죽이게 된다.&lt;/li&gt;
+&lt;li&gt;Target selection
+
+&lt;ul&gt;
+&lt;li&gt;가장 중요한 것.&lt;/li&gt;
+&lt;li&gt;Protein 등 - tumor specific target인 것이 중요하다.&lt;/li&gt;
+&lt;li&gt;어떻게 하면 on-target, off-target toxicity를 줄일 수 있을까? off-target, off-target toxicity 줄여야함.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;CD19 and other B cell markers (Stem cells - mature B)&lt;/li&gt;
+&lt;li&gt;Normal B cell -&amp;gt; not tumor specific함.&lt;/li&gt;
+&lt;li&gt;Signal 1만 막아. Signal2 - CD28, 4-1BB, OX-40 | signal 2가 없으면 anergic - First gen CAR에서는 실패. 2nd gen CAR는 CD28, 4-1BB, OX40&lt;/li&gt;
+&lt;li&gt;3rd gen CAR에서는 임상에서 많이 사용되지는 않는다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://d3md5dngttnvbj.cloudfront.net/content/bloodjournal/125/26/4017/F1.large.jpg&#34; alt=&#34;CAR generation&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cell production - T cell expansion by dynabeads - 19-28z+ vector와 T cell을 섞어줌. 19-28z+ transduced T cells | CTCEF&lt;/li&gt;
+&lt;li&gt;GVHD minimal risk&lt;/li&gt;
+&lt;li&gt;ALL - CLL과 다르게 proliferation 빠르다.&lt;/li&gt;
+&lt;li&gt;Relapsed ALL은 Px - poor&lt;/li&gt;
+&lt;li&gt;Post-CAR T cell infusion&lt;/li&gt;
+&lt;li&gt;No cure. 5년정도 F/U&lt;/li&gt;
+&lt;li&gt;Clinical Trial&lt;/li&gt;
+&lt;li&gt;&lt;sup&gt;4&lt;/sup&gt;&amp;frasl;&lt;sub&gt;18&lt;/sub&gt; relapse&lt;/li&gt;
+&lt;li&gt;Overall survival - relapse하긴 하나&lt;/li&gt;
+&lt;li&gt;Murine - T cell - Flow cytometry통해서.&lt;/li&gt;
+&lt;li&gt;cytokine release syndrome&lt;/li&gt;
+&lt;li&gt;Tc 얼마나 last하는가는 key question&lt;/li&gt;
+&lt;li&gt;어느정도 lasting하는가? - NEJM 2014 - Maude
+
+&lt;ul&gt;
+&lt;li&gt;소아라서 Quality가 다를 수 있는 확률이 있어.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;CRS - fever, hypotension, resp insufficiency - 7일정도&lt;/li&gt;
+&lt;li&gt;Neurological changes - delirium, global encephalopathy, aphasia, seizure-like activities/seizure&lt;/li&gt;
+&lt;li&gt;disease burden 많으면 severe CRS - correlation이 있다.&lt;/li&gt;
+&lt;li&gt;CRP - IL-6 release 높아져.
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Tocilizumab&#34;&gt;Tocilizumab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;humanized monoclonal antibody against the interleukin-6 receptor (IL-6R). Interleukin 6 (IL-6) is a cytokine that plays an important role in immune response and is implicated in the pathogenesis of many diseases, such as autoimmune diseases, multiple myeloma and prostate cancer.&lt;/li&gt;
+&lt;li&gt;Steroid&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;High CR rates can be achieved in both adults and children with R/R B-ALL&lt;/li&gt;
+&lt;li&gt;Durable response - no subsequent allo-SCT&lt;/li&gt;
+&lt;li&gt;CRS - mc AE a/w CD19 CAR T cells - toci, steroid&lt;/li&gt;
+&lt;li&gt;Neurotoxicity - difficult&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;additional-comments&#34;&gt;Additional comments&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The hostile Tumor microinvironment&lt;/li&gt;
+&lt;li&gt;Armored CARs
+
+&lt;ul&gt;
+&lt;li&gt;genetic modification - IL12, CD40L&lt;/li&gt;
+&lt;li&gt;PD-1 K/O할수도 있고..&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;IL-12
+
+&lt;ul&gt;
+&lt;li&gt;IL-12 pro-inflammatory - IV infusion힘들어.&lt;/li&gt;
+&lt;li&gt;IL-12 secretion-&amp;gt; NK cells &amp;amp; Anergic TIL -&amp;gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;CD40L
+
+&lt;ul&gt;
+&lt;li&gt;Armored CD40L CAR&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;for-the-future&#34;&gt;For the future&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Less cumbersome, 3rd party, 더 강한 Tc, solid tumor에서 적용,&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Autologous CD19-Targeted&lt;/li&gt;
+&lt;li&gt;High response rate이지만 perfect하지 않음&lt;/li&gt;
+&lt;li&gt;왜 resistance일어나는지?&lt;/li&gt;
+&lt;li&gt;CLL, ALL 다른점 무엇인지?&lt;/li&gt;
+&lt;li&gt;heme malignancies-&amp;gt; applicability 있는지? solid tumor로 갈수 있을지?&lt;/li&gt;
+&lt;li&gt;target selection&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;my-question&#34;&gt;My Question&lt;/h3&gt;
+
+&lt;p&gt;Dynabeads를 통해 polyclonal activation된 후 filter할 수 없나?&lt;/p&gt;
+
+&lt;h3 id=&#34;questions&#34;&gt;Questions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Car T cell in CSF - Yes&lt;/li&gt;
+&lt;li&gt;41BB PD-1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.danafarberbostonchildrens.org/uploadedimages/content/page_content/news/2015/dfc_7706_car_t-cell_infographic_branded-2.jpg&#34; alt=&#34;enter image description here&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Park J. et al. ASH 2015, Abstract 682&lt;/li&gt;
+&lt;li&gt;Efficacy and safety of CD19-targeted 19-28z CAR modified T cells in adult patients with relapsed or refractory B-ALL. Jae Hong Park MD
+&lt;a href=&#34;http://meetinglibrary.asco.org/content/110503?media=vm&#34;&gt;http://meetinglibrary.asco.org/content/110503?media=vm&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

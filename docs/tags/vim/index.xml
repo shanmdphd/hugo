@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vim on A Hugo website</title>
+    <link>/tags/vim/index.xml</link>
+    <description>Recent content in Vim on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>vim의 매력</title>
+      <link>/1/01/01/vim%EC%9D%98-%EB%A7%A4%EB%A0%A5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/vim%EC%9D%98-%EB%A7%A4%EB%A0%A5/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;빠릅니다.&lt;/li&gt;
+&lt;li&gt;생각을 많이 하게 만듭니다.&lt;/li&gt;
+&lt;li&gt;무엇보다 가볍습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I love Vim!&lt;/p&gt;
+
+&lt;p&gt;사실상 이 링크에서 보이는 기능들을 다 사용한다면 Atom이 굳이 필요 없을지도 모르겠다는 생각을 하게 됩니다.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://jaxbot.me/articles/why-i-use-vim&#34;&gt;Why I use Vim&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;몇가지 Animated Gifs를 가져오자면 다음과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://jaxbot.me/pics/vim/vim_windows.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://jaxbot.me/pics/vim/vim_macros2.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://jaxbot.me/pics/vim/vim_diff.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다만 이 경지에 이르기 위해선 많이 사용해봐야 할 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;Happy Vim!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
